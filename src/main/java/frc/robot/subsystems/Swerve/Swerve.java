@@ -26,7 +26,14 @@ public class Swerve extends SubsystemBase {
 
     private SwerveDriveOdometry mOdometry;
 
-    public Swerve(SwerveModuleType moduleType) {
+    private static Swerve mInstance = null;
+    public Swerve getInstance(SwerveModuleType moduleType) {
+        if (mInstance == null)
+            mInstance = new Swerve(moduleType);
+        return mInstance;
+    }
+
+    private Swerve(SwerveModuleType moduleType) {
         ISwerveModule[] swerveModules = SwerveModuleFactory.generateSwerveModules(moduleType);
         mFrontLeft = swerveModules[0];
         mFrontRight = swerveModules[1];
