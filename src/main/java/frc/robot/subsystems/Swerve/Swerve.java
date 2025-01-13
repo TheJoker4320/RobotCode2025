@@ -10,8 +10,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.SwerveSubsystemConstants;
 
 public class Swerve extends SubsystemBase {
 
@@ -40,12 +40,12 @@ public class Swerve extends SubsystemBase {
         mRearLeft = swerveModules[2];
         mRearRight = swerveModules[3];
 
-        mGyro = new Pigeon2(0);                       // TODO: Get deviceId from constants
+        mGyro = new Pigeon2(SwerveSubsystemConstants.PIGEON_DEVICE_ID);                             
         mGyro.getConfigurator().apply(new Pigeon2Configuration());
         mGyro.setYaw(0);
 
         mOdometry = new SwerveDriveOdometry(
-            null,                                   // TODO: Get kinematics from constants
+            SwerveSubsystemConstants.DRIVE_KINEMATICS,                                                                        
             getRotation(),
             getModulePositions()
         );
@@ -56,25 +56,25 @@ public class Swerve extends SubsystemBase {
         double ySpeedCommand = ySpeed * mInputMultiplier;
         double rotCommand = rot * mInputMultiplier;
 
-        double xSpeedDelivered = xSpeedCommand * 5;                   // TODO: Get max velocity from constants
-        double ySpeedDelivered = ySpeedCommand * 5;                   // TODO: Get max velocity from constants
-        double rotDelivered = rotCommand * 6.28;                      // TODO: Get max velocity from constants
+        double xSpeedDelivered = xSpeedCommand * SwerveSubsystemConstants.MAX_SPEED;                
+        double ySpeedDelivered = ySpeedCommand * SwerveSubsystemConstants.MAX_SPEED;                
+        double rotDelivered = rotCommand * SwerveSubsystemConstants.MAX_ANGULAR_SPEED;              
 
         SwerveModuleState[] swerveModuleStates;
         if (robotFieldRelative) {
             double xSpeedAdjusted = xSpeedDelivered * Math.cos(getRotation().getRadians() * -1) + ySpeedDelivered *  Math.sin(getRotation().getRadians() * -1);
             double ySpeedAdjusted = -1 * xSpeedDelivered * Math.sin(getRotation().getRadians() * -1) + ySpeedDelivered *  Math.cos(getRotation().getRadians() * -1);
 
-            swerveModuleStates = kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeedAdjusted, ySpeedAdjusted, rotDelivered));          //TODO: Get swerve kinematics from constants
+            swerveModuleStates = SwerveSubsystemConstants.DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(xSpeedAdjusted, ySpeedAdjusted, rotDelivered));
         } else {
-            swerveModuleStates = kinematics.toSwerveModuleStates(new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));        //TODO: Get swerve kinematics from constants
+            swerveModuleStates = SwerveSubsystemConstants.DRIVE_KINEMATICS.toSwerveModuleStates(new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
         }
 
         setModuleStates(swerveModuleStates);
     }
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, 5);      // TODO: Get max velocity from constants
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveSubsystemConstants.MAX_SPEED);
         mFrontLeft.setDesiredState(desiredStates[0]);
         mFrontRight.setDesiredState(desiredStates[1]);
         mRearLeft.setDesiredState(desiredStates[2]);
@@ -83,10 +83,10 @@ public class Swerve extends SubsystemBase {
 
     public void setX() {
         SwerveModuleState[] xModuleStates = {
-            new SwerveModuleState(0, Rotation2d.fromDegrees(45)),               // TODO: Get degree from constants
-            new SwerveModuleState(0, Rotation2d.fromDegrees(-45)),                      // TODO: Get degree from constants
-            new SwerveModuleState(0, Rotation2d.fromDegrees(-45)),                      // TODO: Get degree from constants
-            new SwerveModuleState(0, Rotation2d.fromDegrees(45))                // TODO: Get degree from constants
+            new SwerveModuleState(0, Rotation2d.fromRadians(SwerveSubsystemConstants.X_STATE_ANGLE)),
+            new SwerveModuleState(0, Rotation2d.fromRadians(-SwerveSubsystemConstants.X_STATE_ANGLE)),
+            new SwerveModuleState(0, Rotation2d.fromRadians(-SwerveSubsystemConstants.X_STATE_ANGLE)),
+            new SwerveModuleState(0, Rotation2d.fromRadians(SwerveSubsystemConstants.X_STATE_ANGLE))
         };
         setModuleStates(xModuleStates);
     }
