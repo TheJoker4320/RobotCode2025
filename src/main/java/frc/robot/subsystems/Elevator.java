@@ -82,6 +82,16 @@ public class Elevator extends SubsystemBase {
     final PositionVoltage mRequest = new PositionVoltage (0);
     mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
 
+    /*
+     * This code is for when we want to add motion magic to the elevator
+     * notice here that just as it is in the rest of the elevator code the setpoint should be
+     * in rotations and not meters as many might think
+     * 
+     * final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
+     * mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+     */
+
+    // Use this in shuffleboard as a graph to calculate PID values
     SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);
     SmartDashboard.putNumber("ELEVATOR: Current position", mRightMotorController.getPosition().getValue().magnitude());
 
