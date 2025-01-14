@@ -38,4 +38,46 @@ public final class Constants {
 
     public static final int PIGEON_DEVICE_ID = 0;                   // TODO: Validate device id
   }
+
+  public static final class NeoModuleConstants {
+    public static final int MODULE_COUNT = 4;
+    
+    public static final int[] DRIVING_CAN_ID = new int[] {8, 6, 2, 4};        // TODO: Validate device id
+    public static final int[] TURNING_CAN_ID = new int[] {7, 5, 1, 3};        // TODO: Validate device id
+    public static final double[] ANGULAR_OFFSETS = new double[] {
+      (-Math.PI / 2.0), 0, (Math.PI), (Math.PI / 2.0)
+    };                                                                        // TODO: Validate device id
+
+    public static final int DRIVING_MOTOR_PINION_TEETH = 16;                  // TODO: Validate value
+    public static final int SPUR_GEAR_TEETH = 19;                             // TODO: Validate value
+    public static final double DRIVING_MOTOR_REDUCTION = (45.0 * SPUR_GEAR_TEETH) / (DRIVING_MOTOR_PINION_TEETH * 15.0);
+
+    public static final double TURNING_ENCODER_POSITION_FACTOR = (2 * Math.PI);           // Radians
+    public static final double TURNING_ENCODER_VELOCITY_FACTOR = (2 * Math.PI) / 60.0;    // Radians per seconds
+
+    public static final double DRIVING_FREE_SPEED_RPM = 5676;
+    public static final double DRIVING_FREE_SPEED_RPS = DRIVING_FREE_SPEED_RPM / 60.0;
+
+    public static final double WHEEL_DIAMETER_METERS = 0.0762;                // TODO: Validate value
+    public static final double WHEEL_CIRCUFERENCE_METERS = WHEEL_DIAMETER_METERS * Math.PI;
+    public static final double DRIVING_WHEEL_FREE_SPEED_RPS = (DRIVING_FREE_SPEED_RPS * WHEEL_CIRCUFERENCE_METERS) / DRIVING_MOTOR_REDUCTION;
+    public static final double DRIVING_ENCODER_POSITION_FACTOR = WHEEL_CIRCUFERENCE_METERS / DRIVING_MOTOR_REDUCTION;
+    public static final double DRIVING_ENCODER_VELOCITY_FACTOR = DRIVING_ENCODER_POSITION_FACTOR / 60.0;
+
+    public static final int DRIVING_SMART_CURRENT_LIMIT = 50;                 // TODO: Validate value
+    public static final int TURNING_SMART_CURRENT_LIMIT = 20;                 // TODO: Validate value
+
+    public static final boolean TURNING_ENCODER_INVERTED = true;
+
+    public static final double DRIVING_P_CONSTANT = 0.04;
+    public static final double DRIVING_I_CONSTANT = 0;
+    public static final double DRIVING_D_CONSTANT = 0;
+    public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
+
+    public static final double TURNING_P_CONSTANT = 1;
+    public static final double TURNING_I_CONSTANT = 0;
+    public static final double TURNING_D_CONSTANT = 0;
+
+    public static final double MAX_TURNING_ENCODER_VALUE = 2.0 * Math.PI;
+  }
 }
