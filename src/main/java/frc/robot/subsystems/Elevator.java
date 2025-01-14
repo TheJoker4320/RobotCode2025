@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.utils.ElevatorState;
@@ -80,6 +81,9 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     final PositionVoltage mRequest = new PositionVoltage (0);
     mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+
+    SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);
+    SmartDashboard.putNumber("ELEVATOR: Current position", mRightMotorController.getPosition().getValue().magnitude());
 
     verifyEncoderSync();
   }
