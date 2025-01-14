@@ -1,8 +1,10 @@
 package frc.robot.utils;
 
+import frc.robot.Constants.ElevatorConstants;
+
 public enum ElevatorState {
-    LOW(0),                 // TODO: Get value from constants
-    HIGH(100);              // TODO: Get value from constants
+    LOW(ElevatorConstants.LOW_POSITION_HEIGHT),
+    HIGH(ElevatorConstants.HIGH_POSITION_HEIGHT);
 
     private double mHeight;        // Notice that the value is in rotations         
     private ElevatorState(double height) { mHeight = height; }

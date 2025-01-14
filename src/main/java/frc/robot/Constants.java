@@ -16,4 +16,25 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class ElevatorConstants {
+    public static final int ENCODER_CHANNEL = 1;                    // TODO: Validate encoder channel
+    public static final int RIGHT_MOTOR_DEVICE_ID = 1;              // TODO: Validate device id
+    public static final int LEFT_MOTOR_DEVICE_ID = 2;               // TODO: Validate device id
+
+    public static final boolean LEFT_OPPOSITE_OF_RIGHT = false;     // TODO: Validate this value
+
+    public static final double ELEVATOR_ENCODER_TOLERANCE = 0.1;
+    public static final double ELEVATOR_POSITION_TOLERANCE = 0.1;
+
+    // Notice that all the values in regard to positions/velocity/encoder/pid and so on are all based on rotations not meters
+    // so if we want a height of 1 meter, instead of 1 we convert it to rotations and put that new value
+    public static final double LOW_POSITION_HEIGHT = 50;            // Example values
+    public static final double HIGH_POSITION_HEIGHT = 100;          // Example values
+
+    public static final double ELEVATOR_P_CONSTANT = 1;             // TODO: Validate this value
+    public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
+    public static final double ELEVATOR_D_CONSTANT = 0;             // TODO: Validate this value
+    public static final double ELEVATOR_G_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+  }
 }

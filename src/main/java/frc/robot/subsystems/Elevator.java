@@ -11,6 +11,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.utils.ElevatorState;
 import frc.robot.utils.Configs.ElevatorConfigs;
 
@@ -27,14 +28,14 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     super("Elevator");
 
-    mElevatorEncoder = new DutyCycleEncoder(0);    // TODO: Get channel from constants
+    mElevatorEncoder = new DutyCycleEncoder(ElevatorConstants.ENCODER_CHANNEL);
 
-    mRightMotorController = new TalonFX(0);         // TODO: Get deviceId from constants
+    mRightMotorController = new TalonFX(ElevatorConstants.RIGHT_MOTOR_DEVICE_ID);
     mRightMotorController.getConfigurator().apply(ElevatorConfigs.ELEVATOR_TALONFX_CONFIG);
     mRightMotorController.setNeutralMode(NeutralModeValue.Brake);
 
-    mLeftMotorController = new TalonFX(0);          // TODO: Get deviceId from constants
-    mLeftMotorController.setControl(new Follower(mRightMotorController.getDeviceID(), false));
+    mLeftMotorController = new TalonFX(ElevatorConstants.LEFT_MOTOR_DEVICE_ID);
+    mLeftMotorController.setControl(new Follower(mRightMotorController.getDeviceID(), ElevatorConstants.LEFT_OPPOSITE_OF_RIGHT));
     mLeftMotorController.setNeutralMode(NeutralModeValue.Brake);
 
     syncEncoders();
@@ -48,8 +49,7 @@ public class Elevator extends SubsystemBase {
     double krakenPosition = getCurrentHeight();
     double throughBorePosition = mElevatorEncoder.get();
     
-    final double POSITION_TOLERANCE = 0.1;                                                  // TODO: Get value from constants
-    if (Math.abs(krakenPosition - throughBorePosition) > POSITION_TOLERANCE) {
+    if (Math.abs(krakenPosition - throughBorePosition) > ElevatorConstants.ELEVATOR_ENCODER_TOLERANCE) {
         System.out.println("WARNING: Encoder synchronization may be lost!");
         syncEncoders();
     }
@@ -60,8 +60,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean isAtState(ElevatorState state) {
-    final double POSITION_TOLERANCE = 0.1;                                                  // TODO: Get value from constants
-    if (Math.abs(state.height() - getCurrentHeight()) < POSITION_TOLERANCE)
+    if (Math.abs(state.height() - getCurrentHeight()) < ElevatorConstants.ELEVATOR_POSITION_TOLERANCE)
       return true;
     return false; 
   }
