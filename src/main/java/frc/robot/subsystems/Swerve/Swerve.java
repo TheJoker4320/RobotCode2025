@@ -15,7 +15,7 @@ import frc.robot.Constants.SwerveSubsystemConstants;
 
 public class Swerve extends SubsystemBase {
 
-    private double mInputMultiplier = 1;
+    private double mInputMultiplier = SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER;
 
     private Pigeon2 mGyro;
 
@@ -27,7 +27,7 @@ public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry mOdometry;
 
     private static Swerve mInstance = null;
-    public Swerve getInstance(SwerveModuleType moduleType) {
+    public static Swerve getInstance(SwerveModuleType moduleType) {
         if (mInstance == null)
             mInstance = new Swerve(moduleType);
         return mInstance;

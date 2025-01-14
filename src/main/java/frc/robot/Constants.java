@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -18,11 +19,18 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+
+    public static final int SLOW_SWERVE_BUTTON = XboxController.Button.kA.value;
+
+    public static final double DRIVE_DEADBAND = 0.05;
   }
 
   public static class SwerveSubsystemConstants {
     public static final double TRACK_WIDTH = 0.675;                 // distance between centers of right and left modules TODO: Validate measurment
     public static final double WHEEL_BASE = 0.675;                  // distance between centers of front and rear modules TODO: Validate measurment
+
+    public static final double SLOW_INPUT_MULTIPLIER = 0.65;
+    public static final double REGULAR_INPUT_MULTIPLIER = 1;
   
     public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
       new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0),

@@ -5,9 +5,18 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.SwerveSubsystemConstants;
+import frc.robot.subsystems.Swerve.Swerve;
+import frc.robot.subsystems.Swerve.SwerveModuleType;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -18,9 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -38,7 +48,21 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.SLOW_SWERVE_BUTTON);
+    slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER), mSwerveSubsystem));
+    slowSwerveButton.onFalse(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER), mSwerveSubsystem));
 
+    mSwerveSubsystem.setDefaultCommand(
+      new RunCommand(
+        () -> mSwerveSubsystem.drive(
+          -MathUtil.applyDeadband(m_driverController.getLeftY(), OperatorConstants.DRIVE_DEADBAND),
+          -MathUtil.applyDeadband(m_driverController.getLeftX(), OperatorConstants.DRIVE_DEADBAND),
+          -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVE_DEADBAND),
+          true
+        ), 
+        mSwerveSubsystem
+      )
+    );
   }
 
   /**
