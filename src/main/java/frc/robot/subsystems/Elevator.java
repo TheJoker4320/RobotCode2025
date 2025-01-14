@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.ElevatorState;
+import frc.robot.utils.Configs.ElevatorConfigs;
 
 public class Elevator extends SubsystemBase {
 
@@ -29,6 +30,7 @@ public class Elevator extends SubsystemBase {
     mElevatorEncoder = new DutyCycleEncoder(0);    // TODO: Get channel from constants
 
     mRightMotorController = new TalonFX(0);         // TODO: Get deviceId from constants
+    mRightMotorController.getConfigurator().apply(ElevatorConfigs.ELEVATOR_TALONFX_CONFIG);
     mRightMotorController.setNeutralMode(NeutralModeValue.Brake);
 
     mLeftMotorController = new TalonFX(0);          // TODO: Get deviceId from constants
@@ -58,8 +60,8 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean isAtState(ElevatorState state) {
-    final double POSITION_TOLERANCE = 0.1; // Adjust based on your needs
-    if (Math.abs(state.height() - getCurrentHeight()) < POSITION_TOLERANCE) // Example threshold
+    final double POSITION_TOLERANCE = 0.1;                                                  // TODO: Get value from constants
+    if (Math.abs(state.height() - getCurrentHeight()) < POSITION_TOLERANCE)
       return true;
     return false; 
   }
