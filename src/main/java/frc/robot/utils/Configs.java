@@ -6,8 +6,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Constants.NeoModuleConstants;
 
-public class Configs {
-    public static final class NeoSwerveConfigs {
+public final class Configs {
+    public static class NeoSwerveConfigs {
         public static final SparkMaxConfig DRIVING_CONFIG = new SparkMaxConfig();
         public static final SparkMaxConfig TURNING_CONFIG = new SparkMaxConfig();
 
