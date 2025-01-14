@@ -24,8 +24,15 @@ public class Elevator extends SubsystemBase {
 
   private double mSetpoint;
 
+  private static Elevator mInstance = null;
+  public static Elevator getInstance() {
+    if (mInstance == null)
+      mInstance = new Elevator();
+    return mInstance;
+  }
+
   /** Creates a new Elevator. */
-  public Elevator() {
+  private Elevator() {
     super("Elevator");
 
     mElevatorEncoder = new DutyCycleEncoder(ElevatorConstants.ENCODER_CHANNEL);
