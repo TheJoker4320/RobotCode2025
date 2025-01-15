@@ -24,6 +24,7 @@ public final class Constants {
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
     public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value;
+    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value;
 
     public static final double DRIVE_DEADBAND = 0.05;
   }

@@ -26,6 +26,8 @@ public class Swerve extends SubsystemBase {
 
     private SwerveDriveOdometry mOdometry;
 
+    private Boolean mFieldRelative;
+
     private static Swerve mInstance = null;
     public static Swerve getInstance(SwerveModuleType moduleType) {
         if (mInstance == null)
@@ -49,9 +51,11 @@ public class Swerve extends SubsystemBase {
             getRotation(),
             getModulePositions()
         );
+
+        mFieldRelative = true;
     }
 
-    public void drive(double xSpeed, double ySpeed, double rot, boolean robotFieldRelative) {
+    public void drive(double xSpeed, double ySpeed, double rot) {
         double xSpeedCommand = xSpeed * mInputMultiplier;
         double ySpeedCommand = ySpeed * mInputMultiplier;
         double rotCommand = rot * mInputMultiplier;
@@ -61,7 +65,7 @@ public class Swerve extends SubsystemBase {
         double rotDelivered = rotCommand * SwerveSubsystemConstants.MAX_ANGULAR_SPEED;              
 
         SwerveModuleState[] swerveModuleStates;
-        if (robotFieldRelative) {
+        if (mFieldRelative) {
             double xSpeedAdjusted = xSpeedDelivered * Math.cos(getRotation().getRadians() * -1) + ySpeedDelivered *  Math.sin(getRotation().getRadians() * -1);
             double ySpeedAdjusted = -1 * xSpeedDelivered * Math.sin(getRotation().getRadians() * -1) + ySpeedDelivered *  Math.cos(getRotation().getRadians() * -1);
 
@@ -71,6 +75,12 @@ public class Swerve extends SubsystemBase {
         }
 
         setModuleStates(swerveModuleStates);
+    }
+
+    // Switches to what the robot is relative to, AKA:
+    // Robot-Relative <---> Field-Relative
+    public void switchReferenceFrame() {
+        mFieldRelative = !mFieldRelative;
     }
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {
