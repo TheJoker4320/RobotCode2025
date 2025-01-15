@@ -16,4 +16,20 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static class ArmConstants{
+    public static int ENCODER_CHANNEL = 0;
+    public static int MOTOR_ID = 0;
+
+    public static double ARM_KP = 0;
+    public static double ARM_KI = 0;
+    public static double ARM_KD = 0;
+    public static double ARM_KG = 0; 
+
+    public static double ARM_MIN_ANGLE = 0;
+    public static double ARM_MAX_ANGLE = 90;
+
+    public static double ARM_POSITION_TOLERANCE = 0;
+    public static double ARM_ENCODER_TOLERANCE = 0;
+    //TODO: set all constants
+  }
 }
