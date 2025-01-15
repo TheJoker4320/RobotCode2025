@@ -20,7 +20,10 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    public static final int SLOW_SWERVE_BUTTON = XboxController.Button.kA.value;
+    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
+    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
+    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
+    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value;
 
     public static final double DRIVE_DEADBAND = 0.05;
   }
@@ -29,7 +32,8 @@ public final class Constants {
     public static final double TRACK_WIDTH = 0.675;                 // distance between centers of right and left modules TODO: Validate measurment
     public static final double WHEEL_BASE = 0.675;                  // distance between centers of front and rear modules TODO: Validate measurment
 
-    public static final double SLOW_INPUT_MULTIPLIER = 0.65;
+    public static final double SLOW_INPUT_MULTIPLIER = 0.3;
+    public static final double MEDIUM_INPUT_MULTIPLIER = 0.7;
     public static final double REGULAR_INPUT_MULTIPLIER = 1;
   
     public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
