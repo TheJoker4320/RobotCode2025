@@ -23,9 +23,9 @@ public final class Configs {
 
             TURNING_CONFIG.idleMode(IdleMode.kBrake);
             TURNING_CONFIG.smartCurrentLimit(NeoModuleConstants.TURNING_SMART_CURRENT_LIMIT);
-            TURNING_CONFIG.encoder.positionConversionFactor(NeoModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
-            TURNING_CONFIG.encoder.velocityConversionFactor(NeoModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
-            TURNING_CONFIG.encoder.inverted(NeoModuleConstants.TURNING_ENCODER_INVERTED);
+            TURNING_CONFIG.absoluteEncoder.positionConversionFactor(NeoModuleConstants.TURNING_ENCODER_POSITION_FACTOR);
+            TURNING_CONFIG.absoluteEncoder.velocityConversionFactor(NeoModuleConstants.TURNING_ENCODER_VELOCITY_FACTOR);
+            TURNING_CONFIG.absoluteEncoder.inverted(NeoModuleConstants.TURNING_ENCODER_INVERTED);
             TURNING_CONFIG.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
             TURNING_CONFIG.closedLoop.pid(NeoModuleConstants.TURNING_P_CONSTANT, NeoModuleConstants.TURNING_I_CONSTANT, NeoModuleConstants.TURNING_D_CONSTANT);
             TURNING_CONFIG.closedLoop.outputRange(-1, 1);
