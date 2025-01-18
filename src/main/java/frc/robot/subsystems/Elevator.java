@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -79,17 +80,18 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    final PositionVoltage mRequest = new PositionVoltage (0);
-    mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
-
-    /*
-     * This code is for when we want to add motion magic to the elevator
-     * notice here that just as it is in the rest of the elevator code the setpoint should be
-     * in rotations and not meters as many might think
-     * 
-     * final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
-     * mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
-     */
+    if (!ElevatorConstants.MOTIONMAGIC_ENABLED) {
+      final PositionVoltage mRequest = new PositionVoltage (0);
+      mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+    } else {
+      /*
+      * This code is for when we want to add motion magic to the elevator
+      * notice here that just as it is in the rest of the elevator code the setpoint should be
+      * in rotations and not meters as many might think
+      */
+      final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
+      mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+    }
 
     // Use this in shuffleboard as a graph to calculate PID values
     SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);

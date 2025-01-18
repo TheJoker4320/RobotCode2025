@@ -41,5 +41,13 @@ public final class Constants {
     public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
     public static final double ELEVATOR_D_CONSTANT = 0;             // TODO: Validate this value
     public static final double ELEVATOR_G_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+    public static final double ELEVATOR_V_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+    public static final double ELEVATOR_A_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+
+    public static final double MM_CRUISE_VELOCITY = 1;              // TODO: Calculate this value from the site ReCalc
+    public static final double MM_ACCELERATION = 10;                // TODO: Calculate this value from the site ReCalc
+    public static final double MM_JERK = 100;                       // This value is optional, TODO: Calculate this value from the site ReCalc
+
+    public static final boolean MOTIONMAGIC_ENABLED = false;
   }
 }
