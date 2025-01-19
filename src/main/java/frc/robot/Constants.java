@@ -16,4 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class ArmCollectorConstants {
+    public static int BALL_MOTOR_ID = 0; //#TODO: set motor id
+    public static int CORAL_MOTOR_ID = 0; //#TODO: set motor id
+
+    public static int LIMIT_SWITCH_PORT = 0; //#TODO: set port
+    public static final double BALL_COLLECTOR_SPEED = 0.5;
+    public static final double CORAL_COLLECTOR_SPEED = 0.5;
+    
+
+  }
 }
