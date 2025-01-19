@@ -5,9 +5,14 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArmReachAngle;
+import frc.robot.subsystems.Arm;
+import frc.robot.utils.ArmState;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -17,10 +22,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  private Arm m_arm = Arm.getInstance();
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private XboxController m_driverController =
+      new XboxController(OperatorConstants.kDriverControllerPort);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -38,7 +45,12 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-
+    /*raises arm to low state (probably L2) */
+    JoystickButton armSetLow = new JoystickButton(m_driverController, OperatorConstants.ARM_LOW_STATE);
+    armSetLow.onTrue(new ArmReachAngle(m_arm, ArmState.LOW));
+    /*raises arm to high state (probably L3) */
+    JoystickButton armSetHigh = new JoystickButton(m_driverController, OperatorConstants.ARM_HIGH_STATE);
+    armSetHigh.onTrue(new ArmReachAngle(m_arm, ArmState.HIGH));
   }
 
   /**
