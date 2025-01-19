@@ -24,12 +24,20 @@ public final class Constants {
     public static double ARM_KI = 0;
     public static double ARM_KD = 0;
     public static double ARM_KG = 0; 
+    public static double ARM_KV = 0;
+    public static double ARM_KA = 0;
 
-    public static double ARM_MIN_ANGLE = 0;
-    public static double ARM_MAX_ANGLE = 90;
+    public static double ARM_LOW_ANGLE = 0;
+    public static double ARM_HIGH_ANGLE = 90;
 
     public static double ARM_POSITION_TOLERANCE = 0;
     public static double ARM_ENCODER_TOLERANCE = 0;
+
+    public static boolean IS_MAGIC_MOTION_ENABLED = false;
+
+    public static double MM_CRUISE_VELOCITY = 0;
+    public static double MM_ACCELERATION = 0;
+    public static double MM_JERK = 0;
     //TODO: set all constants
   }
 }

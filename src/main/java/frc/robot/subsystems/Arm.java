@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -58,8 +59,14 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    PositionVoltage m_request = new PositionVoltage(0);
-    m_motor.setControl(m_request.withPosition(m_setpoint));
+    if (!ArmConstants.IS_MAGIC_MOTION_ENABLED){
+      PositionVoltage m_request = new PositionVoltage(0);
+      m_motor.setControl(m_request.withPosition(m_setpoint));
+    }
+    else{
+      MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+      m_motor.setControl(m_request.withPosition(m_setpoint));
+    }
     verifyEncoderSync();
   }
 }
