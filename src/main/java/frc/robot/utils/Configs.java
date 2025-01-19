@@ -25,8 +25,10 @@ public class Configs {
 
              /*
              * This code is for when we want to add motion magic to the arm
-             * Notice that when you calculate these values (probably using ReCalc) you recive it in meters - instead of meters you want
-             * it to be rotation - so you MUST convert the meters to rotation
+             * Notice that when you calculate these values (probably using ReCalc) you recive it in radians - instead of radians you want
+             * it to be rotation - so you MUST convert the meters to rotation either from:
+             * the formula given in constants
+             * the conversion given in ReCalc
              */
             if (ArmConstants.IS_MAGIC_MOTION_ENABLED){
                 slot0Configs.kV = ArmConstants.ARM_KV;

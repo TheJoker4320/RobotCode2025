@@ -33,6 +33,9 @@ public final class Constants {
     public static double ARM_POSITION_TOLERANCE = 0;
     public static double ARM_ENCODER_TOLERANCE = 0;
 
+    public static double ENCODER_TO_ARM_GEAR_RATIO = 0;
+    public static double CONVERSION_RATE = ENCODER_TO_ARM_GEAR_RATIO * 2*Math.PI;
+
     public static boolean IS_MAGIC_MOTION_ENABLED = false;
 
     public static double MM_CRUISE_VELOCITY = 0;

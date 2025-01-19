@@ -63,7 +63,12 @@ public class Arm extends SubsystemBase {
       PositionVoltage m_request = new PositionVoltage(0);
       m_motor.setControl(m_request.withPosition(m_setpoint));
     }
-    else{
+    /*
+     * this code is for when we want to add magic motion to the elevator
+     * notice here that just as it is in the rest of the arm code the setpoint should be
+     * in rotations and not radians
+     */
+    else{  
       MotionMagicVoltage m_request = new MotionMagicVoltage(0);
       m_motor.setControl(m_request.withPosition(m_setpoint));
     }
