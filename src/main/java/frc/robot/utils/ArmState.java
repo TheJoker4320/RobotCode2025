@@ -3,8 +3,8 @@ package frc.robot.utils;
 import frc.robot.Constants.ArmConstants;
 
 public enum ArmState {
-    MIN(ArmConstants.ARM_MIN_ANGLE),
-    MAX(ArmConstants.ARM_MAX_ANGLE);
+    LOW(ArmConstants.ARM_LOW_ANGLE),
+    HIGH(ArmConstants.ARM_HIGH_ANGLE);
 
     private double m_angle;
     private ArmState(double angle){m_angle = angle;}
