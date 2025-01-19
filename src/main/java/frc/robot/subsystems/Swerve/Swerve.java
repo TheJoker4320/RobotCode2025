@@ -91,6 +91,10 @@ public class Swerve extends SubsystemBase {
         mRearRight.setDesiredState(desiredStates[3]);
     }
 
+    /**
+     * This method makes the swerve module form an "X" (causes them all to look at the center)
+     * this will result in the robot locking in place - shouldn't be use as an emergency brake
+     */
     public void setX() {
         SwerveModuleState[] xModuleStates = {
             new SwerveModuleState(0, Rotation2d.fromRadians(SwerveSubsystemConstants.X_STATE_ANGLE)),
