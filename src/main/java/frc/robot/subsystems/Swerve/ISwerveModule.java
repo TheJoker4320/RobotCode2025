@@ -8,4 +8,5 @@ public interface ISwerveModule {
     public SwerveModulePosition getPosition();
     public void setDesiredState(SwerveModuleState state);
     public void resetEncoders();
+    public void displayData();
 }

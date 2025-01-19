@@ -12,6 +12,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.utils.Configs.NeoSwerveConfigs;
 
 public class NeoSwerveModule implements ISwerveModule {
@@ -48,6 +49,12 @@ public class NeoSwerveModule implements ISwerveModule {
         mDrivingEncoder.setPosition(0);
 
         mModuleId = moduleId;
+    }
+
+    @Override
+    public void displayData() {
+        SmartDashboard.putNumber("MODULE " + mModuleId + " velocity", mDrivingEncoder.getVelocity());
+        SmartDashboard.putNumber("MODULE " + mModuleId + " angle", mTurningEncoder.getPosition());
     }
 
     @Override

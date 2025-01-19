@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveSubsystemConstants;
 
@@ -140,11 +141,20 @@ public class Swerve extends SubsystemBase {
         mOdometry.resetPosition(getRotation(), getModulePositions(), pose);
     }
 
+    public void displayModuleData() {
+        mFrontLeft.displayData();
+        mFrontRight.displayData();
+        mRearLeft.displayData();
+        mRearRight.displayData();
+    }
+
     @Override
     public void periodic() {
         mOdometry.update(
             getRotation(), 
             getModulePositions()
         );
+
+        SmartDashboard.putNumber("ROBOT HEADING", mGyro.getRotation2d().getDegrees()); // Displays angle in degrees ( not radians as it is less intuitive with radians )
     }
 }
