@@ -20,8 +20,10 @@ public class Configs {
             slot0Configs.kG = ArmConstants.ARM_KG;
 
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ARM_TALONFX_CONFIG.SoftwareLimitSwitch;
-            limitSwitchConfigs.withForwardSoftLimitEnable(true);
-            limitSwitchConfigs.withForwardSoftLimitThreshold(100);
+            limitSwitchConfigs.withForwardSoftLimitEnable(ArmConstants.MAXIMUM_VALUE_ENABLED);
+            limitSwitchConfigs.withForwardSoftLimitThreshold(ArmConstants.MAXIMUM_ARM_ANGLE);
+            limitSwitchConfigs.withReverseSoftLimitEnable(ArmConstants.MINIMUM_VALUE_ENABLED);
+            limitSwitchConfigs.withReverseSoftLimitThreshold(ArmConstants.MINIMUM_ARM_ANGLE);
             
              /*
              * This code is for when we want to add motion magic to the arm

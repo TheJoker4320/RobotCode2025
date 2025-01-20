@@ -34,6 +34,12 @@ public final class Constants {
     public static double ARM_LOW_ANGLE = 0;
     public static double ARM_HIGH_ANGLE = 90;
 
+    public static boolean MAXIMUM_VALUE_ENABLED = true;
+    public static boolean MINIMUM_VALUE_ENABLED = true;
+    public static double MINIMUM_ARM_ANGLE = 0;
+    public static double MAXIMUM_ARM_ANGLE = 90;
+
+
     public static double ARM_POSITION_TOLERANCE = 0;
     public static double ARM_ENCODER_TOLERANCE = 0;
 
