@@ -2,6 +2,7 @@ package frc.robot.utils;
 
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
 import frc.robot.Constants.ElevatorConstants;
@@ -16,6 +17,12 @@ public final class Configs {
             slot0Configs.kI = ElevatorConstants.ELEVATOR_I_CONSTANT;
             slot0Configs.kD = ElevatorConstants.ELEVATOR_D_CONSTANT;
             slot0Configs.kG = ElevatorConstants.ELEVATOR_G_CONSTANT;
+
+            SoftwareLimitSwitchConfigs limitSwitchConfigs = ELEVATOR_TALONFX_CONFIG.SoftwareLimitSwitch;
+            limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MAXIMUM_VALUE_ENABLED);
+            limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT);
+            limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
+            limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT);
 
             /*
              * This code is for when we want to add motion magic to the elevator

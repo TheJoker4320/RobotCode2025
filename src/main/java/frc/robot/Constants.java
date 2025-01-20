@@ -35,7 +35,7 @@ public final class Constants {
     public static final int RIGHT_MOTOR_DEVICE_ID = 1;              // TODO: Validate device id
     public static final int LEFT_MOTOR_DEVICE_ID = 2;               // TODO: Validate device id
 
-    public static final boolean LEFT_OPPOSITE_OF_RIGHT = false;     // TODO: Validate this value
+    public static final boolean LEFT_OPPOSITE_OF_RIGHT = true;      // TODO: Validate this value
 
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.1;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.1;
@@ -44,6 +44,11 @@ public final class Constants {
     // so if we want a height of 1 meter, instead of 1 we convert it to rotations and put that new value
     public static final double LOW_POSITION_HEIGHT = 50;            // Example values
     public static final double HIGH_POSITION_HEIGHT = 100;          // Example values
+
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 10;        // TODO: Validate this value;
+    public static final boolean MINIMUM_VALUE_ENABLED = true;
+    public static final double MAXIMUM_ELEVATOR_HEIGHT = 110;       // TODO: Validate this value;
+    public static final boolean MAXIMUM_VALUE_ENABLED = true;
 
     public static final double ELEVATOR_P_CONSTANT = 1;             // TODO: Validate this value
     public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
