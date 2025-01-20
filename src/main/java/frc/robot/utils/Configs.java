@@ -22,11 +22,11 @@ public class Configs {
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ARM_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(true);
             limitSwitchConfigs.withForwardSoftLimitThreshold(100);
-
+            
              /*
              * This code is for when we want to add motion magic to the arm
              * Notice that when you calculate these values (probably using ReCalc) you recive it in radians - instead of radians you want
-             * it to be rotation - so you MUST convert the meters to rotation either from:
+             * it to be rotation - so you MUST convert the radians to rotation either from:
              * the formula given in constants
              * the conversion given in ReCalc
              */

@@ -45,10 +45,10 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    /*raises arm to low state (probably L2) */
+    //raises arm to low state
     JoystickButton armSetLow = new JoystickButton(m_driverController, OperatorConstants.ARM_LOW_STATE);
     armSetLow.onTrue(new ArmReachAngle(m_arm, ArmState.LOW));
-    /*raises arm to high state (probably L3) */
+    //raises arm to high state
     JoystickButton armSetHigh = new JoystickButton(m_driverController, OperatorConstants.ARM_HIGH_STATE);
     armSetHigh.onTrue(new ArmReachAngle(m_arm, ArmState.HIGH));
   }

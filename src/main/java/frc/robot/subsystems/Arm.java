@@ -23,6 +23,10 @@ public class Arm extends SubsystemBase {
   private double m_setpoint;
   
   private static Arm m_instance;
+  public static Arm getInstance() {
+    if (m_instance == null) m_instance = new Arm();
+    return m_instance;
+  }
 
   private Arm() {
     m_motor = new TalonFX(ArmConstants.MOTOR_ID);
@@ -31,30 +35,27 @@ public class Arm extends SubsystemBase {
     m_motor.setNeutralMode(NeutralModeValue.Brake);
     syncEncoders();
   }
-  public void setSetpoint(ArmState setpoint){
+  public void setSetpoint(ArmState setpoint) {
     m_setpoint = setpoint.angle();
   }
-  private double getCurrentAngle(){
+  private double getCurrentAngle() {
     return m_motor.getPosition().getValue().magnitude();
   }
-  private void syncEncoders(){
+  private void syncEncoders() {
     m_motor.setPosition(m_encoder.get());
   }
-  private void verifyEncoderSync(){
+  private void verifyEncoderSync() {
     if (Math.abs(getCurrentAngle() - m_encoder.get()) > ArmConstants.ARM_ENCODER_TOLERANCE){
       System.out.println("WARNING: Encoder values are not in sync!");
       syncEncoders();
     }
   }
-  public boolean isAtState(ArmState state){
+  public boolean isAtState(ArmState state) {
     if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE)
       return true;
     return false;
   }
-  public static Arm getInstance(){
-    if (m_instance == null) m_instance = new Arm();
-    return m_instance;
-  }
+
 
   @Override
   public void periodic() {
@@ -64,7 +65,7 @@ public class Arm extends SubsystemBase {
       m_motor.setControl(m_request.withPosition(m_setpoint));
     }
     /*
-     * this code is for when we want to add magic motion to the elevator
+     * this code is for when we want to add magic motion to the arm
      * notice here that just as it is in the rest of the arm code the setpoint should be
      * in rotations and not radians
      */
