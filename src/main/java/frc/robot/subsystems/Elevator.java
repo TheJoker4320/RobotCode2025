@@ -50,13 +50,20 @@ public class Elevator extends SubsystemBase {
     syncEncoders();
   }
 
+  private double getAbsoluteEncoderValue() {
+    // In the current state of the elevator there are multiple gears between the motor and the absolute encoder
+    // so in order to get the actual value of the absolute encoder from the point of view of the motor we must
+    // multiply it by the ratio
+    return (mElevatorEncoder.get() * ElevatorConstants.ABSOLUTE_ENCODER_TO_MOTOR_RATIO);
+  }
+
   public void setSetpoint(ElevatorState setpoint) {
     mSetpoint = setpoint.height();
   }
 
   private void verifyEncoderSync() {
     double krakenPosition = getCurrentHeight();
-    double throughBorePosition = mElevatorEncoder.get();
+    double throughBorePosition = getAbsoluteEncoderValue();
     
     if (Math.abs(krakenPosition - throughBorePosition) > ElevatorConstants.ELEVATOR_ENCODER_TOLERANCE) {
         System.out.println("WARNING: Encoder synchronization may be lost!");
@@ -75,7 +82,7 @@ public class Elevator extends SubsystemBase {
   }
 
   private void syncEncoders() {
-    mRightMotorController.setPosition(mElevatorEncoder.get());
+    mRightMotorController.setPosition(getAbsoluteEncoderValue());
   }
 
   @Override
