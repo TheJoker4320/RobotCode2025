@@ -88,7 +88,7 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     if (!ElevatorConstants.MOTIONMAGIC_ENABLED) {
-      final PositionVoltage mRequest = new PositionVoltage (0);
+      final PositionVoltage mRequest = new PositionVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
     } else {
       /*

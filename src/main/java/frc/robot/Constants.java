@@ -29,7 +29,7 @@ public final class Constants {
     // To use the following value, find the height measurement in meters than multiply it by the height to rotation factor to get the rotations
     public static final double HEIGHT_TO_ROTATION_FACTOR = GEAR_RATION_REDUCTION / PULLEY_CIRCUMFERENCE;
     // This value is the difference between the axis of the motor and the axis of the through bore encoder - needed to allow encoder synchronization
-    public static final double ABSOLUTE_ENCODER_TO_MOTOR_RATIO = 4; // TODO: Validate this measurement, its in meters
+    public static final double ABSOLUTE_ENCODER_TO_MOTOR_RATIO = 4; // Value is in meters, TODO: Validate this measurement
 
     public static final int ENCODER_CHANNEL = 1;                    // TODO: Validate encoder channel
     public static final int RIGHT_MOTOR_DEVICE_ID = 1;              // TODO: Validate device id
@@ -62,5 +62,7 @@ public final class Constants {
     public static final double MM_JERK = 100;                       // This value is optional, TODO: Calculate this value from the site ReCalc
 
     public static final boolean MOTIONMAGIC_ENABLED = false;
+
+    public static final double REACHSTATE_TIMEOUT = 4;              // Maximum time for a reachstate command (in seconds), TODO: Validate this value
   }
 }
