@@ -125,6 +125,10 @@ public class Swerve extends SubsystemBase {
         return Rotation2d.fromDegrees(mGyro.getYaw().getValue().magnitude());
     }
 
+    public double getAngularVelocity() {
+        return mGyro.getAngularVelocityZWorld().getValueAsDouble();
+    }
+
     public void zeroHeading() {
         mGyro.reset();
         resetOdometry(new Pose2d(getPose().getTranslation(), new Rotation2d()));
