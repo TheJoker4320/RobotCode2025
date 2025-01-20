@@ -43,9 +43,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    JoystickButton elevatorSetLow = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_LOW_STATE);
+    JoystickButton elevatorSetLow = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
     elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
-    JoystickButton elevatorSetHigh = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_HIGH_STATE);
+    JoystickButton elevatorSetHigh = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
     elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
   }
 
