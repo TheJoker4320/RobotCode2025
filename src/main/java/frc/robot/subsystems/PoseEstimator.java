@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +18,7 @@ import frc.robot.subsystems.Swerve.Swerve;
 public class PoseEstimator extends SubsystemBase {
 
   private final Field2d mField;
-
+  
   private final SwerveDrivePoseEstimator mPoseEstimator;
   private final Swerve mSwerve;
 
@@ -31,12 +32,22 @@ public class PoseEstimator extends SubsystemBase {
       SwerveSubsystemConstants.DRIVE_KINEMATICS, 
       swerve.getRotation(), 
       swerve.getModulePositions(), 
-      new Pose2d()
+      new Pose2d(),
+      VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+      VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15))
     );
   }
 
   public Pose2d getPose() {
     return mPoseEstimator.getEstimatedPosition();
+  }
+
+  public void resetPose(Pose2d pose) {
+    mPoseEstimator.resetPosition(
+      mSwerve.getRotation(),
+      mSwerve.getModulePositions(),
+      pose
+    );
   }
 
   @Override
@@ -67,9 +78,10 @@ public class PoseEstimator extends SubsystemBase {
       SmartDashboard.putNumber("Limelight reported y", poseEstimate.pose.getY());                                       // Specifically for debugging, should be removed later
       SmartDashboard.putNumber("Limelight reported angle", poseEstimate.pose.getRotation().getDegrees());               // Specifically for debugging, should be removed later
 
-      mPoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
       mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
     }
+
+    mPoseEstimator.update(mSwerve.getRotation(), mSwerve.getModulePositions());
 
     mField.setRobotPose(mPoseEstimator.getEstimatedPosition());
 
