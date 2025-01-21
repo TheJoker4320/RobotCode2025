@@ -12,12 +12,12 @@ public class Configs {
         
         static {
             config.idleMode(IdleMode.kBrake);
-            config.smartCurrentLimit(BallCollectorPID.TURNING_SMART_CURRENT_LIMIT);
-            config.absoluteEncoder.positionConversionFactor(BallCollectorPID.TURNING_ENCODER_POSITION_FACTOR);
-            config.absoluteEncoder.velocityConversionFactor(BallCollectorPID.TURNING_ENCODER_VELOCITY_FACTOR);
-            config.absoluteEncoder.inverted(BallCollectorPID.TURNING_ENCODER_INVERTED);
+            config.smartCurrentLimit(BallCollectorPID.SMART_CURRENT_LIMIT);
+            config.absoluteEncoder.positionConversionFactor(BallCollectorPID.ENCODER_POSITION_FACTOR);
+            config.absoluteEncoder.velocityConversionFactor(BallCollectorPID.ENCODER_VELOCITY_FACTOR);
+            config.absoluteEncoder.inverted(BallCollectorPID.ENCODER_INVERTED);
             config.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-            config.closedLoop.pid(BallCollectorPID.TURNING_P_CONSTANT, BallCollectorPID.TURNING_I_CONSTANT, BallCollectorPID.TURNING_D_CONSTANT);
+            config.closedLoop.pid(BallCollectorPID.P_CONSTANT, BallCollectorPID.I_CONSTANT, BallCollectorPID.D_CONSTANT);
             config.closedLoop.outputRange(-1, 1);            
         }
 

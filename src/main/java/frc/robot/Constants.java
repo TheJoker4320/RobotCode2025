@@ -16,32 +16,38 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 0;
 
-    public static final int ballCollectorButtonNumber = XboxController.Button.kX.value;
-    public static final int MoveBallCollectorButtonNumber = XboxController.Button.kA.value;
+    public static final int BALL_COLLECT_BUTTON = XboxController.Button.kX.value;
+    public static final int MOVE_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
   }
 
   public static class CollectorMotorPorts {
-    public static final int motorNeoPort = 1;
-    public static final int motorNeo550Port = 2;
-    public static final int limitSwitchPort = 3;
+    public static final int MOTOR_NEO_PORT = 1;
+    public static final int MOTOR_NEO550_PORT = 2;
+    public static final int LIMIT_SWITCH_PORT = 3;
 
   }
 
+  public static class CollectorMotorSpeeds {
+    public static final double MOTOR_NEO_START_SPEED = 1.0;
+    public static final int MOTOR_NEO_Finish_SPEED = 0;
+    public static final double MOTOR_NEO550_START_SPEED = 1.0;
+    public static final int MOTOR_NEO550_FINISH_SPEED = 0;
+  }
+
   public static final class BallCollectorPID {
+    public static final double ENCODER_POSITION_FACTOR = 360;           // Degrees
+    public static final double ENCODER_VELOCITY_FACTOR = 12.0;    // Degrees per seconds. TODO: Need to calibrate speed
 
-    public static final double TURNING_ENCODER_POSITION_FACTOR = (2 * Math.PI);           // Radians
-    public static final double TURNING_ENCODER_VELOCITY_FACTOR = (2 * Math.PI) / 60.0;    // Radians per seconds
 
-    public static final boolean TURNING_ENCODER_INVERTED = true;
-    public static final int TURNING_SMART_CURRENT_LIMIT = 20;
-    public static final double TURNING_P_CONSTANT = 1;
-    public static final double TURNING_I_CONSTANT = 0;
-    public static final double TURNING_D_CONSTANT = 0;
+    public static final boolean ENCODER_INVERTED = false; // TODO: To check if encoder is inverted
+    public static final int SMART_CURRENT_LIMIT = 20; // Default rev configuration for current limit
+    public static final double P_CONSTANT = 1; //TODO: Calibrate PID values
+    public static final double I_CONSTANT = 0;
+    public static final double D_CONSTANT = 0;
 
-    public static final double MAX_TURNING_ENCODER_VALUE = 2.0 * Math.PI;
+    public static final double MAX_ENCODER_VALUE = 360;
   }
   
 

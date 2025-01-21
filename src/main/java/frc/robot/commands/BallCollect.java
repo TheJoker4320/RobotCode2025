@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants.CollectorMotorSpeeds;
 import frc.robot.subsystems.BallCollector;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,16 +28,18 @@ public class BallCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_collectorBall.setSpeedCollectorBall(1.0);
+    m_collectorBall.setSpeedCollectorBall(CollectorMotorSpeeds.MOTOR_NEO_START_SPEED);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_collectorBall.setSpeedCollectorBall(0);
+    m_collectorBall.setSpeedCollectorBall(CollectorMotorSpeeds.MOTOR_NEO_Finish_SPEED);
 
   }
 

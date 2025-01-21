@@ -28,13 +28,13 @@ public class BallCollector extends SubsystemBase {
 
   private BallCollector() {
     //configuring 
-    m_neo = new SparkMax(CollectorMotorPorts.motorNeoPort , MotorType.kBrushless);
+    m_neo = new SparkMax(CollectorMotorPorts.MOTOR_NEO_PORT , MotorType.kBrushless);
     m_neo.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_PIDController = m_neo.getClosedLoopController();
 
-    m_neo550 = new SparkMax(CollectorMotorPorts.motorNeo550Port, MotorType.kBrushless);
+    m_neo550 = new SparkMax(CollectorMotorPorts.MOTOR_NEO550_PORT, MotorType.kBrushless);
     
-    m_limitSwitch = new DigitalInput(CollectorMotorPorts.limitSwitchPort);
+    m_limitSwitch = new DigitalInput(CollectorMotorPorts.LIMIT_SWITCH_PORT);
     
   }
 
