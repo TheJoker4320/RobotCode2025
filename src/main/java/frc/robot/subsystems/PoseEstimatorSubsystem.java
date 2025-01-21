@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,27 +23,41 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   private final SwerveDrivePoseEstimator mPoseEstimator;
   private final Swerve mSwerve;
 
+  private final double mGyroOffset;   // In degrees
+
   private static PoseEstimatorSubsystem mInstance = null;
-  public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
+  public static PoseEstimatorSubsystem getInstance(Swerve swerve, Alliance alliance) {
     if (mInstance == null)
-      mInstance = new PoseEstimatorSubsystem(swerve);
+      mInstance = new PoseEstimatorSubsystem(swerve, alliance);
     return mInstance;
   }
 
   /** Creates a new PoseEstimator. */
-  private PoseEstimatorSubsystem(Swerve swerve) {
+  private PoseEstimatorSubsystem(Swerve swerve, Alliance alliance) {
     mField = new Field2d();
     SmartDashboard.putData(mField);
+
+    if (alliance == Alliance.Red)
+      mGyroOffset = PoseEstimatorConstants.RED_GYRO_OFFSET;
+    else
+      mGyroOffset = PoseEstimatorConstants.BLUE_GYRO_OFFSET;
 
     mSwerve = swerve;
     mPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveSubsystemConstants.DRIVE_KINEMATICS, 
-      swerve.getRotation(), 
-      swerve.getModulePositions(), 
+      getRobotRotation(), 
+      mSwerve.getModulePositions(), 
       new Pose2d(),
       PoseEstimatorConstants.STATE_STANDARD_DEVIATIONS,
       PoseEstimatorConstants.VISION_STANDARD_DEVIATIONS
     );
+  }
+
+  private Rotation2d getRobotRotation() {
+    Rotation2d robotRotation = mSwerve.getRotation();
+    robotRotation.rotateBy(Rotation2d.fromDegrees(mGyroOffset));
+
+    return robotRotation;
   }
 
   public Pose2d getPose() {
@@ -50,7 +66,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   public void resetPose(Pose2d pose) {
     mPoseEstimator.resetPosition(
-      mSwerve.getRotation(),
+      getRobotRotation(),
       mSwerve.getModulePositions(),
       pose
     );
@@ -87,7 +103,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
     }
 
-    mPoseEstimator.update(mSwerve.getRotation(), mSwerve.getModulePositions());
+    mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
 
     mField.setRobotPose(mPoseEstimator.getEstimatedPosition());
 

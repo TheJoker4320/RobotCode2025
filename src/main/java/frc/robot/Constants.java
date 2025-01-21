@@ -41,7 +41,11 @@ public final class Constants {
     public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15));      // These values are most likely too high - should be tested, TODO: Calibrate values
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
-    
+
+    // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
+    // but for the red alliance we would expect 0 to face the blue alliance drivers so we must shift the gyro angle by 180 degrees;
+    public static final double BLUE_GYRO_OFFSET = 0;          // Values is in degrees
+    public static final double RED_GYRO_OFFSET = 180;         // Values is in degrees
   }
 
   public static class SwerveSubsystemConstants {
