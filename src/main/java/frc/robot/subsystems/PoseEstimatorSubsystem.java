@@ -16,7 +16,7 @@ import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
 
-public class PoseEstimator extends SubsystemBase {
+public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private final Field2d mField;
   
@@ -24,7 +24,7 @@ public class PoseEstimator extends SubsystemBase {
   private final Swerve mSwerve;
 
   /** Creates a new PoseEstimator. */
-  public PoseEstimator(Swerve swerve) {
+  public PoseEstimatorSubsystem(Swerve swerve) {
     mField = new Field2d();
     SmartDashboard.putData(mField);
 
