@@ -20,7 +20,7 @@ public final class Constants {
     public static int ARM_LOW_STATE = XboxController.Button.kA.value;
     public static int ARM_HIGH_STATE = XboxController.Button.kB.value;
   }
-  public static class ArmConstants{
+  public static class ArmConstants {
     public static double ENCODER_TO_ARM_GEAR_RATIO = 0;
     //to use this value, find the angle measurement in radians than multiply it by the angle to rotation factor to get rotations
     public static double ANGLE_TO_ROTATIONS_FACTOR = ENCODER_TO_ARM_GEAR_RATIO * 2*Math.PI;

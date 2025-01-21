@@ -26,7 +26,8 @@ public class Arm extends SubsystemBase {
   private Alert m_encoderDesyncAlert = new Alert("WARNING: Arm Encoder values are not in sync!", Alert.AlertType.kWarning);
   private static Arm m_instance;
   public static Arm getInstance() {
-    if (m_instance == null) m_instance = new Arm();
+    if (m_instance == null)
+      m_instance = new Arm();
     return m_instance;
   }
 
@@ -63,7 +64,7 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (!ArmConstants.IS_MAGIC_MOTION_ENABLED){
+    if (!ArmConstants.IS_MAGIC_MOTION_ENABLED) {
       PositionVoltage m_request = new PositionVoltage(0);
       m_motor.setControl(m_request.withPosition(m_setpoint));
     }
@@ -72,7 +73,7 @@ public class Arm extends SubsystemBase {
      * notice here that just as it is in the rest of the arm code the setpoint should be
      * in rotations and not radians
      */
-    else{  
+    else {  
       MotionMagicVoltage m_request = new MotionMagicVoltage(0);
       m_motor.setControl(m_request.withPosition(m_setpoint));
     }

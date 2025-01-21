@@ -9,10 +9,10 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 
 public class Configs {
-    public static class ArmConfigs{
+    public static class ArmConfigs {
         public static TalonFXConfiguration ARM_TALONFX_CONFIG = new TalonFXConfiguration();
 
-        static{
+        static {
             Slot0Configs slot0Configs = ARM_TALONFX_CONFIG.Slot0;
             slot0Configs.kP = ArmConstants.ARM_KP;
             slot0Configs.kI = ArmConstants.ARM_KI;
@@ -32,7 +32,7 @@ public class Configs {
              * the formula given in constants
              * the conversion given in ReCalc
              */
-            if (ArmConstants.IS_MAGIC_MOTION_ENABLED){
+            if (ArmConstants.IS_MAGIC_MOTION_ENABLED) {
                 slot0Configs.kV = ArmConstants.ARM_KV;
                 slot0Configs.kA = ArmConstants.ARM_KA;
 

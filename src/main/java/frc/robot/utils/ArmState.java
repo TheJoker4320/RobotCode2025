@@ -7,6 +7,6 @@ public enum ArmState {
     HIGH(ArmConstants.ARM_HIGH_ANGLE);
 
     private double m_angle;
-    private ArmState(double angle){m_angle = angle;}
+    private ArmState(double angle) {m_angle = angle;}
     public double angle() {return m_angle;}
 }
