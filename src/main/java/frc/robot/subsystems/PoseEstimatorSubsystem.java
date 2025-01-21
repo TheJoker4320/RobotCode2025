@@ -4,10 +4,8 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,8 +21,15 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   private final SwerveDrivePoseEstimator mPoseEstimator;
   private final Swerve mSwerve;
 
+  private static PoseEstimatorSubsystem mInstance = null;
+  public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
+    if (mInstance == null)
+      mInstance = new PoseEstimatorSubsystem(swerve);
+    return mInstance;
+  }
+
   /** Creates a new PoseEstimator. */
-  public PoseEstimatorSubsystem(Swerve swerve) {
+  private PoseEstimatorSubsystem(Swerve swerve) {
     mField = new Field2d();
     SmartDashboard.putData(mField);
 
