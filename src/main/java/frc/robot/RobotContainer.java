@@ -5,10 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.PS4ControllerButtons;
-import frc.robot.commands.CollectBall;
-import frc.robot.subsystems.CollectorBall;
-import edu.wpi.first.wpilibj.PS4Controller;
+import frc.robot.commands.BallCollect;
+import frc.robot.commands.MoveBallCollector;
+import frc.robot.subsystems.BallCollector;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -19,12 +19,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private final CollectorBall m_collectorBall = CollectorBall.getInstance();
+  private final BallCollector m_ballCollector = BallCollector.getInstance();
+
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final PS4Controller m_operatorController = new PS4Controller(OperatorConstants.kOperatorControllerPort);
+  private final XboxController m_driverController = new XboxController(OperatorConstants.kOperatorControllerPort);
 
-
+   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     
@@ -34,8 +35,12 @@ public class RobotContainer {
   
   private void configureBindings() {
 
-    JoystickButton collectorBallButton = new JoystickButton(m_operatorController , PS4ControllerButtons.collectorButtonNumber);
-    collectorBallButton.onTrue(new CollectBall(m_collectorBall));
+    //Button for BallCollect Command
+    JoystickButton BallcollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON);
+    BallcollectorButton.onTrue(new BallCollect(m_ballCollector));
+    //Button for MoveBallCollect Command
+    JoystickButton MoveBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.MOVE_BALL_COLLECTOR_BUTTON);
+    MoveBallCollectorButton.onTrue(new MoveBallCollector(m_ballCollector));
   }
 
   /**
