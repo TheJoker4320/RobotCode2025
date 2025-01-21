@@ -31,7 +31,6 @@ public final class Constants {
     public static double ARM_POSITION_TOLERANCE = 0;
     public static double ARM_ENCODER_TOLERANCE = 0;
 
-    //all values of pid/encoder/positions and so are based on rotations and not meters
     public static double ARM_KP = 0;
     public static double ARM_KI = 0;
     public static double ARM_KD = 0;
@@ -39,17 +38,17 @@ public final class Constants {
     public static double ARM_KV = 0;  //calculated from ReCalc
     public static double ARM_KA = 0;  //calculated from ReCalc
 
-    public static double ARM_LOW_ANGLE = 0;   //example value
-    public static double ARM_HIGH_ANGLE = 90; //example value
+    public static double ARM_LOW_ANGLE = 0;   //example value, in rotations
+    public static double ARM_HIGH_ANGLE = 90; //example value, in rotations
 
     public static boolean MAXIMUM_VALUE_ENABLED = true;
     public static boolean MINIMUM_VALUE_ENABLED = true;
-    public static double MINIMUM_ARM_ANGLE = 0;
-    public static double MAXIMUM_ARM_ANGLE = 90;
+    public static double MINIMUM_ARM_ANGLE = 0; //in rotations
+    public static double MAXIMUM_ARM_ANGLE = 90;//in rotations
 
-    public static double MM_CRUISE_VELOCITY = 0;
-    public static double MM_ACCELERATION = 0;
-    public static double MM_JERK = 0; //this value is optional
+    public static double MM_CRUISE_VELOCITY = 0;  //calculated from ReCalc, in rotations
+    public static double MM_ACCELERATION = 0;     //calculated from ReCalc, in rotations
+    public static double MM_JERK = 0;             //this value is optional, in rotations
 
     public static boolean IS_MAGIC_MOTION_ENABLED = false;
     //TODO: set all constants

@@ -23,7 +23,7 @@ public class Arm extends SubsystemBase {
   
   private double m_setpoint;
   
-  private Alert m_encoderDesyncAlert = new Alert("WARNING: Encoder values are not in sync!", Alert.AlertType.kWarning);
+  private Alert m_encoderDesyncAlert = new Alert("WARNING: Arm Encoder values are not in sync!", Alert.AlertType.kWarning);
   private static Arm m_instance;
   public static Arm getInstance() {
     if (m_instance == null) m_instance = new Arm();
