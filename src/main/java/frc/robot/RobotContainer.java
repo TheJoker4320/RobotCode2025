@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType;
 
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
+  private final PoseEstimatorSubsystem mPoseEstimator = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
@@ -79,6 +81,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // When you load here the autonomous command you must firstly reset the poseEstimator and swerve's odometry
+    // with the first pose of the autonomous command.
+    // use: mPoseEstimator.resetPose(...);
+    // use: mSwerveSubsystem.resetOdometry(...);
+
     // An example command will be run in autonomous
     return new WaitCommand(0);
   }
