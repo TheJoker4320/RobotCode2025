@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
@@ -22,6 +23,7 @@ public class Arm extends SubsystemBase {
   
   private double m_setpoint;
   
+  private Alert m_encoderDesyncAlert = new Alert("WARNING: Encoder values are not in sync!", Alert.AlertType.kWarning);
   private static Arm m_instance;
   public static Arm getInstance() {
     if (m_instance == null) m_instance = new Arm();
@@ -44,11 +46,12 @@ public class Arm extends SubsystemBase {
   private void syncEncoders() {
     m_motor.setPosition(m_encoder.get());
   }
-  private void verifyEncoderSync() {
+  private boolean verifyEncoderSync() {
     if (Math.abs(getCurrentAngle() - m_encoder.get()) > ArmConstants.ARM_ENCODER_TOLERANCE){
-      System.out.println("WARNING: Encoder values are not in sync!");
       syncEncoders();
+      return true;
     }
+    return false;
   }
   public boolean isAtState(ArmState state) {
     if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE)
@@ -73,6 +76,8 @@ public class Arm extends SubsystemBase {
       MotionMagicVoltage m_request = new MotionMagicVoltage(0);
       m_motor.setControl(m_request.withPosition(m_setpoint));
     }
-    verifyEncoderSync();
+
+    //sends to smart dashboard if encoders are out of sync
+    m_encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
   }
 }
