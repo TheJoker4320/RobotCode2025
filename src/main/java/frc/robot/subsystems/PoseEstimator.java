@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
 
@@ -33,8 +34,8 @@ public class PoseEstimator extends SubsystemBase {
       swerve.getRotation(), 
       swerve.getModulePositions(), 
       new Pose2d(),
-      VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
-      VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15))
+      PoseEstimatorConstants.STATE_STANDARD_DEVIATIONS,
+      PoseEstimatorConstants.VISION_STANDARD_DEVIATIONS
     );
   }
 
@@ -66,7 +67,7 @@ public class PoseEstimator extends SubsystemBase {
     LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
 
     // If the angular velocity is over 720, the estimated pose is going to be very innacurate so we "reject" the vision update
-    if (Math.abs(mSwerve.getAngularVelocity())  > 720) {
+    if (Math.abs(mSwerve.getAngularVelocity())  > PoseEstimatorConstants.MAXIMUM_ANGULAR_VELOCITY) {
       rejectVisionUpdate = true;
     }
     if (poseEstimate.tagCount == 0) {

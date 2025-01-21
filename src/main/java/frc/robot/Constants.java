@@ -4,8 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -27,6 +32,16 @@ public final class Constants {
     public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value;
 
     public static final double DRIVE_DEADBAND = 0.05;
+  }
+
+  public static class PoseEstimatorConstants {
+    // The larger the following values are the less the pose estimator trusts the measurements - if we see 
+    // large ambiguity increase the values, if we see high precision than decrease the values
+    public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));      // TODO: Calibrate values
+    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15));      // These values are most likely too high - should be tested, TODO: Calibrate values
+  
+    public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
+    
   }
 
   public static class SwerveSubsystemConstants {
