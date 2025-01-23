@@ -47,19 +47,18 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    /*button to collect balls */
-    JoystickButton armCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.kArmCollectBallButton);
+    //button to collect balls 
+    JoystickButton armCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.ARM_COLLECT_BALL_BUTTON);
     armCollectBallButton.toggleOnTrue(new ArmCollectBall(m_armCollectors));
-    /*button to collect coral */
-    JoystickButton armCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.kArmCollectCoralButton);
+    //button to collect coral 
+    JoystickButton armCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.ARM_COLLECT_CORAL_BUTTON);
     armCollectCoralButton.whileTrue(new ArmCollectCoral(m_armCollectors));
-    //TODO: decide if button is whileTrue or toggleOnTrue
 
-    /*button to eject balls */
-    JoystickButton armEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.kArmEjectBallButton);
+    //button to eject balls 
+    JoystickButton armEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.ARM_EJECT_BALL_BUTTON);
     armEjectBallButton.whileTrue(new BallEject(m_armCollectors));
-
-    JoystickButton armEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.kArmEjectCoralButton);
+    //button to eject coral
+    JoystickButton armEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.ARM_EJECT_CORAL_BUTTON);
     armEjectCoralButton.whileTrue(new CoralEject(m_armCollectors));
 
   }

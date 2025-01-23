@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmCollectorConstants;
 
@@ -32,7 +33,7 @@ public class ArmCollectors extends SubsystemBase {
       mLimitSwitch = new DigitalInput(ArmCollectorConstants.LIMIT_SWITCH_PORT);
   }
 
-  public boolean getLimitSwitchState(){
+  public boolean getLimitSwitchState() {
     return mLimitSwitch.get();
   }
 
@@ -40,8 +41,8 @@ public class ArmCollectors extends SubsystemBase {
  * This method sets the speed of the ball collector motor.
  * @param isForward - true if the motor should move forward, false if the motor should move backward.
  */
-  public void setBallSpeed(Boolean isForward){
-    if (isForward){
+  public void setBallSpeed(Boolean isForward) {
+    if (isForward) {
       mBallMotor.set(ArmCollectorConstants.BALL_COLLECTOR_SPEED);
     } else {
       mBallMotor.set(-ArmCollectorConstants.BALL_COLLECTOR_SPEED);
@@ -52,8 +53,8 @@ public class ArmCollectors extends SubsystemBase {
  * This method sets the speed of the coral collector motor.
  * @param isForward - true if the motor should move forward, false if the motor should move backward.
  */
-  public void setCoralSpeed(Boolean isForward){
-    if (isForward){
+  public void setCoralSpeed(Boolean isForward) {
+    if (isForward) {
       mCoralMotor.set(ArmCollectorConstants.CORAL_COLLECTOR_SPEED);
     } else {
       mCoralMotor.set(-ArmCollectorConstants.CORAL_COLLECTOR_SPEED);
@@ -61,11 +62,11 @@ public class ArmCollectors extends SubsystemBase {
   }
 
 
-  public void stopBallCollector(){
+  public void stopBallCollector() {
     mBallMotor.set(0);
   }
 
-  public void stopCoralCollector(){
+  public void stopCoralCollector() {
     mCoralMotor.set(0);
   }
 
