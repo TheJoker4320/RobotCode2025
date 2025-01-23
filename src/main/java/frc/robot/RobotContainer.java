@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private final BallCollector m_ballCollector = BallCollector.getInstance();
+  private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -37,11 +37,11 @@ public class RobotContainer {
 
     //Button for turn on the Ball collect
     JoystickButton BallcollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON);
-    BallcollectorButton.onTrue(new BallCollect(m_ballCollector));
+    BallcollectorButton.onTrue(new BallCollect(mBallCollector));
 
     //Button for Moving Ball Collect
     JoystickButton MoveBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.MOVE_BALL_COLLECTOR_BUTTON);
-    MoveBallCollectorButton.onTrue(new MoveBallCollector(m_ballCollector));
+    MoveBallCollectorButton.onTrue(new MoveBallCollector(mBallCollector));
   }
 
   /**

@@ -22,19 +22,18 @@ public final class Constants {
     public static final int MOVE_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
   }
 
-  public static class CollectorMotorPorts {
+  public static class CollectorMotors{
     public static final int BALL_Collector_MOTOR_MOTOR_PORT = 1;
     public static final int MOVE_BALL_COLLECTOR_MOTOR_PORT = 2;
     public static final int LIMIT_SWITCH_PORT = 3;
-
-  }
-
-  public static class CollectorMotorSpeeds {
     public static final double BALL_Collector_MOTOR_START_SPEED = 1.0;
     public static final int BALL_Collector_MOTOR_FINISH_SPEED  = 0;
     public static final double MOVE_BALL_COLLECTOR_MOTOR_START_SPEED = 1.0;
     public static final int MOVE_BALL_COLLECTOR_MOTOR_FINISH_SPEED = 0;
+
   }
+
+
 
   public static final class BallCollectorPID {
     public static final double ENCODER_POSITION_FACTOR = 360;           // Degrees
@@ -49,6 +48,6 @@ public final class Constants {
 
     public static final double MAX_ENCODER_VALUE = 360;  // TODO: Calibrate Max Encoder Value
   }
-  
+
 
 }

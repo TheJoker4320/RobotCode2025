@@ -3,12 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
-import frc.robot.Constants.CollectorMotorSpeeds;
+import frc.robot.Constants.CollectorMotors;
 import frc.robot.subsystems.BallCollector;
-
 import edu.wpi.first.wpilibj2.command.Command;
-
 
 /** An example command that uses an example subsystem. */
 public class BallCollect extends Command {
@@ -28,7 +25,7 @@ public class BallCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_collectorBall.setSpeedCollectorBall(CollectorMotorSpeeds.BALL_Collector_MOTOR_START_SPEED);
+    m_collectorBall.setSpeedCollectorBall(CollectorMotors.BALL_Collector_MOTOR_START_SPEED);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -39,7 +36,7 @@ public class BallCollect extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_collectorBall.setSpeedCollectorBall(CollectorMotorSpeeds.BALL_Collector_MOTOR_FINISH_SPEED);
+    m_collectorBall.setSpeedCollectorBall(CollectorMotors.BALL_Collector_MOTOR_FINISH_SPEED);
 
   }
 

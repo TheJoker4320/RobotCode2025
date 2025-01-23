@@ -14,7 +14,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CollectorMotorPorts;
+import frc.robot.Constants.CollectorMotors;
 import frc.robot.utils.Configs;
 
 public class BallCollector extends SubsystemBase {
@@ -28,13 +28,13 @@ public class BallCollector extends SubsystemBase {
 
   private BallCollector() {
     //configuring 
-    m_ballCollectorMotor = new SparkMax(CollectorMotorPorts.BALL_Collector_MOTOR_MOTOR_PORT , MotorType.kBrushless);
+    m_ballCollectorMotor = new SparkMax(CollectorMotors.BALL_Collector_MOTOR_MOTOR_PORT , MotorType.kBrushless);
     m_ballCollectorMotor.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_PIDController = m_ballCollectorMotor.getClosedLoopController();
 
-    m_moveBallCollectorMotor = new SparkMax(CollectorMotorPorts.MOVE_BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
-    
-    m_limitSwitch = new DigitalInput(CollectorMotorPorts.LIMIT_SWITCH_PORT);
+    m_moveBallCollectorMotor = new SparkMax(CollectorMotors.MOVE_BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
+    m_ballCollectorMotor.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_limitSwitch = new DigitalInput(CollectorMotors.LIMIT_SWITCH_PORT);
     
   }
 
