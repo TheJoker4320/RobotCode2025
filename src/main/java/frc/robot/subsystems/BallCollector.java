@@ -18,8 +18,8 @@ import frc.robot.Constants.CollectorMotorPorts;
 import frc.robot.utils.Configs;
 
 public class BallCollector extends SubsystemBase {
-  private final SparkMax m_neo;
-  private final SparkMax m_neo550;
+  private final SparkMax m_ballCollectorMotor;
+  private final SparkMax m_moveBallCollectorMotor;
   private final DigitalInput m_limitSwitch;
   private static BallCollector instance = null;
 
@@ -28,11 +28,11 @@ public class BallCollector extends SubsystemBase {
 
   private BallCollector() {
     //configuring 
-    m_neo = new SparkMax(CollectorMotorPorts.MOTOR_NEO_PORT , MotorType.kBrushless);
-    m_neo.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_PIDController = m_neo.getClosedLoopController();
+    m_ballCollectorMotor = new SparkMax(CollectorMotorPorts.BALL_Collector_MOTOR_MOTOR_PORT , MotorType.kBrushless);
+    m_ballCollectorMotor.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_PIDController = m_ballCollectorMotor.getClosedLoopController();
 
-    m_neo550 = new SparkMax(CollectorMotorPorts.MOTOR_NEO550_PORT, MotorType.kBrushless);
+    m_moveBallCollectorMotor = new SparkMax(CollectorMotorPorts.MOVE_BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
     
     m_limitSwitch = new DigitalInput(CollectorMotorPorts.LIMIT_SWITCH_PORT);
     
@@ -47,14 +47,14 @@ public class BallCollector extends SubsystemBase {
   }
 
   public void setSpeedCollectorBall(double speed) {
-    m_neo550.set(speed);
+    m_moveBallCollectorMotor.set(speed);
    
   }
 
   public void setReference(double position) {
     m_PIDController.setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0);
   }
-  public boolean GetLimitSwitch() {
+  public boolean getLimitSwitch() {
     return m_limitSwitch.get();
   }
 

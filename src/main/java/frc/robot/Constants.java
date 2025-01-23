@@ -16,24 +16,24 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kOperatorControllerPort = 0;
+    public static final int kDriverControllerPort = 0;
 
     public static final int BALL_COLLECT_BUTTON = XboxController.Button.kX.value;
     public static final int MOVE_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
   }
 
   public static class CollectorMotorPorts {
-    public static final int MOTOR_NEO_PORT = 1;
-    public static final int MOTOR_NEO550_PORT = 2;
+    public static final int BALL_Collector_MOTOR_MOTOR_PORT = 1;
+    public static final int MOVE_BALL_COLLECTOR_MOTOR_PORT = 2;
     public static final int LIMIT_SWITCH_PORT = 3;
 
   }
 
   public static class CollectorMotorSpeeds {
-    public static final double MOTOR_NEO_START_SPEED = 1.0;
-    public static final int MOTOR_NEO_Finish_SPEED = 0;
-    public static final double MOTOR_NEO550_START_SPEED = 1.0;
-    public static final int MOTOR_NEO550_FINISH_SPEED = 0;
+    public static final double BALL_Collector_MOTOR_START_SPEED = 1.0;
+    public static final int BALL_Collector_MOTOR_FINISH_SPEED  = 0;
+    public static final double MOVE_BALL_COLLECTOR_MOTOR_START_SPEED = 1.0;
+    public static final int MOVE_BALL_COLLECTOR_MOTOR_FINISH_SPEED = 0;
   }
 
   public static final class BallCollectorPID {
@@ -47,7 +47,7 @@ public final class Constants {
     public static final double I_CONSTANT = 0;
     public static final double D_CONSTANT = 0;
 
-    public static final double MAX_ENCODER_VALUE = 360;
+    public static final double MAX_ENCODER_VALUE = 360;  // TODO: Calibrate Max Encoder Value
   }
   
 

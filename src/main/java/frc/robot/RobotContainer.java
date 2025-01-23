@@ -23,7 +23,7 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kOperatorControllerPort);
+  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
    
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -35,10 +35,11 @@ public class RobotContainer {
   
   private void configureBindings() {
 
-    //Button for BallCollect Command
+    //Button for turn on the Ball collect
     JoystickButton BallcollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON);
     BallcollectorButton.onTrue(new BallCollect(m_ballCollector));
-    //Button for MoveBallCollect Command
+
+    //Button for Moving Ball Collect
     JoystickButton MoveBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.MOVE_BALL_COLLECTOR_BUTTON);
     MoveBallCollectorButton.onTrue(new MoveBallCollector(m_ballCollector));
   }
