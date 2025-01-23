@@ -15,7 +15,7 @@ import frc.robot.subsystems.ArmCollectors;
 public class CoralEject extends Command {
   /** Creates a new CoralEject. */
   private ArmCollectors mCollector;
-  public CoralEject(ArmCollectors collector, double speed) {
+  public CoralEject(ArmCollectors collector) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.mCollector = collector;
     addRequirements(collector);

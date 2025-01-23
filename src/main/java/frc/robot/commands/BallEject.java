@@ -15,7 +15,7 @@ import frc.robot.subsystems.ArmCollectors;
 public class BallEject extends Command {
   /** Creates a new BallEject. */
   private ArmCollectors mCollector;
-  public BallEject(ArmCollectors collector, double speed) {
+  public BallEject(ArmCollectors collector) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.mCollector = collector;
     addRequirements(collector);

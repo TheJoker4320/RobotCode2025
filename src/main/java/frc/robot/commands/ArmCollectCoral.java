@@ -14,7 +14,7 @@ import frc.robot.subsystems.ArmCollectors;
 public class ArmCollectCoral extends Command {
   /** Creates a new ArmCollectCoral. */
   private ArmCollectors mCollector;
-  public ArmCollectCoral(ArmCollectors collector, double speed) {
+  public ArmCollectCoral(ArmCollectors collector) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.mCollector = collector;
     addRequirements(collector);
