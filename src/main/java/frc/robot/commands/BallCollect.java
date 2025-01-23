@@ -3,13 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.Constants.CollectorMotors;
+import frc.robot.Constants.BallCollectorConstants;
 import frc.robot.subsystems.BallCollector;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class BallCollect extends Command {
-  private final BallCollector m_collectorBall;
+  private final BallCollector mCollectorBall;
 
   /**
    * Creates a new EampleCommand.
@@ -17,15 +17,15 @@ public class BallCollect extends Command {
    * @param subsystem The subsystem used by this command.
    */
   public BallCollect(BallCollector collectorBall) {
-    m_collectorBall = collectorBall;
+    mCollectorBall = collectorBall;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_collectorBall);
+    addRequirements(mCollectorBall);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_collectorBall.setSpeedCollectorBall(CollectorMotors.BALL_Collector_MOTOR_START_SPEED);
+    mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.BALL_COLLECTOR_MOTOR_START_SPEED);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,13 +36,13 @@ public class BallCollect extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_collectorBall.setSpeedCollectorBall(CollectorMotors.BALL_Collector_MOTOR_FINISH_SPEED);
+    mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.BALL_COLLECTOR_MOTOR_FINISH_SPEED);
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_collectorBall.getLimitSwitch();
+    return mCollectorBall.getLimitSwitch();
   }
 }

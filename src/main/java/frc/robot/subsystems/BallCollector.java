@@ -13,28 +13,29 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CollectorMotors;
+import frc.robot.Constants.BallCollectorConstants;
 import frc.robot.utils.Configs;
 
 public class BallCollector extends SubsystemBase {
-  private final SparkMax m_ballCollectorMotor;
-  private final SparkMax m_moveBallCollectorMotor;
-  private final DigitalInput m_limitSwitch;
+  private final SparkMax mBallCollectorMotor;
+  private final SparkMax mBallCollectorArmMotor;
+  private final DigitalInput mLimitSwitch;
   private static BallCollector instance = null;
 
-  private final SparkClosedLoopController m_PIDController;
+  private final SparkClosedLoopController mPIDController;
   
 
   private BallCollector() {
     //configuring 
-    m_ballCollectorMotor = new SparkMax(CollectorMotors.BALL_Collector_MOTOR_MOTOR_PORT , MotorType.kBrushless);
-    m_ballCollectorMotor.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_PIDController = m_ballCollectorMotor.getClosedLoopController();
+    mBallCollectorMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
+    mBallCollectorMotor.configure(Configs.BallCollectorConfig.collectorCofigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mPIDController = mBallCollectorMotor.getClosedLoopController();
 
-    m_moveBallCollectorMotor = new SparkMax(CollectorMotors.MOVE_BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
-    m_ballCollectorMotor.configure(Configs.BallCollectorConfig.config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_limitSwitch = new DigitalInput(CollectorMotors.LIMIT_SWITCH_PORT);
+    mBallCollectorArmMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_ARM_MOTOR_PORT, MotorType.kBrushless);
+    mBallCollectorArmMotor.configure(Configs.BallCollectorConfig.armConfigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mLimitSwitch = new DigitalInput(BallCollectorConstants.LIMIT_SWITCH_PORT);
     
   }
 
@@ -47,21 +48,22 @@ public class BallCollector extends SubsystemBase {
   }
 
   public void setSpeedCollectorBall(double speed) {
-    m_moveBallCollectorMotor.set(speed);
+    mBallCollectorArmMotor.set(speed);
    
   }
 
   public void setReference(double position) {
-    m_PIDController.setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    mPIDController.setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0);
   }
   public boolean getLimitSwitch() {
-    return m_limitSwitch.get();
+    return mLimitSwitch.get();
   }
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("BallCollectorCollect", getLimitSwitch());
   }
 
 }
