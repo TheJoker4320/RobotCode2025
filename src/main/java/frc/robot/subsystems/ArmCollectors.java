@@ -17,8 +17,16 @@ public class ArmCollectors extends SubsystemBase {
   private final SparkMax mCoralMotor;
   private final SparkMax mBallMotor;
   private final DigitalInput mLimitSwitch;
+  private static ArmCollectors mInstance;
 
-  public ArmCollectors() {
+  public static ArmCollectors getInstance() {
+    if (mInstance == null) {
+      mInstance = new ArmCollectors();
+    }
+    return mInstance;
+  }
+
+  private ArmCollectors() {
       mCoralMotor = new SparkMax(ArmCollectorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
       mBallMotor = new SparkMax(ArmCollectorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
       mLimitSwitch = new DigitalInput(ArmCollectorConstants.LIMIT_SWITCH_PORT);
@@ -56,7 +64,7 @@ public class ArmCollectors extends SubsystemBase {
   public void stopBallCollector(){
     mBallMotor.set(0);
   }
-  
+
   public void stopCoralCollector(){
     mCoralMotor.set(0);
   }
