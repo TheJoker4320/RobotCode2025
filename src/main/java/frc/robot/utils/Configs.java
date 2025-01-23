@@ -3,23 +3,29 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import frc.robot.Constants.BallCollectorPID;
+import frc.robot.Constants.BallCollectorConstants;
 
   
 public class Configs {
     public static class BallCollectorConfig {
-        public static SparkMaxConfig config = new SparkMaxConfig();
+        public static SparkMaxConfig armConfigs = new SparkMaxConfig();
+        public static SparkMaxConfig collectorCofigs = new SparkMaxConfig();
         
         static {
-            config.idleMode(IdleMode.kBrake);
-            config.smartCurrentLimit(BallCollectorPID.SMART_CURRENT_LIMIT);
-            config.absoluteEncoder.positionConversionFactor(BallCollectorPID.ENCODER_POSITION_FACTOR);
-            config.absoluteEncoder.velocityConversionFactor(BallCollectorPID.ENCODER_VELOCITY_FACTOR);
-            config.absoluteEncoder.inverted(BallCollectorPID.ENCODER_INVERTED);
-            config.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-            config.closedLoop.pid(BallCollectorPID.P_CONSTANT, BallCollectorPID.I_CONSTANT, BallCollectorPID.D_CONSTANT);
-            config.closedLoop.outputRange(-1, 1);            
+            armConfigs.idleMode(IdleMode.kBrake);
+            armConfigs.smartCurrentLimit(BallCollectorConstants.ARM_SMART_CURRENT_LIMIT);
+            armConfigs.absoluteEncoder.positionConversionFactor(BallCollectorConstants.ENCODER_POSITION_FACTOR);
+            armConfigs.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.ARM_ENCODER_VELOCITY_FACTOR);
+            armConfigs.absoluteEncoder.inverted(BallCollectorConstants.ENCODER_INVERTED);
+            armConfigs.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+            armConfigs.closedLoop.pid(BallCollectorConstants.P_CONSTANT, BallCollectorConstants.I_CONSTANT, BallCollectorConstants.D_CONSTANT);
+            armConfigs.closedLoop.outputRange(-1, 1);        
+            
+            collectorCofigs.idleMode(IdleMode.kBrake);
+            collectorCofigs.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.COLLECTOR_ENCODER_VELOCITY_FACTOR);
+            collectorCofigs.smartCurrentLimit(BallCollectorConstants.COLLECTOR_SMART_CURRENT_LIMIT);
         }
+
 
     }
 }
