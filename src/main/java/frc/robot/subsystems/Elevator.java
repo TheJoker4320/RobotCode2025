@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -48,6 +49,7 @@ public class Elevator extends SubsystemBase {
     mLeftMotorController.setNeutralMode(NeutralModeValue.Brake);
 
     syncEncoders();
+    DataLogManager.start();
   }
 
   private double getAbsoluteEncoderValue() {
@@ -66,7 +68,7 @@ public class Elevator extends SubsystemBase {
     double throughBorePosition = getAbsoluteEncoderValue();
     
     if (Math.abs(krakenPosition - throughBorePosition) > ElevatorConstants.ELEVATOR_ENCODER_TOLERANCE) {
-        System.out.println("WARNING: Encoder synchronization may be lost!");
+        DataLogManager.log("WARNING: Encoder synchronization may be lost!");
         syncEncoders();
     }
   }
