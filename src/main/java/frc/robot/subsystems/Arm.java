@@ -18,37 +18,37 @@ import frc.robot.utils.Configs.ArmConfigs;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Arm. */
-  private TalonFX m_motor;
-  private DutyCycleEncoder m_encoder;
+  private TalonFX mMotor;
+  private DutyCycleEncoder mEncoder;
   
-  private double m_setpoint;
+  private double mSetpoint;
   
-  private Alert m_encoderDesyncAlert = new Alert("WARNING: Arm Encoder values are not in sync!", Alert.AlertType.kWarning);
-  private static Arm m_instance;
+  private Alert mEncoderDesyncAlert = new Alert("WARNING: Arm Encoder values are not in sync!", Alert.AlertType.kWarning);
+  private static Arm mInstance;
   public static Arm getInstance() {
-    if (m_instance == null)
-      m_instance = new Arm();
-    return m_instance;
+    if (mInstance == null)
+      mInstance = new Arm();
+    return mInstance;
   }
 
   private Arm() {
-    m_motor = new TalonFX(ArmConstants.MOTOR_ID);
-    m_encoder = new DutyCycleEncoder(ArmConstants.ENCODER_CHANNEL);
-    m_motor.getConfigurator().apply(ArmConfigs.ARM_TALONFX_CONFIG);
-    m_motor.setNeutralMode(NeutralModeValue.Brake);
+    mMotor = new TalonFX(ArmConstants.MOTOR_ID);
+    mEncoder = new DutyCycleEncoder(ArmConstants.ENCODER_CHANNEL);
+    mMotor.getConfigurator().apply(ArmConfigs.ARM_TALONFX_CONFIG);
+    mMotor.setNeutralMode(NeutralModeValue.Brake);
     syncEncoders();
   }
   public void setSetpoint(ArmState setpoint) {
-    m_setpoint = setpoint.angle();
+    mSetpoint = setpoint.angle();
   }
   private double getCurrentAngle() {
-    return m_motor.getPosition().getValue().magnitude();
+    return mMotor.getPosition().getValue().magnitude();
   }
   private void syncEncoders() {
-    m_motor.setPosition(m_encoder.get());
+    mMotor.setPosition(mEncoder.get());
   }
   private boolean verifyEncoderSync() {
-    if (Math.abs(getCurrentAngle() - m_encoder.get()) > ArmConstants.ARM_ENCODER_TOLERANCE){
+    if (Math.abs(getCurrentAngle() - mEncoder.get()) > ArmConstants.ARM_ENCODER_TOLERANCE){
       syncEncoders();
       return true;
     }
@@ -66,7 +66,7 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
     if (!ArmConstants.IS_MAGIC_MOTION_ENABLED) {
       PositionVoltage m_request = new PositionVoltage(0);
-      m_motor.setControl(m_request.withPosition(m_setpoint));
+      mMotor.setControl(m_request.withPosition(mSetpoint));
     }
     /*
      * this code is for when we want to add magic motion to the arm
@@ -75,10 +75,10 @@ public class Arm extends SubsystemBase {
      */
     else {  
       MotionMagicVoltage m_request = new MotionMagicVoltage(0);
-      m_motor.setControl(m_request.withPosition(m_setpoint));
+      mMotor.setControl(m_request.withPosition(mSetpoint));
     }
 
     //sends to smart dashboard if encoders are out of sync
-    m_encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
+    mEncoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
   }
 }

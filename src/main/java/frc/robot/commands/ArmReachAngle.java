@@ -11,19 +11,19 @@ import frc.robot.utils.ArmState;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ArmReachAngle extends Command {
   /** Creates a new ArmReachAngle. */
-  private Arm m_arm;
-  private ArmState m_desieredState;
+  private Arm mArm;
+  private ArmState mDesieredState;
   public ArmReachAngle(Arm arm, ArmState desiredState) {
-    m_arm = arm;
-    m_desieredState = desiredState; 
+    mArm = arm;
+    mDesieredState = desiredState; 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_arm);
+    addRequirements(mArm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_arm.setSetpoint(m_desieredState);
+    mArm.setSetpoint(mDesieredState);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +37,6 @@ public class ArmReachAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_arm.isAtState(m_desieredState);
+    return mArm.isAtState(mDesieredState);
   }
 }

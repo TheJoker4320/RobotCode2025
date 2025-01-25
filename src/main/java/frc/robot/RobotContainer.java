@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private Arm m_arm = Arm.getInstance();
+  private Arm mArm = Arm.getInstance();
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private XboxController m_driverController =
@@ -47,10 +47,10 @@ public class RobotContainer {
   private void configureBindings() {
     //raises arm to low state
     JoystickButton armSetLow = new JoystickButton(m_driverController, OperatorConstants.ARM_LOW_STATE);
-    armSetLow.onTrue(new ArmReachAngle(m_arm, ArmState.LOW));
+    armSetLow.onTrue(new ArmReachAngle(mArm, ArmState.LOW));
     //raises arm to high state
     JoystickButton armSetHigh = new JoystickButton(m_driverController, OperatorConstants.ARM_HIGH_STATE);
-    armSetHigh.onTrue(new ArmReachAngle(m_arm, ArmState.HIGH));
+    armSetHigh.onTrue(new ArmReachAngle(mArm, ArmState.HIGH));
   }
 
   /**
