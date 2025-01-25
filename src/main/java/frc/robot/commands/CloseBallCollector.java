@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 
 /** An example command that uses an example subsystem. */
-public class MoveBallCollector extends Command {
+public class CloseBallCollector extends Command {
   private final BallCollector mBallCollector;
   private final Timer mTimer;
   private final double mTimeout;
@@ -19,7 +19,7 @@ public class MoveBallCollector extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MoveBallCollector(BallCollector ballCollector , double timeout) {
+  public CloseBallCollector(BallCollector ballCollector , double timeout) {
     mBallCollector = ballCollector;
     mTimer = new Timer();
     mTimeout = timeout;
@@ -32,7 +32,7 @@ public class MoveBallCollector extends Command {
   @Override
   public void initialize() {
     mTimer.start();
-    mBallCollector.setReference(BallCollectorConstants.OPEN_POSITION);
+    mBallCollector.setReference(BallCollectorConstants.CLOSE_POSITION);
 
   }
   // Called every time the scheduler runs while the command is scheduled.
@@ -48,7 +48,7 @@ public class MoveBallCollector extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mBallCollector.isAtState(BallCollectorConstants.CLOSE_POSITION , BallCollectorConstants.OPEN_POSITION) || mTimer.get() >= mTimeout) {
+    if (mBallCollector.isAtState(BallCollectorConstants.OPEN_POSITION , BallCollectorConstants.CLOSE_POSITION) || mTimer.get() >= mTimeout) {
       return true;
     }
     return false;

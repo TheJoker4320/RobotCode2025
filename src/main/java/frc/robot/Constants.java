@@ -26,18 +26,15 @@ public final class Constants {
     public static final int BALL_COLLECTOR_MOTOR_PORT = 1;
     public static final int BALL_COLLECTOR_ARM_MOTOR_PORT = 2;
     public static final int LIMIT_SWITCH_PORT = 3;
-    public static final double BALL_COLLECTOR_MOTOR_START_SPEED = 1.0;
-    public static final int BALL_COLLECTOR_MOTOR_FINISH_SPEED  = 0;
-    public static final double BALL_COLLECTOR_MOTOR_ARM_START_SPEED = 1.0;
-    public static final int BALL_COLLECTOR_MOTOR_ARM_FINISH_SPEED  = 0;
-    public static final double BALL_COLLECTOR_MOTOR_ARM_START_POSITION = 1.0;
-    public static final double BALL_COLLECTOR_MOTOR_ARM_FINISH_POSITION = 1.0;
+    public static final double COLLECTING_SPEED = 1.0;
+    public static final int STOP_SPEED = 0;
+    public static final double OPEN_POSITION = 1.0;
+    public static final double CLOSE_POSITION = 1.0;
     public static final double ENCODER_POSITION_FACTOR = 360;           // Degrees
-    public static final double ARM_ENCODER_VELOCITY_FACTOR = 12.0;    // Degrees per seconds. TODO: Need to calibrate speed
+    public static final double ARM_ENCODER_VELOCITY_FACTOR = 6.0;    // Degrees per seconds. TODO: Need to calibrate speed
 
 
     public static final int COLLECTOR_SMART_CURRENT_LIMIT = 20;
-    public static final double COLLECTOR_ENCODER_VELOCITY_FACTOR = 12.0;
     public static final boolean ENCODER_INVERTED = false; // TODO: To check if encoder is inverted
     public static final int ARM_SMART_CURRENT_LIMIT = 20; // Default rev configuration for current limit
     public static final double P_CONSTANT = 1; //TODO: Calibrate PID values

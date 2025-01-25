@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.BallCollect;
+import frc.robot.commands.CloseBallCollector;
 import frc.robot.commands.MoveBallCollector;
 import frc.robot.subsystems.BallCollector;
 import edu.wpi.first.wpilibj.XboxController;
@@ -35,13 +36,17 @@ public class RobotContainer {
   
   private void configureBindings() {
 
-    //Button for turn on the Ball collect
+    //Button for turn on the Ball Collector
     JoystickButton BallcollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON);
-    BallcollectorButton.onTrue(new BallCollect(mBallCollector));
+    BallcollectorButton.whileTrue(new BallCollect(mBallCollector));
 
-    //Button for Moving Ball Collect
+    //Button for moving the Ball Collector
     JoystickButton MoveBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.MOVE_BALL_COLLECTOR_BUTTON);
     MoveBallCollectorButton.onTrue(new MoveBallCollector(mBallCollector , 5));
+
+    //Button for closing the Ball Collector
+    JoystickButton CloseBallCollectorButton = new JoystickButton(m_driverController, 0);
+    CloseBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector, 5));
   }
 
   /**

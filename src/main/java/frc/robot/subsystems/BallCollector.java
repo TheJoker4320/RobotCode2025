@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
@@ -27,7 +27,7 @@ public class BallCollector extends SubsystemBase {
   private static BallCollector mInstance = null;
 
   private final SparkClosedLoopController mPIDController;
-  private final RelativeEncoder mEncoder;
+  private final AbsoluteEncoder mEncoder;
 
   
 
@@ -41,7 +41,7 @@ public class BallCollector extends SubsystemBase {
     mLimitSwitch = new DigitalInput(BallCollectorConstants.LIMIT_SWITCH_PORT);
     
     mPIDController = mBallCollectorArmMotor.getClosedLoopController();
-    mEncoder = mBallCollectorArmMotor.getEncoder() ;
+    mEncoder = mBallCollectorArmMotor.getAbsoluteEncoder();
     
     
   }
@@ -54,8 +54,8 @@ public class BallCollector extends SubsystemBase {
 
   }
 
-  public boolean isAtState() {
-    if (Math.abs(mEncoder.getPosition() - BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_START_POSITION) < BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_FINISH_POSITION) {
+  public boolean isAtState(double threshold , double setPoint) {
+    if (Math.abs(mEncoder.getPosition() - setPoint) < threshold) {
       return true;
     }
     return false;
@@ -65,12 +65,6 @@ public class BallCollector extends SubsystemBase {
     mBallCollectorMotor.set(speed);
    
   }
-
-  public void setSpeedCollectorBallArm(double speed) {
-    mBallCollectorArmMotor.set(speed);
-   
-  }
-
 
   public void setReference(double position) {
     mPIDController.setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0);

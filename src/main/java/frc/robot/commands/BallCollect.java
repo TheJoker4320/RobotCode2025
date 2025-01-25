@@ -25,7 +25,7 @@ public class BallCollect extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.BALL_COLLECTOR_MOTOR_START_SPEED);
+    mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.COLLECTING_SPEED);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,13 +36,13 @@ public class BallCollect extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.BALL_COLLECTOR_MOTOR_FINISH_SPEED);
+    mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.STOP_SPEED);
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return mCollectorBall.getLimitSwitch();
+    return false;
   }
 }

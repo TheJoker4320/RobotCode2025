@@ -22,7 +22,6 @@ public class Configs {
             armConfigs.closedLoop.outputRange(-1, 1);        
             
             collectorCofigs.idleMode(IdleMode.kBrake);
-            collectorCofigs.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.COLLECTOR_ENCODER_VELOCITY_FACTOR);
             collectorCofigs.smartCurrentLimit(BallCollectorConstants.COLLECTOR_SMART_CURRENT_LIMIT);
         }
 
