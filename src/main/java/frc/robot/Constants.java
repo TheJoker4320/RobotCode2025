@@ -20,6 +20,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
+    // Swerve operator constants
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
@@ -27,6 +28,54 @@ public final class Constants {
     public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value;
 
     public static final double DRIVE_DEADBAND = 0.05;
+    
+    // Elevator operator constants
+    public static final int ELEVATOR_LOW_STATE = XboxController.Button.kX.value;
+    public static final int ELEVATOR_HIGH_STATE = XboxController.Button.kY.value;
+  }
+
+  public static class ElevatorConstants {
+    public static final double PULLEY_DIAMATER = 0.1;               // TODO: Validate this measurement, its in meters
+    public static final double PULLEY_CIRCUMFERENCE = PULLEY_DIAMATER * Math.PI;
+    public static final double GEAR_RATION_REDUCTION = 5;           // TODO: Validate this measurement, its in meters
+    // To use the following value, find the height measurement in meters than multiply it by the height to rotation factor to get the rotations
+    public static final double HEIGHT_TO_ROTATION_FACTOR = GEAR_RATION_REDUCTION / PULLEY_CIRCUMFERENCE;
+    // This value is the difference between the axis of the motor and the axis of the through bore encoder - needed to allow encoder synchronization
+    public static final double ABSOLUTE_ENCODER_TO_MOTOR_RATIO = 4; // Value is in meters, TODO: Validate this measurement
+
+    public static final int ENCODER_CHANNEL = 1;                    // TODO: Validate encoder channel
+    public static final int RIGHT_MOTOR_DEVICE_ID = 1;              // TODO: Validate device id
+    public static final int LEFT_MOTOR_DEVICE_ID = 2;               // TODO: Validate device id
+
+    public static final boolean LEFT_OPPOSITE_OF_RIGHT = true;      // TODO: Validate this value
+
+    public static final double ELEVATOR_ENCODER_TOLERANCE = 0.1;
+    public static final double ELEVATOR_POSITION_TOLERANCE = 0.1;
+
+    // Notice that all the values in regard to positions/velocity/encoder/pid and so on are all based on rotations not meters
+    // so if we want a height of 1 meter, instead of 1 we convert it to rotations and put that new value
+    public static final double LOW_POSITION_HEIGHT = 50;            // Example values - in rotations
+    public static final double HIGH_POSITION_HEIGHT = 100;          // Example values - in rotations
+
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 10;        // This value is in rotations, TODO: Validate this value
+    public static final boolean MINIMUM_VALUE_ENABLED = true;
+    public static final double MAXIMUM_ELEVATOR_HEIGHT = 110;       // This value is in rotations, TODO: Validate this value
+    public static final boolean MAXIMUM_VALUE_ENABLED = true;
+
+    public static final double ELEVATOR_P_CONSTANT = 1;             // TODO: Validate this value
+    public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
+    public static final double ELEVATOR_D_CONSTANT = 0;             // TODO: Validate this value
+    public static final double ELEVATOR_G_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+    public static final double ELEVATOR_V_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+    public static final double ELEVATOR_A_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+
+    public static final double MM_CRUISE_VELOCITY = 1;              // TODO: Calculate this value from the site ReCalc
+    public static final double MM_ACCELERATION = 10;                // TODO: Calculate this value from the site ReCalc
+    public static final double MM_JERK = 100;                       // This value is optional, TODO: Calculate this value from the site ReCalc
+
+    public static final boolean MOTIONMAGIC_ENABLED = false;
+
+    public static final double REACHSTATE_TIMEOUT = 4;              // Maximum time for a reachstate command (in seconds), TODO: Validate this value
   }
 
   public static class SwerveSubsystemConstants {
