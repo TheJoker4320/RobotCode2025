@@ -15,7 +15,6 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BallCollectorConstants;
@@ -28,8 +27,8 @@ public class BallCollector extends SubsystemBase {
   private static BallCollector mInstance = null;
 
   private final SparkClosedLoopController mPIDController;
-  private final DutyCycleEncoder mEncoder;
-  //private double mSetPoint;
+  private final RelativeEncoder mEncoder;
+
   
 
   private BallCollector() {
@@ -42,7 +41,7 @@ public class BallCollector extends SubsystemBase {
     mLimitSwitch = new DigitalInput(BallCollectorConstants.LIMIT_SWITCH_PORT);
     
     mPIDController = mBallCollectorArmMotor.getClosedLoopController();
-    mEncoder = new DutyCycleEncoder(1) ;
+    mEncoder = mBallCollectorArmMotor.getEncoder() ;
     
     
   }
@@ -56,7 +55,7 @@ public class BallCollector extends SubsystemBase {
   }
 
   public boolean isAtState() {
-    if (Math.abs(mEncoder.get() - BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_START_POSITION) < BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_FINISH_POSITION) {
+    if (Math.abs(mEncoder.getPosition() - BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_START_POSITION) < BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_FINISH_POSITION) {
       return true;
     }
     return false;
