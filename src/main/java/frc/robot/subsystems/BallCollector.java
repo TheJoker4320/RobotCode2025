@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
@@ -12,7 +13,9 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BallCollectorConstants;
@@ -22,35 +25,53 @@ public class BallCollector extends SubsystemBase {
   private final SparkMax mBallCollectorMotor;
   private final SparkMax mBallCollectorArmMotor;
   private final DigitalInput mLimitSwitch;
-  private static BallCollector instance = null;
+  private static BallCollector mInstance = null;
 
   private final SparkClosedLoopController mPIDController;
+  private final DutyCycleEncoder mEncoder;
+  //private double mSetPoint;
   
 
   private BallCollector() {
     //configuring 
     mBallCollectorMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
     mBallCollectorMotor.configure(Configs.BallCollectorConfig.collectorCofigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    mPIDController = mBallCollectorMotor.getClosedLoopController();
 
     mBallCollectorArmMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_ARM_MOTOR_PORT, MotorType.kBrushless);
     mBallCollectorArmMotor.configure(Configs.BallCollectorConfig.armConfigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     mLimitSwitch = new DigitalInput(BallCollectorConstants.LIMIT_SWITCH_PORT);
     
+    mPIDController = mBallCollectorArmMotor.getClosedLoopController();
+    mEncoder = new DutyCycleEncoder(1) ;
+    
+    
   }
 
   public static BallCollector getInstance(){
-    if(instance == null) {
-        instance = new BallCollector();
+    if(mInstance == null) {
+      mInstance = new BallCollector();
     }
-    return instance;
+    return mInstance;
 
+  }
+
+  public boolean isAtState() {
+    if (Math.abs(mEncoder.get() - BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_START_POSITION) < BallCollectorConstants.BALL_COLLECTOR_MOTOR_ARM_FINISH_POSITION) {
+      return true;
+    }
+    return false;
   }
 
   public void setSpeedCollectorBall(double speed) {
+    mBallCollectorMotor.set(speed);
+   
+  }
+
+  public void setSpeedCollectorBallArm(double speed) {
     mBallCollectorArmMotor.set(speed);
    
   }
+
 
   public void setReference(double position) {
     mPIDController.setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0);

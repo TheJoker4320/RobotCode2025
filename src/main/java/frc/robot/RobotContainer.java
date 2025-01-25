@@ -41,7 +41,7 @@ public class RobotContainer {
 
     //Button for Moving Ball Collect
     JoystickButton MoveBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.MOVE_BALL_COLLECTOR_BUTTON);
-    MoveBallCollectorButton.onTrue(new MoveBallCollector(mBallCollector));
+    MoveBallCollectorButton.onTrue(new MoveBallCollector(mBallCollector , 5));
   }
 
   /**

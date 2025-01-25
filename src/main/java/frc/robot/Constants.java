@@ -28,6 +28,8 @@ public final class Constants {
     public static final int LIMIT_SWITCH_PORT = 3;
     public static final double BALL_COLLECTOR_MOTOR_START_SPEED = 1.0;
     public static final int BALL_COLLECTOR_MOTOR_FINISH_SPEED  = 0;
+    public static final double BALL_COLLECTOR_MOTOR_ARM_START_SPEED = 1.0;
+    public static final int BALL_COLLECTOR_MOTOR_ARM_FINISH_SPEED  = 0;
     public static final double BALL_COLLECTOR_MOTOR_ARM_START_POSITION = 1.0;
     public static final double BALL_COLLECTOR_MOTOR_ARM_FINISH_POSITION = 1.0;
     public static final double ENCODER_POSITION_FACTOR = 360;           // Degrees
