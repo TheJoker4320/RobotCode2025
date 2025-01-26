@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 
 /** An example command that uses an example subsystem. */
-public class MoveBallCollector extends Command {
+public class OpenBallCollector extends Command {
   private final BallCollector mBallCollector;
   private final Timer mTimer;
   private final double mTimeout;
@@ -19,7 +19,7 @@ public class MoveBallCollector extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MoveBallCollector(BallCollector ballCollector , double timeout) {
+  public OpenBallCollector(BallCollector ballCollector , double timeout) {
     mBallCollector = ballCollector;
     mTimer = new Timer();
     mTimeout = timeout;
