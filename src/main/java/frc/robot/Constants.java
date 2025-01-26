@@ -30,6 +30,7 @@ public final class Constants {
     public static final int STOP_SPEED = 0;
     public static final double OPEN_POSITION = 1.0;
     public static final double CLOSE_POSITION = 1.0;
+    public static final double THRESHOLD = 1.5;
     public static final double ENCODER_POSITION_FACTOR = 360;           // Degrees
     public static final double ARM_ENCODER_VELOCITY_FACTOR = 6.0;    // Degrees per seconds. TODO: Need to calibrate speed
 

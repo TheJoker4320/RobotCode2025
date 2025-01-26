@@ -48,7 +48,7 @@ public class CloseBallCollector extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mBallCollector.isAtState(BallCollectorConstants.OPEN_POSITION , BallCollectorConstants.CLOSE_POSITION) || mTimer.get() >= mTimeout) {
+    if (mBallCollector.isAtState(BallCollectorConstants.CLOSE_POSITION) || mTimer.get() >= mTimeout) {
       return true;
     }
     return false;

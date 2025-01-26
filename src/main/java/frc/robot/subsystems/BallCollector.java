@@ -54,8 +54,8 @@ public class BallCollector extends SubsystemBase {
 
   }
 
-  public boolean isAtState(double threshold , double setPoint) {
-    if (Math.abs(mEncoder.getPosition() - setPoint) < threshold) {
+  public boolean isAtState(double setPoint) {
+    if (Math.abs(mEncoder.getPosition() - setPoint) < BallCollectorConstants.THRESHOLD) {
       return true;
     }
     return false;
