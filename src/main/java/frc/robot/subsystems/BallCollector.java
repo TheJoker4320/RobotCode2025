@@ -34,10 +34,10 @@ public class BallCollector extends SubsystemBase {
   private BallCollector() {
     //configuring 
     mBallCollectorMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
-    mBallCollectorMotor.configure(Configs.BallCollectorConfig.collectorCofigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mBallCollectorMotor.configure(Configs.BallCollectorConfig.COLLECTOR_CONFIGS, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     mBallCollectorArmMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_ARM_MOTOR_PORT, MotorType.kBrushless);
-    mBallCollectorArmMotor.configure(Configs.BallCollectorConfig.armConfigs, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mBallCollectorArmMotor.configure(Configs.BallCollectorConfig.ARM_CONFIGS, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     mLimitSwitch = new DigitalInput(BallCollectorConstants.LIMIT_SWITCH_PORT);
     
     mPIDController = mBallCollectorArmMotor.getClosedLoopController();

@@ -8,21 +8,21 @@ import frc.robot.Constants.BallCollectorConstants;
   
 public class Configs {
     public static class BallCollectorConfig {
-        public static SparkMaxConfig armConfigs = new SparkMaxConfig();
-        public static SparkMaxConfig collectorCofigs = new SparkMaxConfig();
+        public static final SparkMaxConfig ARM_CONFIGS = new SparkMaxConfig();
+        public static final SparkMaxConfig COLLECTOR_CONFIGS = new SparkMaxConfig();
         
         static {
-            armConfigs.idleMode(IdleMode.kBrake);
-            armConfigs.smartCurrentLimit(BallCollectorConstants.ARM_SMART_CURRENT_LIMIT);
-            armConfigs.absoluteEncoder.positionConversionFactor(BallCollectorConstants.ENCODER_POSITION_FACTOR);
-            armConfigs.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.ARM_ENCODER_VELOCITY_FACTOR);
-            armConfigs.absoluteEncoder.inverted(BallCollectorConstants.ENCODER_INVERTED);
-            armConfigs.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-            armConfigs.closedLoop.pid(BallCollectorConstants.P_CONSTANT, BallCollectorConstants.I_CONSTANT, BallCollectorConstants.D_CONSTANT);
-            armConfigs.closedLoop.outputRange(-1, 1);        
+            ARM_CONFIGS.idleMode(IdleMode.kBrake);
+            ARM_CONFIGS.smartCurrentLimit(BallCollectorConstants.ARM_SMART_CURRENT_LIMIT);
+            ARM_CONFIGS.absoluteEncoder.positionConversionFactor(BallCollectorConstants.ENCODER_POSITION_FACTOR);
+            ARM_CONFIGS.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.ARM_ENCODER_VELOCITY_FACTOR);
+            ARM_CONFIGS.absoluteEncoder.inverted(BallCollectorConstants.ENCODER_INVERTED);
+            ARM_CONFIGS.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+            ARM_CONFIGS.closedLoop.pid(BallCollectorConstants.P_CONSTANT, BallCollectorConstants.I_CONSTANT, BallCollectorConstants.D_CONSTANT);
+            ARM_CONFIGS.closedLoop.outputRange(-1, 1);        
             
-            collectorCofigs.idleMode(IdleMode.kBrake);
-            collectorCofigs.smartCurrentLimit(BallCollectorConstants.COLLECTOR_SMART_CURRENT_LIMIT);
+            COLLECTOR_CONFIGS.idleMode(IdleMode.kBrake);
+            COLLECTOR_CONFIGS.smartCurrentLimit(BallCollectorConstants.COLLECTOR_SMART_CURRENT_LIMIT);
         }
 
 
