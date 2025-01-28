@@ -10,7 +10,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,6 +26,8 @@ public class Elevator extends SubsystemBase {
   private final DutyCycleEncoder mElevatorEncoder;
 
   private double mSetpoint;
+
+  private final Alert mEncoderDesyncAlert = new Alert("WARNING: Elevator encode values are not in sync!", Alert.AlertType.kWarning);
 
   private static Elevator mInstance = null;
   public static Elevator getInstance() {
@@ -49,7 +51,6 @@ public class Elevator extends SubsystemBase {
     mLeftMotorController.setNeutralMode(NeutralModeValue.Brake);
 
     syncEncoders();
-    DataLogManager.start();
   }
 
   private double getAbsoluteEncoderValue() {
@@ -63,18 +64,20 @@ public class Elevator extends SubsystemBase {
     mSetpoint = setpoint.height();
   }
 
-  private void verifyEncoderSync() {
+  private boolean verifyEncoderSync() {
     double krakenPosition = getCurrentHeight();
     double throughBorePosition = getAbsoluteEncoderValue();
     
     if (Math.abs(krakenPosition - throughBorePosition) > ElevatorConstants.ELEVATOR_ENCODER_TOLERANCE) {
-        DataLogManager.log("WARNING: Encoder synchronization may be lost!");
         syncEncoders();
+        return true;
     }
+
+    return false;
   }
 
-    private double getCurrentHeight() {
-    return mRightMotorController.getPosition().getValue().magnitude();
+  private double getCurrentHeight() {
+    return mRightMotorController.getPosition().getValueAsDouble();
   }
 
   public boolean isAtState(ElevatorState state) {
@@ -104,8 +107,8 @@ public class Elevator extends SubsystemBase {
 
     // Use this in shuffleboard as a graph to calculate PID values
     SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);
-    SmartDashboard.putNumber("ELEVATOR: Current position", mRightMotorController.getPosition().getValue().magnitude());
+    SmartDashboard.putNumber("ELEVATOR: Current position", getCurrentHeight());
 
-    verifyEncoderSync();
+    mEncoderDesyncAlert.set(verifyEncoderSync());
   }
 }
