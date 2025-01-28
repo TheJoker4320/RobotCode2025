@@ -55,14 +55,12 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.1;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.1;
 
-    // Notice that all the values in regard to positions/velocity/encoder/pid and so on are all based on rotations not meters
-    // so if we want a height of 1 meter, instead of 1 we convert it to rotations and put that new value
-    public static final double LOW_POSITION_HEIGHT = 50;            // Example values - in rotations
-    public static final double HIGH_POSITION_HEIGHT = 100;          // Example values - in rotations
+    public static final double LOW_POSITION_HEIGHT = 50;            // Example values - in meters
+    public static final double HIGH_POSITION_HEIGHT = 100;          // Example values - in meters
 
-    public static final double MINIMUM_ELEVATOR_HEIGHT = 10;        // This value is in rotations, TODO: Validate this value
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 10;        // This value is in meters, TODO: Validate this value
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MAXIMUM_ELEVATOR_HEIGHT = 110;       // This value is in rotations, TODO: Validate this value
+    public static final double MAXIMUM_ELEVATOR_HEIGHT = 110;       // This value is in meters, TODO: Validate this value
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
 
     public static final double ELEVATOR_P_CONSTANT = 1;             // TODO: Validate this value

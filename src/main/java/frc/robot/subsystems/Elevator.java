@@ -54,9 +54,6 @@ public class Elevator extends SubsystemBase {
   }
 
   private double getAbsoluteEncoderValue() {
-    // In the current state of the elevator there are multiple gears between the motor and the absolute encoder
-    // so in order to get the actual value of the absolute encoder from the point of view of the motor we must
-    // multiply it by the ratio
     return (mElevatorEncoder.get() * ElevatorConstants.ABSOLUTE_ENCODER_ROTATION_TO_HEIGHT_FACTOR + ElevatorConstants.ABSOLUTE_ENCODER_OFFSET);
   }
 
@@ -96,11 +93,6 @@ public class Elevator extends SubsystemBase {
       final PositionVoltage mRequest = new PositionVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
     } else {
-      /*
-      * This code is for when we want to add motion magic to the elevator
-      * notice here that just as it is in the rest of the elevator code the setpoint should be
-      * in rotations and not meters as many might think
-      */
       final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
     }
