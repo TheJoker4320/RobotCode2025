@@ -1,9 +1,14 @@
 package frc.robot.utils;
 
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -17,6 +22,7 @@ public final class Configs {
 
         static {
             Slot0Configs slot0Configs = ELEVATOR_TALONFX_CONFIG.Slot0;
+            slot0Configs.GravityType = GravityTypeValue.Elevator_Static;
             slot0Configs.kP = ElevatorConstants.ELEVATOR_P_CONSTANT;
             slot0Configs.kI = ElevatorConstants.ELEVATOR_I_CONSTANT;
             slot0Configs.kD = ElevatorConstants.ELEVATOR_D_CONSTANT;
@@ -27,6 +33,13 @@ public final class Configs {
             limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT);
             limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
             limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT);
+
+            FeedbackConfigs feedbackConfigs = ELEVATOR_TALONFX_CONFIG.Feedback;
+            feedbackConfigs.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+            feedbackConfigs.SensorToMechanismRatio = ElevatorConstants.MOTOR_ROTATION_TO_HEIGHT_FACTOR;
+
+            MotorOutputConfigs motorOutputConfigs = ELEVATOR_TALONFX_CONFIG.MotorOutput;
+            motorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
 
             /*
              * This code is for when we want to add motion magic to the elevator

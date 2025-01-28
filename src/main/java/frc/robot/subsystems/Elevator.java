@@ -57,7 +57,7 @@ public class Elevator extends SubsystemBase {
     // In the current state of the elevator there are multiple gears between the motor and the absolute encoder
     // so in order to get the actual value of the absolute encoder from the point of view of the motor we must
     // multiply it by the ratio
-    return (mElevatorEncoder.get() * ElevatorConstants.ABSOLUTE_ENCODER_TO_MOTOR_RATIO);
+    return (mElevatorEncoder.get() * ElevatorConstants.ABSOLUTE_ENCODER_ROTATION_TO_HEIGHT_FACTOR + ElevatorConstants.ABSOLUTE_ENCODER_OFFSET);
   }
 
   public void setSetpoint(ElevatorState setpoint) {

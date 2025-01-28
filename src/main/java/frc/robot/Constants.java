@@ -37,11 +37,14 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final double PULLEY_DIAMATER = 0.1;               // TODO: Validate this measurement, its in meters
     public static final double PULLEY_CIRCUMFERENCE = PULLEY_DIAMATER * Math.PI;
-    public static final double GEAR_RATION_REDUCTION = 5;           // TODO: Validate this measurement, its in meters
-    // To use the following value, find the height measurement in meters than multiply it by the height to rotation factor to get the rotations
-    public static final double HEIGHT_TO_ROTATION_FACTOR = GEAR_RATION_REDUCTION / PULLEY_CIRCUMFERENCE;
-    // This value is the difference between the axis of the motor and the axis of the through bore encoder - needed to allow encoder synchronization
-    public static final double ABSOLUTE_ENCODER_TO_MOTOR_RATIO = 4; // Value is in meters, TODO: Validate this measurement
+
+    public static final double ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION = 1;     // TODO: Validate this measurement, its in meters
+    public static final double MOTOR_GEAR_RATIO_REDUCTION = 5;                // TODO: Validate this measurement, its in meters
+
+    public static final double MOTOR_ROTATION_TO_HEIGHT_FACTOR = PULLEY_CIRCUMFERENCE / MOTOR_GEAR_RATIO_REDUCTION;
+    public static final double ABSOLUTE_ENCODER_ROTATION_TO_HEIGHT_FACTOR = PULLEY_CIRCUMFERENCE / ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION;
+
+    public static final double ABSOLUTE_ENCODER_OFFSET = 0;         // TODO: Validate measurment
 
     public static final int ENCODER_CHANNEL = 1;                    // TODO: Validate encoder channel
     public static final int RIGHT_MOTOR_DEVICE_ID = 1;              // TODO: Validate device id
