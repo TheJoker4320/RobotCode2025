@@ -39,15 +39,18 @@ public final class Constants {
     public static int ARM_HIGH_STATE = XboxController.Button.kB.value;
   }
   public static class ArmConstants {
-    public static double ENCODER_TO_ARM_GEAR_RATIO = 0;
-    //to use this value, find the angle measurement in radians than multiply it by the angle to rotation factor to get rotations
-    public static double ANGLE_TO_ROTATIONS_FACTOR = ENCODER_TO_ARM_GEAR_RATIO * 2*Math.PI;
+    public static double MOTOR_TO_ARM_GEAR_RATIO = 1;
+    public static double ENCODER_TO_ARM_GEAR_RATIO = 1;
+    
+    public static boolean SMART_CURRENT_LIMIT_ENABLED = true;
+    public static double SMART_CURRENT_LIMIT = 50;
 
     public static int ENCODER_CHANNEL = 0;
     public static int MOTOR_ID = 0;
 
     public static double ARM_POSITION_TOLERANCE = 0;
     public static double ARM_ENCODER_TOLERANCE = 0;
+    public static double ARM_ENCODER_OFFSET = 0;
 
     public static double ARM_KP = 0;
     public static double ARM_KI = 0;
@@ -56,17 +59,17 @@ public final class Constants {
     public static double ARM_KV = 0;  //calculated from ReCalc
     public static double ARM_KA = 0;  //calculated from ReCalc
 
-    public static double ARM_LOW_ANGLE = 0;   //example value, in rotations
-    public static double ARM_HIGH_ANGLE = 90; //example value, in rotations
+    public static double ARM_LOW_ANGLE = 0;   //example value, in degrees
+    public static double ARM_HIGH_ANGLE = 90; //example value, in degrees
 
     public static boolean MAXIMUM_VALUE_ENABLED = true;
     public static boolean MINIMUM_VALUE_ENABLED = true;
-    public static double MINIMUM_ARM_ANGLE = 0; //in rotations
-    public static double MAXIMUM_ARM_ANGLE = 90;//in rotations
+    public static double MINIMUM_ARM_ANGLE = 0; //in degrees
+    public static double MAXIMUM_ARM_ANGLE = 90;//in degrees
 
-    public static double MM_CRUISE_VELOCITY = 0;  //calculated from ReCalc, in rotations
-    public static double MM_ACCELERATION = 0;     //calculated from ReCalc, in rotations
-    public static double MM_JERK = 0;             //this value is optional, in rotations
+    public static double MM_CRUISE_VELOCITY = 0;  //calculated from ReCalc, in degrees
+    public static double MM_ACCELERATION = 0;     //calculated from ReCalc, in degrees
+    public static double MM_JERK = 0;             //this value is optional, in degrees
 
     public static boolean IS_MAGIC_MOTION_ENABLED = false;
     //TODO: set all constants

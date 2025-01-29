@@ -1,13 +1,27 @@
 package frc.robot.utils;
 
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.DegreesPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Second;
+
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.units.AngularAccelerationUnit;
+import edu.wpi.first.units.AngularMomentumUnit;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
 import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ArmConstants;
@@ -41,9 +55,9 @@ public final class Configs {
                 slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
 
                 MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
-                motionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;
-                motionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.MM_ACCELERATION;
-                motionMagicConfigs.MotionMagicJerk = ElevatorConstants.MM_JERK;         // Optional
+                motionMagicConfigs.withMotionMagicCruiseVelocity(DegreesPerSecond.of(ElevatorConstants.MM_CRUISE_VELOCITY));
+                motionMagicConfigs.withMotionMagicAcceleration(DegreesPerSecondPerSecond.of(ElevatorConstants.MM_ACCELERATION));
+                motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ElevatorConstants.MM_JERK));            // Optional
             }
         }
     }
@@ -83,19 +97,28 @@ public final class Configs {
             slot0Configs.kI = ArmConstants.ARM_KI;
             slot0Configs.kD = ArmConstants.ARM_KD;
             slot0Configs.kG = ArmConstants.ARM_KG;
+            slot0Configs.GravityType = GravityTypeValue.Arm_Cosine;
 
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ARM_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(ArmConstants.MAXIMUM_VALUE_ENABLED);
             limitSwitchConfigs.withForwardSoftLimitThreshold(ArmConstants.MAXIMUM_ARM_ANGLE);
             limitSwitchConfigs.withReverseSoftLimitEnable(ArmConstants.MINIMUM_VALUE_ENABLED);
-            limitSwitchConfigs.withReverseSoftLimitThreshold(ArmConstants.MINIMUM_ARM_ANGLE);
+            limitSwitchConfigs.withReverseSoftLimitThreshold(Units.Degree.of(ArmConstants.MINIMUM_ARM_ANGLE));
             
+            FeedbackConfigs feedback = ARM_TALONFX_CONFIG.Feedback;
+            feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+            feedback.SensorToMechanismRatio = ArmConstants.MOTOR_TO_ARM_GEAR_RATIO;
+
+            MotorOutputConfigs motorOutput = ARM_TALONFX_CONFIG.MotorOutput;
+            motorOutput.NeutralMode = NeutralModeValue.Brake;
+
+            CurrentLimitsConfigs currentLimit = ARM_TALONFX_CONFIG.CurrentLimits;
+            currentLimit.StatorCurrentLimitEnable = ArmConstants.SMART_CURRENT_LIMIT_ENABLED;
+            currentLimit.StatorCurrentLimit = ArmConstants.SMART_CURRENT_LIMIT;
              /*
              * This code is for when we want to add motion magic to the arm
              * Notice that when you calculate these values (probably using ReCalc) you recive it in radians - instead of radians you want
-             * it to be rotation - so you MUST convert the radians to rotation either from:
-             * the formula given in constants
-             * the conversion given in ReCalc
+             * it to be degrees - so you MUST convert the radians to degrees either from:
              */
             if (ArmConstants.IS_MAGIC_MOTION_ENABLED) {
                 slot0Configs.kV = ArmConstants.ARM_KV;
@@ -108,4 +131,5 @@ public final class Configs {
                 motionMagicConfigs.MotionMagicJerk = ArmConstants.MM_JERK;
             }
         }
+    }
 }
