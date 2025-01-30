@@ -17,7 +17,7 @@ public class ArmCollectCoral extends Command {
   public ArmCollectCoral(ArmCollectors collector) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.mCollector = collector;
-    addRequirements(collector);
+    addRequirements(mCollector);
   }
 
   // Called when the command is initially scheduled.
@@ -39,6 +39,6 @@ public class ArmCollectCoral extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return mCollector.getCoralSwitchState();
   }
 }

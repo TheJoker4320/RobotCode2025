@@ -10,14 +10,14 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmCollectorConstants;
 
 public class ArmCollectors extends SubsystemBase {
   private final SparkMax mCoralMotor;
   private final SparkMax mBallMotor;
-  private final DigitalInput mLimitSwitch;
+  private final DigitalInput mBallSwitch;
+  private final DigitalInput mCoralSwitch;
   private static ArmCollectors mInstance;
 
   public static ArmCollectors getInstance() {
@@ -30,11 +30,16 @@ public class ArmCollectors extends SubsystemBase {
   private ArmCollectors() {
       mCoralMotor = new SparkMax(ArmCollectorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
       mBallMotor = new SparkMax(ArmCollectorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
-      mLimitSwitch = new DigitalInput(ArmCollectorConstants.LIMIT_SWITCH_PORT);
+      mBallSwitch = new DigitalInput(ArmCollectorConstants.BALL_SWITCH_PORT);
+      mCoralSwitch = new DigitalInput(ArmCollectorConstants.CORAL_SWITCH_PORT);
   }
 
-  public boolean getLimitSwitchState() {
-    return mLimitSwitch.get();
+  public boolean getBallSwitchState() {
+    return mBallSwitch.get();
+  }
+
+  public boolean getCoralSwitchState() {
+    return mCoralSwitch.get();
   }
 
 /**

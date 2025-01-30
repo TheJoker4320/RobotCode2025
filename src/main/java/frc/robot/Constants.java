@@ -28,7 +28,13 @@ public final class Constants {
     public static int BALL_MOTOR_ID = 0; //#TODO: set motor id
     public static int CORAL_MOTOR_ID = 0; //#TODO: set motor id
 
-    public static int LIMIT_SWITCH_PORT = 0; //#TODO: set port
+    /*This is the coral limit switch port */
+    public static int CORAL_SWITCH_PORT = 0; //#TODO: set port
+    
+    /*This is the ball limit switch port */
+    public static int BALL_SWITCH_PORT = 0; //#TODO: set port
+
+
     public static final double BALL_COLLECTOR_SPEED = 0.5;
     public static final double CORAL_COLLECTOR_SPEED = 0.5;
     
