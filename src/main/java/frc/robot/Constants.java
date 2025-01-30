@@ -21,8 +21,6 @@ public final class Constants {
 
     public static final int MANIPULATOR_EJECT_BALL_BUTTON = 0; //#TODO: set button
     public static final int MANIPULATOR_EJECT_CORAL_BUTTON = 0; //#TODO: set button
-    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
-    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
 
   }
 
@@ -35,6 +33,9 @@ public final class Constants {
     
     /*This is the ball limit switch port */
     public static int BALL_SWITCH_PORT = 0; //#TODO: set port
+
+    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
+    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
 
 
     public static final double BALL_COLLECTOR_SPEED = 0.5;

@@ -2,7 +2,7 @@ package frc.robot.utils;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ManipulatorConstants;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -13,9 +13,9 @@ public class Configs {
 
         static {
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
-            BALL_COLLECTOR_CONFIG.smartCurrentLimit(OperatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
-            CORAL_COLLECTOR_CONFIG.smartCurrentLimit(OperatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
     }
 }
