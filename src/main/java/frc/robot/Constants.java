@@ -16,8 +16,6 @@ import edu.wpi.first.wpilibj.XboxController;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-
-
     public static final int BALL_COLLECT_BUTTON = XboxController.Button.kX.value;
     public static final int OPEN_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
     public static final int CLOSE_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
@@ -36,7 +34,6 @@ public final class Constants {
     public static final double ARM_ENCODER_VELOCITY_FACTOR = 6.0;    // Degrees per seconds. TODO: Need to calibrate speed
     public static final double OPEN_TIME_OUT = 5.0;
     public static final double CLOSE_TIME_OUT = 5.0;
-
     public static final int COLLECTOR_SMART_CURRENT_LIMIT = 20;
     public static final boolean ENCODER_INVERTED = false; // TODO: To check if encoder is inverted
     public static final int ARM_SMART_CURRENT_LIMIT = 20; // Default rev configuration for current limit

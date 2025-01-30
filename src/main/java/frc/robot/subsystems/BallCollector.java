@@ -27,8 +27,6 @@ public class BallCollector extends SubsystemBase {
   private final SparkClosedLoopController mPIDController;
   private final AbsoluteEncoder mEncoder;
 
-  
-
   private BallCollector() {
     //configuring 
     mBallCollectorMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
