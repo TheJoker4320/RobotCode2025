@@ -28,7 +28,7 @@ public class RobotContainer {
   private final Manipulator mManipulator = Manipulator.getInstance();
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController mDriverController =
+  private final XboxController m_driverController =
       new XboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -48,17 +48,17 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //button to collect balls 
-    JoystickButton manipulatorCollectBallButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
+    JoystickButton manipulatorCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
     manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
     //button to collect coral 
-    JoystickButton manipulatorCollectCoralButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
-    manipulatorCollectCoralButton.whileTrue(new ManipulatorCollectCoral(mManipulator));
+    JoystickButton manipulatorCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
+    manipulatorCollectCoralButton.toggleOnTrue(new ManipulatorCollectCoral(mManipulator));
 
     //button to eject balls 
-    JoystickButton manipulatorEjectBallButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
+    JoystickButton manipulatorEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
     manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
     //button to eject coral
-    JoystickButton manipulatorEjectCoralButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
+    JoystickButton manipulatorEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
     manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
 
   }
