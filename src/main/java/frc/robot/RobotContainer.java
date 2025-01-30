@@ -20,16 +20,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private final BallCollector mBallCollector = BallCollector.getInstance();
-
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final BallCollector mBallCollector = BallCollector.getInstance();
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
    
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    
     // Configure the trigger bindings
     configureBindings();
   }
@@ -38,15 +36,15 @@ public class RobotContainer {
 
     //Button for turn on the Ball Collector
     JoystickButton BallcollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON);
-    BallcollectorButton.onTrue(new BallCollect(mBallCollector));
+    BallcollectorButton.whileTrue(new BallCollect(mBallCollector));
 
     //Button for moving the Ball Collector
     JoystickButton MoveBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.MOVE_BALL_COLLECTOR_BUTTON);
-    MoveBallCollectorButton.onTrue(new OpenBallCollector(mBallCollector , 5));
+    MoveBallCollectorButton.onTrue(new OpenBallCollector(mBallCollector));
 
     //Button for closing the Ball Collector
     JoystickButton CloseBallCollectorButton = new JoystickButton(m_driverController, 0);
-    CloseBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector, 5));
+    CloseBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector));
   }
 
   /**

@@ -33,7 +33,8 @@ public final class Constants {
     public static final double THRESHOLD = 1.5;
     public static final double ENCODER_POSITION_FACTOR = 360;           // Degrees
     public static final double ARM_ENCODER_VELOCITY_FACTOR = 6.0;    // Degrees per seconds. TODO: Need to calibrate speed
-
+    public static final double OPEN_TIME_OUT = 5.0;
+    public static final double CLOSE_TIME_OUT = 5.0;
 
     public static final int COLLECTOR_SMART_CURRENT_LIMIT = 20;
     public static final boolean ENCODER_INVERTED = false; // TODO: To check if encoder is inverted

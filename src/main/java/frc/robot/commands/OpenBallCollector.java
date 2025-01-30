@@ -13,17 +13,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class OpenBallCollector extends Command {
   private final BallCollector mBallCollector;
   private final Timer mTimer;
-  private final double mTimeout;
   /**
    * Creates a new EampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public OpenBallCollector(BallCollector ballCollector , double timeout) {
+  public OpenBallCollector(BallCollector ballCollector) {
     mBallCollector = ballCollector;
-    mTimer = new Timer();
-    mTimeout = timeout;
-    
+    mTimer = new Timer();  
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mBallCollector);
   }
@@ -43,12 +40,13 @@ public class OpenBallCollector extends Command {
   @Override
   public void end(boolean interrupted) {
     mTimer.stop();
+    mTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mBallCollector.isAtState(BallCollectorConstants.OPEN_POSITION) || mTimer.get() >= mTimeout) {
+    if (mBallCollector.isAtState(BallCollectorConstants.OPEN_POSITION) || mTimer.get() >= BallCollectorConstants.OPEN_TIME_OUT) {
       return true;
     }
     return false;

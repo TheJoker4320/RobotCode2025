@@ -12,8 +12,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -35,15 +33,11 @@ public class BallCollector extends SubsystemBase {
     //configuring 
     mBallCollectorMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
     mBallCollectorMotor.configure(Configs.BallCollectorConfig.COLLECTOR_CONFIGS, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
     mBallCollectorArmMotor = new SparkMax(BallCollectorConstants.BALL_COLLECTOR_ARM_MOTOR_PORT, MotorType.kBrushless);
     mBallCollectorArmMotor.configure(Configs.BallCollectorConfig.ARM_CONFIGS, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     mLimitSwitch = new DigitalInput(BallCollectorConstants.LIMIT_SWITCH_PORT);
-    
     mPIDController = mBallCollectorArmMotor.getClosedLoopController();
     mEncoder = mBallCollectorArmMotor.getAbsoluteEncoder();
-    
-    
   }
 
   public static BallCollector getInstance(){
@@ -69,6 +63,7 @@ public class BallCollector extends SubsystemBase {
   public void setReference(double position) {
     mPIDController.setReference(position, ControlType.kPosition, ClosedLoopSlot.kSlot0);
   }
+
   public boolean getLimitSwitch() {
     return mLimitSwitch.get();
   }

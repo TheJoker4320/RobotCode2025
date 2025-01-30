@@ -19,13 +19,10 @@ public class Configs {
             ARM_CONFIGS.absoluteEncoder.inverted(BallCollectorConstants.ENCODER_INVERTED);
             ARM_CONFIGS.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
             ARM_CONFIGS.closedLoop.pid(BallCollectorConstants.P_CONSTANT, BallCollectorConstants.I_CONSTANT, BallCollectorConstants.D_CONSTANT);
-            ARM_CONFIGS.closedLoop.outputRange(-1, 1);        
-            
+            ARM_CONFIGS.closedLoop.outputRange(-1, 1);                  
             COLLECTOR_CONFIGS.idleMode(IdleMode.kBrake);
             COLLECTOR_CONFIGS.smartCurrentLimit(BallCollectorConstants.COLLECTOR_SMART_CURRENT_LIMIT);
         }
-
-
     }
 }
 
