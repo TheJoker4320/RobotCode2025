@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -18,10 +17,12 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    public static final int BALL_COLLECT_BUTTON = XboxController.Button.kX.value;
-    public static final int MOVE_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
-  }
 
+    public static final int BALL_COLLECT_BUTTON = XboxController.Button.kX.value;
+    public static final int OPEN_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
+    public static final int CLOSE_BALL_COLLECTOR_BUTTON = XboxController.Button.kA.value;
+
+  }
   public static class BallCollectorConstants{
     public static final int BALL_COLLECTOR_MOTOR_PORT = 1;
     public static final int BALL_COLLECTOR_ARM_MOTOR_PORT = 2;
