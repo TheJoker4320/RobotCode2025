@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorConstants;
 
@@ -46,24 +47,17 @@ public class Manipulator extends SubsystemBase {
  * This method sets the speed of the ball collector motor.
  * @param isForward - true if the motor should move forward, false if the motor should move backward.
  */
-  public void setBallSpeed(Boolean isForward) {
-    if (isForward) {
-      mBallMotor.set(ManipulatorConstants.BALL_COLLECTOR_SPEED);
-    } else {
-      mBallMotor.set(-ManipulatorConstants.BALL_COLLECTOR_SPEED);
-    }
+  public void collectBall(){
+    mBallMotor.set(ManipulatorConstants.BALL_COLLECTOR_SPEED);
   }
-
-/**
- * This method sets the speed of the coral collector motor.
- * @param isForward - true if the motor should move forward, false if the motor should move backward.
- */
-  public void setCoralSpeed(Boolean isForward) {
-    if (isForward) {
-      mCoralMotor.set(ManipulatorConstants.CORAL_COLLECTOR_SPEED);
-    } else {
-      mCoralMotor.set(-ManipulatorConstants.CORAL_COLLECTOR_SPEED);
-    }
+  public void collectCoral(){
+    mCoralMotor.set(ManipulatorConstants.CORAL_COLLECTOR_SPEED);
+  }
+  public void ejectBall(){
+    mBallMotor.set(-ManipulatorConstants.BALL_COLLECTOR_SPEED);
+  }
+  public void ejectCoral(){
+    mCoralMotor.set(-ManipulatorConstants.CORAL_COLLECTOR_SPEED);
   }
 
 
@@ -77,5 +71,8 @@ public class Manipulator extends SubsystemBase {
 
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.getBoolean("ball collector state:", getBallSwitchState());
+    SmartDashboard.putBoolean("coral collector state", getCoralSwitchState());
+  }
 }
