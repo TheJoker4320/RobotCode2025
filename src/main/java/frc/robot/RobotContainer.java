@@ -5,11 +5,11 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ArmCollectBall;
-import frc.robot.commands.ArmCollectCoral;
-import frc.robot.commands.BallEject;
-import frc.robot.commands.CoralEject;
-import frc.robot.subsystems.ArmCollectors;
+import frc.robot.commands.ManipulatorCollectBall;
+import frc.robot.commands.ManipulatorCollectCoral;
+import frc.robot.commands.ManipulatorBallEject;
+import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.subsystems.Manipulator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  private final ArmCollectors mArmCollectors = ArmCollectors.getInstance();
+  private final Manipulator mManipulator = Manipulator.getInstance();
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController mDriverController =
@@ -48,18 +48,18 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //button to collect balls 
-    JoystickButton armCollectBallButton = new JoystickButton(mDriverController, OperatorConstants.ARM_COLLECT_BALL_BUTTON);
-    armCollectBallButton.toggleOnTrue(new ArmCollectBall(mArmCollectors));
+    JoystickButton manipulatorCollectBallButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
+    manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
     //button to collect coral 
-    JoystickButton armCollectCoralButton = new JoystickButton(mDriverController, OperatorConstants.ARM_COLLECT_CORAL_BUTTON);
-    armCollectCoralButton.whileTrue(new ArmCollectCoral(mArmCollectors));
+    JoystickButton manipulatorCollectCoralButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
+    manipulatorCollectCoralButton.whileTrue(new ManipulatorCollectCoral(mManipulator));
 
     //button to eject balls 
-    JoystickButton armEjectBallButton = new JoystickButton(mDriverController, OperatorConstants.ARM_EJECT_BALL_BUTTON);
-    armEjectBallButton.whileTrue(new BallEject(mArmCollectors));
+    JoystickButton manipulatorEjectBallButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
+    manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
     //button to eject coral
-    JoystickButton armEjectCoralButton = new JoystickButton(mDriverController, OperatorConstants.ARM_EJECT_CORAL_BUTTON);
-    armEjectCoralButton.whileTrue(new CoralEject(mArmCollectors));
+    JoystickButton manipulatorEjectCoralButton = new JoystickButton(mDriverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
+    manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
 
   }
 

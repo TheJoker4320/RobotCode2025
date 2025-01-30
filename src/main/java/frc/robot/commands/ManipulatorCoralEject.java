@@ -3,28 +3,28 @@
 // the WPILib BSD license file in the root directory of this project.
 
 
-//This is the ArmCollectBall command. It is used to collect balls with the arm collector.
+//This is the CoralEject command. It is used to eject corals from the arm collector.
 
 
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ArmCollectors;
+import frc.robot.subsystems.Manipulator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArmCollectBall extends Command {
-  /** Creates a new ArmCollectBall. */
-  private ArmCollectors mCollector;
-  public ArmCollectBall(ArmCollectors collector) {
+public class ManipulatorCoralEject extends Command {
+  /** Creates a new CoralEject. */
+  private Manipulator mManipulator;
+  public ManipulatorCoralEject(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.mCollector = collector;
-    addRequirements(mCollector);
+    this.mManipulator = manipulator;
+    addRequirements(manipulator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mCollector.setBallSpeed(true);
+    mManipulator.setCoralSpeed(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,12 +34,12 @@ public class ArmCollectBall extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mCollector.stopBallCollector();
+    mManipulator.stopCoralCollector();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return mCollector.getBallSwitchState();
+    return false;
   }
 }

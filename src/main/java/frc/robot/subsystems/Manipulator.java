@@ -11,27 +11,27 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ArmCollectorConstants;
+import frc.robot.Constants.ManipulatorConstants;
 
-public class ArmCollectors extends SubsystemBase {
+public class Manipulator extends SubsystemBase {
   private final SparkMax mCoralMotor;
   private final SparkMax mBallMotor;
   private final DigitalInput mBallSwitch;
   private final DigitalInput mCoralSwitch;
-  private static ArmCollectors mInstance;
+  private static Manipulator mInstance;
 
-  public static ArmCollectors getInstance() {
+  public static Manipulator getInstance() {
     if (mInstance == null) {
-      mInstance = new ArmCollectors();
+      mInstance = new Manipulator();
     }
     return mInstance;
   }
 
-  private ArmCollectors() {
-      mCoralMotor = new SparkMax(ArmCollectorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
-      mBallMotor = new SparkMax(ArmCollectorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
-      mBallSwitch = new DigitalInput(ArmCollectorConstants.BALL_SWITCH_PORT);
-      mCoralSwitch = new DigitalInput(ArmCollectorConstants.CORAL_SWITCH_PORT);
+  private Manipulator() {
+      mCoralMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
+      mBallMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
+      mBallSwitch = new DigitalInput(ManipulatorConstants.BALL_SWITCH_PORT);
+      mCoralSwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
   }
 
   public boolean getBallSwitchState() {
@@ -48,9 +48,9 @@ public class ArmCollectors extends SubsystemBase {
  */
   public void setBallSpeed(Boolean isForward) {
     if (isForward) {
-      mBallMotor.set(ArmCollectorConstants.BALL_COLLECTOR_SPEED);
+      mBallMotor.set(ManipulatorConstants.BALL_COLLECTOR_SPEED);
     } else {
-      mBallMotor.set(-ArmCollectorConstants.BALL_COLLECTOR_SPEED);
+      mBallMotor.set(-ManipulatorConstants.BALL_COLLECTOR_SPEED);
     }
   }
 
@@ -60,9 +60,9 @@ public class ArmCollectors extends SubsystemBase {
  */
   public void setCoralSpeed(Boolean isForward) {
     if (isForward) {
-      mCoralMotor.set(ArmCollectorConstants.CORAL_COLLECTOR_SPEED);
+      mCoralMotor.set(ManipulatorConstants.CORAL_COLLECTOR_SPEED);
     } else {
-      mCoralMotor.set(-ArmCollectorConstants.CORAL_COLLECTOR_SPEED);
+      mCoralMotor.set(-ManipulatorConstants.CORAL_COLLECTOR_SPEED);
     }
   }
 

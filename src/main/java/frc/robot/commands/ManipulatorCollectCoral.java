@@ -8,22 +8,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ArmCollectors;
+import frc.robot.subsystems.Manipulator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ArmCollectCoral extends Command {
+public class ManipulatorCollectCoral extends Command {
   /** Creates a new ArmCollectCoral. */
-  private ArmCollectors mCollector;
-  public ArmCollectCoral(ArmCollectors collector) {
+  private Manipulator mManipulator;
+  public ManipulatorCollectCoral(Manipulator manipulator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.mCollector = collector;
-    addRequirements(mCollector);
+    this.mManipulator = manipulator;
+    addRequirements(mManipulator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mCollector.setCoralSpeed(true);
+    mManipulator.setCoralSpeed(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,12 +33,12 @@ public class ArmCollectCoral extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mCollector.stopCoralCollector();
+    mManipulator.stopCoralCollector();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return mCollector.getCoralSwitchState();
+    return mManipulator.getCoralSwitchState();
   }
 }

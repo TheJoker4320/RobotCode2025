@@ -16,15 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    public static final int ARM_COLLECT_BALL_BUTTON = 0; //#TODO: set button
-    public static final int ARM_COLLECT_CORAL_BUTTON = 0; //#TODO: set button
+    public static final int MANIPULATOR_COLLECT_BALL_BUTTON = 0; //#TODO: set button
+    public static final int MANIPULATOR_COLLECT_CORAL_BUTTON = 0; //#TODO: set button
 
-    public static final int ARM_EJECT_BALL_BUTTON = 0; //#TODO: set button
-    public static final int ARM_EJECT_CORAL_BUTTON = 0; //#TODO: set button
+    public static final int MANIPULATOR_EJECT_BALL_BUTTON = 0; //#TODO: set button
+    public static final int MANIPULATOR_EJECT_CORAL_BUTTON = 0; //#TODO: set button
 
   }
 
-  public static class ArmCollectorConstants {
+  public static class ManipulatorConstants {
     public static int BALL_MOTOR_ID = 0; //#TODO: set motor id
     public static int CORAL_MOTOR_ID = 0; //#TODO: set motor id
 
