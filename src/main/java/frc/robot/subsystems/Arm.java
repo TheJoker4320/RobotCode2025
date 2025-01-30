@@ -47,7 +47,7 @@ public class Arm extends SubsystemBase {
     mSetpoint = setpoint.angle();
   }
   private double getCurrentAngle() {
-    return mMotor.getPosition().getValueAsDouble();
+    return mMotor.getPosition().getValue().in(Degree);
   }
   private void syncEncoders() {
     mMotor.setPosition(Degree.of(getAbsoluteEncoderValue()));
