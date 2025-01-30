@@ -7,12 +7,15 @@
 
 package frc.robot.subsystems;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.utils.Configs.ManipulatorConfigs;
 
 public class Manipulator extends SubsystemBase {
   private final SparkMax mCoralMotor;
@@ -33,6 +36,8 @@ public class Manipulator extends SubsystemBase {
       mBallMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
       mBallSwitch = new DigitalInput(ManipulatorConstants.BALL_SWITCH_PORT);
       mCoralSwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
+      mCoralMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      mBallMotor.configure(ManipulatorConfigs.BALL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public boolean getBallSwitchState() {
