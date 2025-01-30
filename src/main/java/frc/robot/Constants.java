@@ -21,6 +21,8 @@ public final class Constants {
 
     public static final int MANIPULATOR_EJECT_BALL_BUTTON = 0; //#TODO: set button
     public static final int MANIPULATOR_EJECT_CORAL_BUTTON = 0; //#TODO: set button
+    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
+    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
 
   }
 
