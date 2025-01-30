@@ -22,7 +22,7 @@ public final class Constants {
 
   }
   public static class BallCollectorConstants{
-    public static final int BALL_COLLECTOR_MOTOR_PORT = 1;
+    public static final int BALL_COLLECTOR_MOTOR_PORT = 1; //TODO: verify the ports
     public static final int BALL_COLLECTOR_ARM_MOTOR_PORT = 2;
     public static final int LIMIT_SWITCH_PORT = 3;
     public static final double COLLECTING_SPEED = 1.0;
