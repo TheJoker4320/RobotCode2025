@@ -1,5 +1,6 @@
 package frc.robot.utils;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
@@ -41,11 +42,10 @@ public final class Configs {
             MotorOutputConfigs motorOutputConfigs = ELEVATOR_TALONFX_CONFIG.MotorOutput;
             motorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
 
-            /*
-             * This code is for when we want to add motion magic to the elevator
-             * Notice that when you calculate these values (probably using ReCalc) you recive it in meters - instead of meters you want
-             * it to be rotation - so you MUST convert the meters to rotations
-             */
+            CurrentLimitsConfigs currentLimitsConfigs = ELEVATOR_TALONFX_CONFIG.CurrentLimits;
+            currentLimitsConfigs.withStatorCurrentLimitEnable(ElevatorConstants.CURRENT_LIMIT_ENABLED);
+            currentLimitsConfigs.withStatorCurrentLimit(ElevatorConstants.CURRENT_LIMIT);
+
             if (ElevatorConstants.MOTIONMAGIC_ENABLED) {
                 slot0Configs.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
                 slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;

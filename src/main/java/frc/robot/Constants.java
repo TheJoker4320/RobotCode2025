@@ -52,15 +52,15 @@ public final class Constants {
 
     public static final boolean LEFT_OPPOSITE_OF_RIGHT = true;      // TODO: Validate this value
 
-    public static final double ELEVATOR_ENCODER_TOLERANCE = 0.1;
-    public static final double ELEVATOR_POSITION_TOLERANCE = 0.1;
+    public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
+    public static final double ELEVATOR_POSITION_TOLERANCE = 0.01;
 
-    public static final double LOW_POSITION_HEIGHT = 50;            // Example values - in meters
-    public static final double HIGH_POSITION_HEIGHT = 100;          // Example values - in meters
+    public static final double LOW_POSITION_HEIGHT = 0.5;            // Example values - in meters
+    public static final double HIGH_POSITION_HEIGHT = 1;          // Example values - in meters
 
-    public static final double MINIMUM_ELEVATOR_HEIGHT = 10;        // This value is in meters, TODO: Validate this value
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 0;        // This value is in meters, TODO: Validate this value
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MAXIMUM_ELEVATOR_HEIGHT = 110;       // This value is in meters, TODO: Validate this value
+    public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.1;       // This value is in meters, TODO: Validate this value
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
 
     public static final double ELEVATOR_P_CONSTANT = 1;             // TODO: Validate this value
@@ -73,6 +73,9 @@ public final class Constants {
     public static final double MM_CRUISE_VELOCITY = 1;              // TODO: Calculate this value from the site ReCalc
     public static final double MM_ACCELERATION = 10;                // TODO: Calculate this value from the site ReCalc
     public static final double MM_JERK = 100;                       // This value is optional, TODO: Calculate this value from the site ReCalc
+
+    public static final boolean CURRENT_LIMIT_ENABLED = true;
+    public static final double CURRENT_LIMIT = 50;
 
     public static final boolean MOTIONMAGIC_ENABLED = false;
 
