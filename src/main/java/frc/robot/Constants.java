@@ -35,16 +35,19 @@ public final class Constants {
   }
 
   public static class ElevatorConstants {
-    public static final double PULLEY_DIAMATER = 0.1;               // TODO: Validate this measurement, its in meters
-    public static final double PULLEY_CIRCUMFERENCE = PULLEY_DIAMATER * Math.PI;
+    // Im not sure how accurate this calculation is with the pulley due to the fact that the pulley only pulls the 3rd stage
+    // also it may not be easy to measure the pulley's circumference - i believe we may want to measure what value the motor spits
+    // out at height 0, and at height 1 - and we find out the ratio.
+    // do something similliar with the absolute encoder to get the offset and the ratio.
+    public static final double PULLEY_CIRCUMFERENCE = 2;                      //TODO: Validate this measurement, This is the circumference of the pulley (the full length of the pulley) - in meters
 
-    public static final double ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION = 1;     // TODO: Validate this measurement, its in meters
-    public static final double MOTOR_GEAR_RATIO_REDUCTION = 5;                // TODO: Validate this measurement, its in meters
+    public static final double ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION = 1;     // TODO: Validate this measurement
+    public static final double MOTOR_GEAR_RATIO_REDUCTION = 5;                // TODO: Validate this measurement
 
     public static final double MOTOR_ROTATION_TO_HEIGHT_FACTOR = PULLEY_CIRCUMFERENCE / MOTOR_GEAR_RATIO_REDUCTION;
     public static final double ABSOLUTE_ENCODER_ROTATION_TO_HEIGHT_FACTOR = PULLEY_CIRCUMFERENCE / ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION;
 
-    public static final double ABSOLUTE_ENCODER_OFFSET = 0;         // TODO: Validate measurment
+    public static final double ABSOLUTE_ENCODER_OFFSET = 0;         // TODO: Validate measurment - in meters
 
     public static final int ENCODER_CHANNEL = 1;                    // TODO: Validate encoder channel
     public static final int RIGHT_MOTOR_DEVICE_ID = 1;              // TODO: Validate device id
@@ -66,9 +69,9 @@ public final class Constants {
     public static final double ELEVATOR_P_CONSTANT = 1;             // TODO: Validate this value
     public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
     public static final double ELEVATOR_D_CONSTANT = 0;             // TODO: Validate this value
-    public static final double ELEVATOR_G_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
-    public static final double ELEVATOR_V_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
-    public static final double ELEVATOR_A_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc
+    public static final double ELEVATOR_G_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc - or sysid
+    public static final double ELEVATOR_V_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc - or sysid
+    public static final double ELEVATOR_A_CONSTANT = 0;             // TODO: Calculate this value from the site ReCalc - or sysid
 
     public static final double MM_CRUISE_VELOCITY = 1;              // TODO: Calculate this value from the site ReCalc
     public static final double MM_ACCELERATION = 10;                // TODO: Calculate this value from the site ReCalc
