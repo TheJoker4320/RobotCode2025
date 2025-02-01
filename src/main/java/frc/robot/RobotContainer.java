@@ -25,7 +25,6 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final BallCollector mBallCollector = BallCollector.getInstance();
 
-
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort); 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -34,16 +33,15 @@ public class RobotContainer {
   }
   
   private void configureBindings() {
-    //Button for turn on the Ball Collector
-    JoystickButton BallcollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON);
-    BallcollectorButton.whileTrue(new BallCollect(mBallCollector));
+    //BallCollector Buttons
 
-    //Button for moving the Ball Collector
-    JoystickButton OpenBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.OPEN_BALL_COLLECTOR_BUTTON);
+    JoystickButton BallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON); //Button for turn on the Ball Collector
+    BallCollectorButton.whileTrue(new BallCollect(mBallCollector));
+    
+    JoystickButton OpenBallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.OPEN_BALL_COLLECTOR_BUTTON); //Button for moving the Ball Collector
     OpenBallCollectorButton.onTrue(new OpenBallCollector(mBallCollector));
 
-    //Button for closing the Ball Collector
-    JoystickButton CloseBallCollectorButton = new JoystickButton(m_driverController,OperatorConstants.CLOSE_BALL_COLLECTOR_BUTTON);
+    JoystickButton CloseBallCollectorButton = new JoystickButton(m_driverController,OperatorConstants.CLOSE_BALL_COLLECTOR_BUTTON); //Button for closing the Ball Collector
     CloseBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector));
 
   }
