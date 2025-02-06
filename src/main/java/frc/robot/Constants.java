@@ -52,6 +52,8 @@ public final class Constants {
     public static double ARM_ENCODER_TOLERANCE = 0;
     public static double ARM_ENCODER_OFFSET = 0;
 
+    //all PID values are in rotations, not degrees/radians
+    //when we calculated them from sysid we will need to multiply them by 360/2pi
     public static double ARM_KP = 0;
     public static double ARM_KI = 0;
     public static double ARM_KD = 0;
