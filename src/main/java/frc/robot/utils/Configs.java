@@ -55,9 +55,9 @@ public final class Configs {
                 slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
 
                 MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
-                motionMagicConfigs.withMotionMagicCruiseVelocity(DegreesPerSecond.of(ElevatorConstants.MM_CRUISE_VELOCITY));
-                motionMagicConfigs.withMotionMagicAcceleration(DegreesPerSecondPerSecond.of(ElevatorConstants.MM_ACCELERATION));
-                motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ElevatorConstants.MM_JERK));            // Optional
+                motionMagicConfigs.withMotionMagicCruiseVelocity(ElevatorConstants.MM_CRUISE_VELOCITY);
+                motionMagicConfigs.withMotionMagicAcceleration(ElevatorConstants.MM_ACCELERATION);
+                motionMagicConfigs.withMotionMagicJerk(ElevatorConstants.MM_JERK);            // Optional
             }
         }
     }
@@ -101,7 +101,7 @@ public final class Configs {
 
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ARM_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(ArmConstants.MAXIMUM_VALUE_ENABLED);
-            limitSwitchConfigs.withForwardSoftLimitThreshold(ArmConstants.MAXIMUM_ARM_ANGLE);
+            limitSwitchConfigs.withForwardSoftLimitThreshold(Units.Degree.of(ArmConstants.MAXIMUM_ARM_ANGLE));
             limitSwitchConfigs.withReverseSoftLimitEnable(ArmConstants.MINIMUM_VALUE_ENABLED);
             limitSwitchConfigs.withReverseSoftLimitThreshold(Units.Degree.of(ArmConstants.MINIMUM_ARM_ANGLE));
             
@@ -125,10 +125,9 @@ public final class Configs {
                 slot0Configs.kA = ArmConstants.ARM_KA;
 
                 MotionMagicConfigs motionMagicConfigs = ARM_TALONFX_CONFIG.MotionMagic;
-                motionMagicConfigs.MotionMagicCruiseVelocity = ArmConstants.MM_CRUISE_VELOCITY;
-                motionMagicConfigs.MotionMagicAcceleration = ArmConstants.MM_ACCELERATION;
-                //optional
-                motionMagicConfigs.MotionMagicJerk = ArmConstants.MM_JERK;
+                motionMagicConfigs.withMotionMagicCruiseVelocity(DegreesPerSecond.of(ArmConstants.MM_CRUISE_VELOCITY));
+                motionMagicConfigs.withMotionMagicAcceleration(DegreesPerSecondPerSecond.of(ArmConstants.MM_ACCELERATION));
+                motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ArmConstants.MM_JERK));            // Optional
             }
         }
     }
