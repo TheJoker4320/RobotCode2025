@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -14,6 +16,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.utils.ArmState;
@@ -25,6 +28,8 @@ public class Arm extends SubsystemBase {
   private DutyCycleEncoder mEncoder;
   
   private double mSetpoint;
+  private ArmState mSetpointState;
+  private boolean mSetpointInitiallied;
   
   private static Arm mInstance;
   public static Arm getInstance() {
@@ -39,11 +44,15 @@ public class Arm extends SubsystemBase {
     mMotor.getConfigurator().apply(ArmConfigs.ARM_TALONFX_CONFIG);
     mMotor.setNeutralMode(NeutralModeValue.Brake);
     syncEncoders();
+
+    mSetpointInitiallied = false;
   }
   public double getAbsoluteEncoderValue(){
     return mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET;
   }
   public void setSetpoint(ArmState setpoint) {
+    mSetpointInitiallied = true;
+    mSetpointState = setpoint;
     mSetpoint = setpoint.angle();
   }
   private double getCurrentAngle() {
@@ -68,23 +77,35 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    if (!ArmConstants.IS_MAGIC_MOTION_ENABLED) {
-      PositionVoltage m_request = new PositionVoltage(0);
-      mMotor.setControl(m_request.withPosition(Degree.of(mSetpoint)));
-    }
-    /*
-     * this code is for when we want to add magic motion to the arm
-     * notice here that just as it is in the rest of the arm code the setpoint should be
-     * in degrees and not radians
-     */
-    else {  
-      MotionMagicVoltage m_request = new MotionMagicVoltage(0);
-      mMotor.setControl(m_request.withPosition(Degree.of(mSetpoint)));
+    SmartDashboard.putNumber("setpoint", mSetpoint);
+    SmartDashboard.putNumber("arm angle", getAbsoluteEncoderValue());
+    SmartDashboard.putNumber("arm motor", mMotor.get());
+    SmartDashboard.putNumber("inner value", mMotor.getPosition().getValue().in(Degrees));
+    SmartDashboard.putNumber("arm velocity", mMotor.getVelocity().getValue().in(DegreesPerSecond));
+
+    if (mSetpointInitiallied) {
+      // This method will be called once per scheduler run
+      if (!ArmConstants.IS_MAGIC_MOTION_ENABLED) {
+        PositionVoltage m_request = new PositionVoltage(0);
+        mMotor.setControl(m_request.withPosition(Degree.of(mSetpoint)));
+      }
+      /*
+      * this code is for when we want to add magic motion to the arm
+      * notice here that just as it is in the rest of the arm code the setpoint should be
+      * in degrees and not radians
+      */
+      else {  
+        MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+        mMotor.setControl(m_request.withPosition(Degree.of(mSetpoint)));
+      }
     }
 
     //sends to smart dashboard if encoders are out of sync
-    Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
-    encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
+    //Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
+    //encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
+    
+    //if (mSetpointInitiallied && isAtState(mSetpointState))
+    //  mSetpointInitiallied = false;
+    verifyEncoderSync();
   }
 }

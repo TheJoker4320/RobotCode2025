@@ -34,8 +34,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private Arm mArm = Arm.getInstance();
-  private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
-  private final Elevator mElevatorSubsystem = Elevator.getInstance();
+  //private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
+  //private final Elevator mElevatorSubsystem = Elevator.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController m_driverController =
@@ -59,10 +59,14 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //Arm buttons
+    // Its B
     JoystickButton armSetLow = new JoystickButton(m_driverController, OperatorConstants.ARM_LOW_STATE);   //raises arm to low state
     armSetLow.onTrue(new ArmReachAngle(mArm, ArmState.LOW));
+    // Its A
     JoystickButton armSetHigh = new JoystickButton(m_driverController, OperatorConstants.ARM_HIGH_STATE); //raises arm to high state
     armSetHigh.onTrue(new ArmReachAngle(mArm, ArmState.HIGH));
+    
+    /*
     // Elevator buttons
     JoystickButton elevatorSetLow = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
     elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
@@ -93,6 +97,7 @@ public class RobotContainer {
         mSwerveSubsystem
       )
     );
+    */
   }
 
   /**

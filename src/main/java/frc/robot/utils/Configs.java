@@ -99,6 +99,9 @@ public final class Configs {
             slot0Configs.kG = ArmConstants.ARM_KG;
             slot0Configs.GravityType = GravityTypeValue.Arm_Cosine;
 
+            MotorOutputConfigs motorOutputConfigs = ARM_TALONFX_CONFIG.MotorOutput;
+            motorOutputConfigs.Inverted = ArmConstants.INVERTED_VALUE;
+
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ARM_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(ArmConstants.MAXIMUM_VALUE_ENABLED);
             limitSwitchConfigs.withForwardSoftLimitThreshold(Units.Degree.of(ArmConstants.MAXIMUM_ARM_ANGLE));
@@ -121,13 +124,14 @@ public final class Configs {
              * it to be degrees - so you MUST convert the radians to degrees either from:
              */
             if (ArmConstants.IS_MAGIC_MOTION_ENABLED) {
+                slot0Configs.kS = ArmConstants.ARM_KS;
                 slot0Configs.kV = ArmConstants.ARM_KV;
                 slot0Configs.kA = ArmConstants.ARM_KA;
 
                 MotionMagicConfigs motionMagicConfigs = ARM_TALONFX_CONFIG.MotionMagic;
                 motionMagicConfigs.withMotionMagicCruiseVelocity(DegreesPerSecond.of(ArmConstants.MM_CRUISE_VELOCITY));
                 motionMagicConfigs.withMotionMagicAcceleration(DegreesPerSecondPerSecond.of(ArmConstants.MM_ACCELERATION));
-                motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ArmConstants.MM_JERK));            // Optional
+                //motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ArmConstants.MM_JERK));            // Optional
             }
         }
     }
