@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
+  private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -54,15 +54,13 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Elevator buttons
-    // ITS Y
     JoystickButton elevatorSetLow = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
     elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
-    // ITS X
     JoystickButton elevatorSetHigh = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
     elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
 
     // Swerve buttons
-    /*JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
+    JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
     slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER), mSwerveSubsystem));
     JoystickButton mediumSwerveButton = new JoystickButton(m_driverController, OperatorConstants.MEDIUM_SPEED_SWERVE_BUTTON);   // Artifically slows down the robot (not too much) by multiplying the drivers input (*0.7)
     mediumSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.MEDIUM_INPUT_MULTIPLIER), mSwerveSubsystem));
@@ -84,7 +82,7 @@ public class RobotContainer {
         ), 
         mSwerveSubsystem
       )
-    );*/
+    );
   }
 
   /**
