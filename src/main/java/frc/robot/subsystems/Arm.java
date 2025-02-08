@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
@@ -39,6 +40,7 @@ public class Arm extends SubsystemBase {
   }
 
   private Arm() {
+    SmartDashboard.putBoolean("Reached state", false);
     mMotor = new TalonFX(ArmConstants.MOTOR_ID);
     mEncoder = new DutyCycleEncoder(ArmConstants.ENCODER_CHANNEL);
     mMotor.getConfigurator().apply(ArmConfigs.ARM_TALONFX_CONFIG);
@@ -50,11 +52,13 @@ public class Arm extends SubsystemBase {
   public double getAbsoluteEncoderValue(){
     return mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET;
   }
+
   public void setSetpoint(ArmState setpoint) {
     mSetpointInitiallied = true;
     mSetpointState = setpoint;
     mSetpoint = setpoint.angle();
   }
+
   private double getCurrentAngle() {
     return mMotor.getPosition().getValue().in(Degree);
   }
@@ -68,10 +72,21 @@ public class Arm extends SubsystemBase {
     }
     return false;
   }
+
   public boolean isAtState(ArmState state) {
-    if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE)
+    if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE) {
+      SmartDashboard.putBoolean("Reached state", true);
+      stopMotorInPlace();
+      mSetpointInitiallied = false;
       return true;
+    }
+    SmartDashboard.putBoolean("Reached state", false);
     return false;
+  }
+
+  public void stopMotorInPlace() {
+    mMotor.set(0);
+    mMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 
 
@@ -82,6 +97,7 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("arm motor", mMotor.get());
     SmartDashboard.putNumber("inner value", mMotor.getPosition().getValue().in(Degrees));
     SmartDashboard.putNumber("arm velocity", mMotor.getVelocity().getValue().in(DegreesPerSecond));
+    SmartDashboard.putNumber("arm current usage", mMotor.getStatorCurrent().getValue().in(Amps));
 
     if (mSetpointInitiallied) {
       // This method will be called once per scheduler run

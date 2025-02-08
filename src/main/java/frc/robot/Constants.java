@@ -41,42 +41,41 @@ public final class Constants {
     public static int ARM_HIGH_STATE = XboxController.Button.kB.value;
   }
   public static class ArmConstants {
-	  public static double MOTOR_TO_ARM_GEAR_RATIO = (5.0 * 4.0 * 4.0 * 42.0) / (18.0);
+	  public static double MOTOR_TO_ARM_GEAR_RATIO = (4.0 * 4.0 * 3.0 * 42.0) / (18.0);
     public static double ENCODER_TO_ARM_GEAR_RATIO = 1;
     
     public static boolean SMART_CURRENT_LIMIT_ENABLED = true;
-    public static double SMART_CURRENT_LIMIT = 50;
+    public static double SMART_CURRENT_LIMIT = 40;
 
     public static int ENCODER_CHANNEL = 0;
     public static int MOTOR_ID = 13;
 
-    public static double ARM_POSITION_TOLERANCE = 2.5;  // in degrees
+    public static double ARM_POSITION_TOLERANCE = 1;  // in degrees
     public static double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
     public static double ARM_ENCODER_OFFSET = -250.7;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
-    //when we calculated them from sysid we will need to multiply them by 360/2pi
-    public static double ARM_KP = 31;
+    public static double ARM_KP = 33.1816;
     public static double ARM_KI = 0;
-    public static double ARM_KD = 5.4098;
-    public static double ARM_KG = 0.17434;  //calculated from ReCalc
-    public static double ARM_KV = 18.986;  //calculated from ReCalc
-    public static double ARM_KA = 0.9083;  //calculated from ReCalc
-    public static final double ARM_KS = 0.25047;
+    public static double ARM_KD = 5.280688;
+    public static double ARM_KG = 0.414284;  //calculated from ReCalc
+    public static double ARM_KV = 10.32784;  //calculated from ReCalc
+    public static double ARM_KA = 0.689612;  //calculated from ReCalc
+    public static final double ARM_KS = 0.52706;
 
     public static InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
-    public static double ARM_LOW_ANGLE = -70;   //test value, in degrees
-    public static double ARM_HIGH_ANGLE = 70;   //test value, in degrees
+    public static double ARM_LOW_ANGLE = -80;   //test value, in degrees
+    public static double ARM_HIGH_ANGLE = 60;   //test value, in degrees
 
     public static boolean MAXIMUM_VALUE_ENABLED = true;
     public static boolean MINIMUM_VALUE_ENABLED = true;
-    public static double MINIMUM_ARM_ANGLE = -82; //current min - not final - in degrees
-    public static double MAXIMUM_ARM_ANGLE = 82;  //current max - not final - in degrees
+    public static double MINIMUM_ARM_ANGLE = -87; //current min - not final - in degrees
+    public static double MAXIMUM_ARM_ANGLE = 70;  //current max - not final - in degrees
 
-    public static double MM_CRUISE_VELOCITY = 260;  //calculated from ReCalc, in degrees
-    public static double MM_ACCELERATION = 200;     //calculated from ReCalc, in degrees
-    //public static double MM_JERK = 200;             //this value is optional, in degrees
+    public static double MM_CRUISE_VELOCITY = 250;  //calculated from ReCalc, in degrees
+    public static double MM_ACCELERATION = 500;     //calculated from ReCalc, in degrees
+    public static double MM_JERK = 2500;            //this value is optional, in degrees
 
     public static boolean IS_MAGIC_MOTION_ENABLED = true;
     //TODO: set all constants

@@ -131,7 +131,7 @@ public final class Configs {
                 MotionMagicConfigs motionMagicConfigs = ARM_TALONFX_CONFIG.MotionMagic;
                 motionMagicConfigs.withMotionMagicCruiseVelocity(DegreesPerSecond.of(ArmConstants.MM_CRUISE_VELOCITY));
                 motionMagicConfigs.withMotionMagicAcceleration(DegreesPerSecondPerSecond.of(ArmConstants.MM_ACCELERATION));
-                //motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ArmConstants.MM_JERK));            // Optional
+                motionMagicConfigs.withMotionMagicJerk(DegreesPerSecondPerSecond.per(Second).of(ArmConstants.MM_JERK));            // Optional
             }
         }
     }

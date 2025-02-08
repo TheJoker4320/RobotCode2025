@@ -18,6 +18,7 @@ import frc.robot.subsystems.Swerve.SwerveModuleType;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -61,10 +62,10 @@ public class RobotContainer {
     //Arm buttons
     // Its B
     JoystickButton armSetLow = new JoystickButton(m_driverController, OperatorConstants.ARM_LOW_STATE);   //raises arm to low state
-    armSetLow.onTrue(new ArmReachAngle(mArm, ArmState.LOW));
+    armSetLow.onTrue((new ArmReachAngle(mArm, ArmState.LOW)));
     // Its A
     JoystickButton armSetHigh = new JoystickButton(m_driverController, OperatorConstants.ARM_HIGH_STATE); //raises arm to high state
-    armSetHigh.onTrue(new ArmReachAngle(mArm, ArmState.HIGH));
+    armSetHigh.onTrue((new ArmReachAngle(mArm, ArmState.HIGH)));
     
     /*
     // Elevator buttons
