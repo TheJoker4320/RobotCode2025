@@ -37,10 +37,11 @@ public final class Configs {
 
             FeedbackConfigs feedbackConfigs = ELEVATOR_TALONFX_CONFIG.Feedback;
             feedbackConfigs.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
-            feedbackConfigs.SensorToMechanismRatio = ElevatorConstants.MOTOR_ROTATION_TO_HEIGHT_FACTOR;
+            feedbackConfigs.SensorToMechanismRatio = ElevatorConstants.ELV_SENSOR_TO_MECAHNISM_RATIO;
 
             MotorOutputConfigs motorOutputConfigs = ELEVATOR_TALONFX_CONFIG.MotorOutput;
             motorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
+            motorOutputConfigs.Inverted = ElevatorConstants.RIGHT_MOTOR_INVERTED;
 
             CurrentLimitsConfigs currentLimitsConfigs = ELEVATOR_TALONFX_CONFIG.CurrentLimits;
             currentLimitsConfigs.withStatorCurrentLimitEnable(ElevatorConstants.CURRENT_LIMIT_ENABLED);
@@ -49,6 +50,7 @@ public final class Configs {
             if (ElevatorConstants.MOTIONMAGIC_ENABLED) {
                 slot0Configs.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
                 slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
+                slot0Configs.kS = ElevatorConstants.ELEVATOR_S_CONSTANT;
 
                 MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
                 motionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;

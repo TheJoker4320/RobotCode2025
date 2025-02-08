@@ -23,9 +23,10 @@ public class Elevator extends SubsystemBase {
   private final TalonFX mRightMotorController;
   private final TalonFX mLeftMotorController;
 
-  private final DutyCycleEncoder mElevatorEncoder;
+  //private final DutyCycleEncoder mElevatorEncoder;
 
   private double mSetpoint;
+  private boolean mSetpointInitiallied = false;
 
   private final Alert mEncoderDesyncAlert = new Alert("WARNING: Elevator encode values are not in sync!", Alert.AlertType.kWarning);
 
@@ -40,7 +41,7 @@ public class Elevator extends SubsystemBase {
   private Elevator() {
     super("Elevator");
 
-    mElevatorEncoder = new DutyCycleEncoder(ElevatorConstants.ENCODER_CHANNEL);
+    //mElevatorEncoder = new DutyCycleEncoder(ElevatorConstants.ENCODER_CHANNEL);
 
     mRightMotorController = new TalonFX(ElevatorConstants.RIGHT_MOTOR_DEVICE_ID);
     mRightMotorController.getConfigurator().apply(ElevatorConfigs.ELEVATOR_TALONFX_CONFIG);
@@ -50,18 +51,19 @@ public class Elevator extends SubsystemBase {
     mLeftMotorController.setControl(new Follower(mRightMotorController.getDeviceID(), ElevatorConstants.LEFT_OPPOSITE_OF_RIGHT));
     mLeftMotorController.setNeutralMode(NeutralModeValue.Brake);
 
-    syncEncoders();
+    //syncEncoders();
   }
 
-  private double getAbsoluteEncoderValue() {
+  /*private double getAbsoluteEncoderValue() {
     return (mElevatorEncoder.get() * ElevatorConstants.ABSOLUTE_ENCODER_ROTATION_TO_HEIGHT_FACTOR + ElevatorConstants.ABSOLUTE_ENCODER_OFFSET);
-  }
+  }*/
 
   public void setSetpoint(ElevatorState setpoint) {
     mSetpoint = setpoint.height();
+    mSetpointInitiallied = true;
   }
 
-  private boolean verifyEncoderSync() {
+  /*private boolean verifyEncoderSync() {
     double krakenPosition = getCurrentHeight();
     double throughBorePosition = getAbsoluteEncoderValue();
     
@@ -71,36 +73,42 @@ public class Elevator extends SubsystemBase {
     }
 
     return false;
-  }
+  }*/
 
   private double getCurrentHeight() {
     return mRightMotorController.getPosition().getValueAsDouble();
   }
 
   public boolean isAtState(ElevatorState state) {
-    if (Math.abs(state.height() - getCurrentHeight()) < ElevatorConstants.ELEVATOR_POSITION_TOLERANCE)
+    if (Math.abs(state.height() - getCurrentHeight()) < ElevatorConstants.ELEVATOR_POSITION_TOLERANCE) {
+      mSetpointInitiallied = false;
+      mRightMotorController.set(0);
       return true;
+    }
     return false; 
   }
 
-  private void syncEncoders() {
+  /*private void syncEncoders() {
     mRightMotorController.setPosition(getAbsoluteEncoderValue());
-  }
+  }*/
 
   @Override
   public void periodic() {
-    if (!ElevatorConstants.MOTIONMAGIC_ENABLED) {
-      final PositionVoltage mRequest = new PositionVoltage(0);
-      mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
-    } else {
-      final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
-      mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+    if (mSetpointInitiallied) {
+      if (!ElevatorConstants.MOTIONMAGIC_ENABLED) {
+        final PositionVoltage mRequest = new PositionVoltage(0);
+        mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+      } else {
+        final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
+        mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+      }
     }
 
     // Use this in shuffleboard as a graph to calculate PID values
     SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);
     SmartDashboard.putNumber("ELEVATOR: Current position", getCurrentHeight());
-
-    mEncoderDesyncAlert.set(verifyEncoderSync());
+    SmartDashboard.putNumber("output", mRightMotorController.get());
+    SmartDashboard.putBoolean("initiallized", mSetpointInitiallied);
+    //mEncoderDesyncAlert.set(verifyEncoderSync());
   }
 }
