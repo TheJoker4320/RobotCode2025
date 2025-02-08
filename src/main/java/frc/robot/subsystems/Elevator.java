@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -46,6 +49,8 @@ public class Elevator extends SubsystemBase {
     mRightMotorController = new TalonFX(ElevatorConstants.RIGHT_MOTOR_DEVICE_ID);
     mRightMotorController.getConfigurator().apply(ElevatorConfigs.ELEVATOR_TALONFX_CONFIG);
     mRightMotorController.setNeutralMode(NeutralModeValue.Brake);
+
+    mRightMotorController.setPosition(ElevatorConstants.MOTOR_OFFSET);
 
     mLeftMotorController = new TalonFX(ElevatorConstants.LEFT_MOTOR_DEVICE_ID);
     mLeftMotorController.setControl(new Follower(mRightMotorController.getDeviceID(), ElevatorConstants.LEFT_OPPOSITE_OF_RIGHT));
@@ -97,16 +102,20 @@ public class Elevator extends SubsystemBase {
     if (mSetpointInitiallied) {
       if (!ElevatorConstants.MOTIONMAGIC_ENABLED) {
         final PositionVoltage mRequest = new PositionVoltage(0);
-        mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+        mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
       } else {
         final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
-        mRightMotorController.setControl(mRequest.withPosition(mSetpoint));
+        mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
+        SmartDashboard.putBoolean("gave command", true);
       }
+    } else {
+      SmartDashboard.putBoolean("gave command", false);
     }
 
     // Use this in shuffleboard as a graph to calculate PID values
     SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);
     SmartDashboard.putNumber("ELEVATOR: Current position", getCurrentHeight());
+    SmartDashboard.putNumber("velocity", mRightMotorController.getVelocity().getValue().in(RotationsPerSecond));
     SmartDashboard.putNumber("output", mRightMotorController.get());
     SmartDashboard.putBoolean("initiallized", mSetpointInitiallied);
     //mEncoderDesyncAlert.set(verifyEncoderSync());

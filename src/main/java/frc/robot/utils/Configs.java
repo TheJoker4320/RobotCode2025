@@ -1,5 +1,7 @@
 package frc.robot.utils;
 
+import static edu.wpi.first.units.Units.Rotations;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
@@ -31,9 +33,9 @@ public final class Configs {
 
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ELEVATOR_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MAXIMUM_VALUE_ENABLED);
-            limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT);
-            limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
-            limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT);
+            limitSwitchConfigs.withForwardSoftLimitThreshold(Rotations.of(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT));
+            limitSwitchConfigs.withReverseSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
+            limitSwitchConfigs.withReverseSoftLimitThreshold(Rotations.of(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT));
 
             FeedbackConfigs feedbackConfigs = ELEVATOR_TALONFX_CONFIG.Feedback;
             feedbackConfigs.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;

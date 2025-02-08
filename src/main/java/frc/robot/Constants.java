@@ -4,10 +4,13 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -37,23 +40,14 @@ public final class Constants {
   }
 
   public static class ElevatorConstants {
-    // Im not sure how accurate this calculation is with the pulley due to the fact that the pulley only pulls the 3rd stage
-    // also it may not be easy to measure the pulley's circumference - i believe we may want to measure what value the motor spits
-    // out at height 0, and at height 1 - and we find out the ratio.
-    // do something similliar with the absolute encoder to get the offset and the ratio.
-    /*
-    public static final double PULLEY_CIRCUMFERENCE = 2;                      //TODO: Validate this measurement, This is the circumference of the pulley (the full length of the pulley) - in meters
 
-    public static final double ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION = 1;     // TODO: Validate this measurement
-    public static final double MOTOR_GEAR_RATIO_REDUCTION = 5;                // TODO: Validate this measurement
+    public static final double SPROCKET_PITCH_DIAMETER = 0.0446193811;              // The pitch diameter of the sprocket in meters
 
-    public static final double MOTOR_ROTATION_TO_HEIGHT_FACTOR = PULLEY_CIRCUMFERENCE / MOTOR_GEAR_RATIO_REDUCTION;
-    public static final double ABSOLUTE_ENCODER_ROTATION_TO_HEIGHT_FACTOR = PULLEY_CIRCUMFERENCE / ABSOLUTE_ENCODER_GEAR_RATIO_REDUCTION;
+    public static final double MOTOR_GEAR_RATIO_REDUCTION = 20;                // TODO: Validate this measurement
 
-    public static final double ABSOLUTE_ENCODER_OFFSET = 0;         // TODO: Validate measurment - in meters
-    */
+    public static final double ELV_SENSOR_TO_MECAHNISM_RATIO = (MOTOR_GEAR_RATIO_REDUCTION) / (2 * SPROCKET_PITCH_DIAMETER * Math.PI);
 
-    public static final double ELV_SENSOR_TO_MECAHNISM_RATIO = 74.463;
+    //public static final double ELV_SENSOR_TO_MECAHNISM_RATIO = 74.463;
 
     public static final int ENCODER_CHANNEL = 3;                    // TODO: Validate encoder channel
     public static final int RIGHT_MOTOR_DEVICE_ID = 12;              // TODO: Validate device id
@@ -62,27 +56,27 @@ public final class Constants {
     public static final boolean LEFT_OPPOSITE_OF_RIGHT = true;      // TODO: Validate this value
 
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
-    public static final double ELEVATOR_POSITION_TOLERANCE = 0.01;
+    public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double LOW_POSITION_HEIGHT = 0.2;            // Example values - in meters
-    public static final double HIGH_POSITION_HEIGHT = 0.7;          // Example values - in meters
+    public static final double LOW_POSITION_HEIGHT = 0.1;            // Example values - in meters
+    public static final double HIGH_POSITION_HEIGHT = 1.26;          // Example values - in meters
 
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0;        // This value is in meters, TODO: Validate this value
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MAXIMUM_ELEVATOR_HEIGHT = 1;       // This value is in meters, TODO: Validate this value
+    public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;       // This value is in meters, TODO: Validate this value
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
 
-    public static final double ELEVATOR_P_CONSTANT = 30.717;             // TODO: Validate this value
+    public static final double ELEVATOR_P_CONSTANT = 28.936;             // TODO: Validate this value
     public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
-    public static final double ELEVATOR_D_CONSTANT = 3.1043;             // TODO: Validate this value
-    public static final double ELEVATOR_G_CONSTANT = 0.10766;             // TODO: Calculate this value from the site ReCalc - or sysid
-    public static final double ELEVATOR_V_CONSTANT = 8.634;             // TODO: Calculate this value from the site ReCalc - or sysid
-    public static final double ELEVATOR_A_CONSTANT = 0.42646;             // TODO: Calculate this value from the site ReCalc - or sysid
-    public static final double ELEVATOR_S_CONSTANT = 0.096745;
+    public static final double ELEVATOR_D_CONSTANT = 1.655;             // TODO: Validate this value
+    public static final double ELEVATOR_G_CONSTANT = 0.10618;             // TODO: Calculate this value from the site ReCalc - or sysid
+    public static final double ELEVATOR_V_CONSTANT = 8.2604;             // TODO: Calculate this value from the site ReCalc - or sysid
+    public static final double ELEVATOR_A_CONSTANT = 0.19692;             // TODO: Calculate this value from the site ReCalc - or sysid
+    public static final double ELEVATOR_S_CONSTANT = 0.11453;
 
-    public static final double MM_CRUISE_VELOCITY = 0.5;              // TODO: Calculate this value from the site ReCalc
-    public static final double MM_ACCELERATION = 1;                // TODO: Calculate this value from the site ReCalc
-    public static final double MM_JERK = 4;                       // This value is optional, TODO: Calculate this value from the site ReCalc
+    public static final double MM_CRUISE_VELOCITY = 1.3;              // TODO: Calculate this value from the site ReCalc
+    public static final double MM_ACCELERATION = 20;                // TODO: Calculate this value from the site ReCalc
+    public static final double MM_JERK = 140;                       // This value is optional, TODO: Calculate this value from the site ReCalc
 
     public static final boolean CURRENT_LIMIT_ENABLED = true;
     public static final double CURRENT_LIMIT = 50;
@@ -92,6 +86,8 @@ public final class Constants {
     public static final double REACHSTATE_TIMEOUT = 4;              // Maximum time for a reachstate command (in seconds), TODO: Validate this value
 
     public static final InvertedValue RIGHT_MOTOR_INVERTED = InvertedValue.Clockwise_Positive;
+
+    public static final Angle MOTOR_OFFSET = Rotation.of(0.0835);
   }
 
   public static class SwerveSubsystemConstants {
