@@ -11,6 +11,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -23,7 +24,8 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int DRIVING_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
 
     // Swerve operator constants
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
@@ -35,8 +37,8 @@ public final class Constants {
     public static final double DRIVE_DEADBAND = 0.05;
     
     // Elevator operator constants
-    public static final int ELEVATOR_LOW_STATE = XboxController.Button.kX.value;
-    public static final int ELEVATOR_HIGH_STATE = XboxController.Button.kY.value;
+    public static final int ELEVATOR_LOW_STATE = PS4Controller.Button.kSquare.value;
+    public static final int ELEVATOR_HIGH_STATE = PS4Controller.Button.kTriangle.value;
   }
 
   public static class ElevatorConstants {

@@ -14,6 +14,7 @@ import frc.robot.subsystems.Swerve.SwerveModuleType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,8 +35,8 @@ public class RobotContainer {
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_driverController =
-      new XboxController(OperatorConstants.kDriverControllerPort);
+  private final XboxController m_driverController = new XboxController(OperatorConstants.DRIVING_CONTROLLER_PORT);
+  private final PS4Controller m_operatorController = new PS4Controller(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -53,11 +54,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    // -------------- OPERATOR BUTTONS --------------
+
     // Elevator buttons
-    JoystickButton elevatorSetLow = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
+    JoystickButton elevatorSetLow = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
     elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
-    JoystickButton elevatorSetHigh = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
+    JoystickButton elevatorSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
     elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
+
+    // -------------- DRIVER BUTTONS -------------
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
