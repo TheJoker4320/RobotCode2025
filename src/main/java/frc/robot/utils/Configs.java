@@ -30,6 +30,15 @@ public final class Configs {
             slot0Configs.kI = ElevatorConstants.ELEVATOR_I_CONSTANT;
             slot0Configs.kD = ElevatorConstants.ELEVATOR_D_CONSTANT;
             slot0Configs.kG = ElevatorConstants.ELEVATOR_G_CONSTANT;
+            // Note that we are using motion magic
+            slot0Configs.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
+            slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
+            slot0Configs.kS = ElevatorConstants.ELEVATOR_S_CONSTANT;
+
+            MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
+            motionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;
+            motionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.MM_ACCELERATION;
+            motionMagicConfigs.MotionMagicJerk = ElevatorConstants.MM_JERK;
 
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ELEVATOR_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MAXIMUM_VALUE_ENABLED);
@@ -48,17 +57,6 @@ public final class Configs {
             CurrentLimitsConfigs currentLimitsConfigs = ELEVATOR_TALONFX_CONFIG.CurrentLimits;
             currentLimitsConfigs.withStatorCurrentLimitEnable(ElevatorConstants.CURRENT_LIMIT_ENABLED);
             currentLimitsConfigs.withStatorCurrentLimit(ElevatorConstants.CURRENT_LIMIT);
-
-            if (ElevatorConstants.MOTIONMAGIC_ENABLED) {
-                slot0Configs.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
-                slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
-                slot0Configs.kS = ElevatorConstants.ELEVATOR_S_CONSTANT;
-
-                MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
-                motionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;
-                motionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.MM_ACCELERATION;
-                motionMagicConfigs.MotionMagicJerk = ElevatorConstants.MM_JERK;         // Optional
-            }
         }
     }
 

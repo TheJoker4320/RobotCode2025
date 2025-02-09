@@ -41,53 +41,51 @@ public final class Constants {
 
   public static class ElevatorConstants {
 
-    public static final double SPROCKET_PITCH_DIAMETER = 0.0446193811;              // The pitch diameter of the sprocket in meters
+    public static final double SPROCKET_PITCH_DIAMETER = 0.0446193811;      // The pitch diameter of the sprocket in meters
 
-    public static final double MOTOR_GEAR_RATIO_REDUCTION = 20;                // TODO: Validate this measurement
+    public static final double MOTOR_GEAR_RATIO_REDUCTION = 20;                
 
     public static final double ELV_SENSOR_TO_MECAHNISM_RATIO = (MOTOR_GEAR_RATIO_REDUCTION) / (2 * SPROCKET_PITCH_DIAMETER * Math.PI);
 
-    //public static final double ELV_SENSOR_TO_MECAHNISM_RATIO = 74.463;
+    public static final int ENCODER_CHANNEL = 3;
+    public static final int RIGHT_MOTOR_DEVICE_ID = 12;
+    public static final int LEFT_MOTOR_DEVICE_ID = 11;
 
-    public static final int ENCODER_CHANNEL = 3;                    // TODO: Validate encoder channel
-    public static final int RIGHT_MOTOR_DEVICE_ID = 12;              // TODO: Validate device id
-    public static final int LEFT_MOTOR_DEVICE_ID = 11;               // TODO: Validate device id
-
-    public static final boolean LEFT_OPPOSITE_OF_RIGHT = true;      // TODO: Validate this value
+    public static final boolean LEFT_OPPOSITE_OF_RIGHT = true;
 
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double LOW_POSITION_HEIGHT = 0.1;            // Example values - in meters
-    public static final double HIGH_POSITION_HEIGHT = 1.26;          // Example values - in meters
+    public static final double LOW_POSITION_HEIGHT = 0.1;               // Example values - in meters
+    public static final double HIGH_POSITION_HEIGHT = 1.26;             // Example values - in meters
 
-    public static final double MINIMUM_ELEVATOR_HEIGHT = 0;        // This value is in meters, TODO: Validate this value
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 0;             // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;       // This value is in meters, TODO: Validate this value
+    public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;           // This value is in meters
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
 
-    public static final double ELEVATOR_P_CONSTANT = 28.936;             // TODO: Validate this value
-    public static final double ELEVATOR_I_CONSTANT = 0;             // TODO: Validate this value
-    public static final double ELEVATOR_D_CONSTANT = 1.655;             // TODO: Validate this value
-    public static final double ELEVATOR_G_CONSTANT = 0.10618;             // TODO: Calculate this value from the site ReCalc - or sysid
-    public static final double ELEVATOR_V_CONSTANT = 8.2604;             // TODO: Calculate this value from the site ReCalc - or sysid
-    public static final double ELEVATOR_A_CONSTANT = 0.19692;             // TODO: Calculate this value from the site ReCalc - or sysid
-    public static final double ELEVATOR_S_CONSTANT = 0.11453;
+    public static final double ELEVATOR_P_CONSTANT = 28.936;            // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_I_CONSTANT = 0;                 // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_D_CONSTANT = 1.655;             // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_G_CONSTANT = 0.10618;           // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_V_CONSTANT = 8.2604;            // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_A_CONSTANT = 0.19692;           // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_S_CONSTANT = 0.11453;           // This is a calibrated value - do not lose it
 
-    public static final double MM_CRUISE_VELOCITY = 1.3;              // TODO: Calculate this value from the site ReCalc
-    public static final double MM_ACCELERATION = 20;                // TODO: Calculate this value from the site ReCalc
-    public static final double MM_JERK = 140;                       // This value is optional, TODO: Calculate this value from the site ReCalc
+    public static final double MM_CRUISE_VELOCITY = 1.3;                // This is a calibrated value - do not lose it - meters per second
+    public static final double MM_ACCELERATION = 20;                    // This is a calibrated value - do not lose it - meters per second^2
+    public static final double MM_JERK = 140;                           // This is a calibrated value - do not lose it - meters per second^3
 
     public static final boolean CURRENT_LIMIT_ENABLED = true;
     public static final double CURRENT_LIMIT = 50;
 
     public static final boolean MOTIONMAGIC_ENABLED = true;
 
-    public static final double REACHSTATE_TIMEOUT = 4;              // Maximum time for a reachstate command (in seconds), TODO: Validate this value
+    public static final double REACHSTATE_TIMEOUT = 4;                  // Maximum time for a reachstate command (in seconds)
 
     public static final InvertedValue RIGHT_MOTOR_INVERTED = InvertedValue.Clockwise_Positive;
 
-    public static final Angle MOTOR_OFFSET = Rotation.of(0.0835);
+    public static final Angle MOTOR_OFFSET = Rotation.of(0.0835);   // This is a measured value - might need to measure and validate it once in a while
   }
 
   public static class SwerveSubsystemConstants {
