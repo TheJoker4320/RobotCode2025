@@ -26,7 +26,17 @@ public final class Constants {
 
     public static final int MANIPULATOR_EJECT_BALL_BUTTON = 0; //#TODO: set button
     public static final int MANIPULATOR_EJECT_CORAL_BUTTON = 0; //#TODO: set button
+    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
+    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
+    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
+    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value;
+    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value;
 
+    public static final double DRIVE_DEADBAND = 0.05;
+    
+    // Elevator operator constants
+    public static final int ELEVATOR_LOW_STATE = XboxController.Button.kX.value;
+    public static final int ELEVATOR_HIGH_STATE = XboxController.Button.kY.value;
   }
 
   public static class ManipulatorConstants {
@@ -46,20 +56,6 @@ public final class Constants {
     public static final double BALL_COLLECTOR_SPEED = 0.5;
     public static final double CORAL_COLLECTOR_SPEED = 0.5;
     
-
-
-    // Swerve operator constants
-    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
-    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
-    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
-    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value;
-    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value;
-
-    public static final double DRIVE_DEADBAND = 0.05;
-    
-    // Elevator operator constants
-    public static final int ELEVATOR_LOW_STATE = XboxController.Button.kX.value;
-    public static final int ELEVATOR_HIGH_STATE = XboxController.Button.kY.value;
   }
 
   public static class ElevatorConstants {

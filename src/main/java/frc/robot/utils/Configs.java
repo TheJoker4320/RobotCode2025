@@ -1,23 +1,5 @@
 package frc.robot.utils;
 
-
-import com.revrobotics.spark.config.SparkMaxConfig;
-
-import frc.robot.Constants.ManipulatorConstants;
-
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-public class Configs {
-    public static class ManipulatorConfigs {
-        public static final SparkMaxConfig BALL_COLLECTOR_CONFIG = new SparkMaxConfig();
-        public static final SparkMaxConfig CORAL_COLLECTOR_CONFIG = new SparkMaxConfig();
-
-        static {
-            BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
-            BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
-            CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
-            CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
-
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
@@ -28,6 +10,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ManipulatorConstants;
 
 public final class Configs {
     public static class ElevatorConfigs {
@@ -45,7 +28,6 @@ public final class Configs {
             limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT);
             limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
             limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT);
-
             /*
              * This code is for when we want to add motion magic to the elevator
              * Notice that when you calculate these values (probably using ReCalc) you recive it in meters - instead of meters you want
@@ -58,7 +40,7 @@ public final class Configs {
                 MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
                 motionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;
                 motionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.MM_ACCELERATION;
-                motionMagicConfigs.MotionMagicJerk = ElevatorConstants.MM_JERK;         // Optional
+                motionMagicConfigs.MotionMagicJerk = ElevatorConstants.MM_JERK;
             }
         }
     }
@@ -87,7 +69,18 @@ public final class Configs {
             TURNING_CONFIG.closedLoop.outputRange(-1, 1);
             TURNING_CONFIG.closedLoop.positionWrappingEnabled(true);
             TURNING_CONFIG.closedLoop.positionWrappingInputRange(0, NeoModuleConstants.MAX_TURNING_ENCODER_VALUE);
+        }
+    }
 
+    public static class ManipulatorConfigs {
+        public static final SparkMaxConfig BALL_COLLECTOR_CONFIG = new SparkMaxConfig();
+        public static final SparkMaxConfig CORAL_COLLECTOR_CONFIG = new SparkMaxConfig();
+
+        static {
+            BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
+            BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
+            CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
     }
 }
