@@ -4,8 +4,12 @@
 
 package frc.robot;
 
+
+import com.ctre.phoenix6.signals.InvertedValue;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -19,6 +23,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
 
     // Swerve operator constants
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
@@ -32,8 +37,52 @@ public final class Constants {
     // Elevator operator constants
     public static final int ELEVATOR_LOW_STATE = XboxController.Button.kX.value;
     public static final int ELEVATOR_HIGH_STATE = XboxController.Button.kY.value;
-  }
+    
+    // Arm operator constants
+    public static int ARM_LOW_STATE = PS4Controller.Button.kCircle.value;
+    public static int ARM_HIGH_STATE = PS4Controller.Button.kCross.value;
 
+
+  }
+  public static class ArmConstants {
+	  public static double MOTOR_TO_ARM_GEAR_RATIO = (4.0 * 4.0 * 3.0 * 42.0) / (18.0);
+    public static double ENCODER_TO_ARM_GEAR_RATIO = 1;
+    
+    public static boolean SMART_CURRENT_LIMIT_ENABLED = true;
+    public static double SMART_CURRENT_LIMIT = 40;
+
+    public static int ENCODER_CHANNEL = 0;
+    public static int MOTOR_ID = 13;
+
+    public static double ARM_POSITION_TOLERANCE = 1;  // in degrees
+    public static double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
+    public static double ARM_ENCODER_OFFSET = -250.7;   // in degrees
+
+    //all PID values are in rotations, not degrees/radians
+    public static double ARM_KP = 33.1816;
+    public static double ARM_KI = 0;
+    public static double ARM_KD = 5.280688;
+    public static double ARM_KG = 0.414284;  //calculated from ReCalc
+    public static double ARM_KV = 10.32784;  //calculated from ReCalc
+    public static double ARM_KA = 0.689612;  //calculated from ReCalc
+    public static final double ARM_KS = 0.52706;
+
+    public static InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
+
+    public static double ARM_LOW_ANGLE = -80;   //test value, in degrees
+    public static double ARM_HIGH_ANGLE = 60;   //test value, in degrees
+
+    public static boolean MAXIMUM_VALUE_ENABLED = true;
+    public static boolean MINIMUM_VALUE_ENABLED = true;
+    public static double MINIMUM_ARM_ANGLE = -87; //current min - not final - in degrees
+    public static double MAXIMUM_ARM_ANGLE = 70;  //current max - not final - in degrees
+
+    public static double MM_CRUISE_VELOCITY = 250;  //calculated from ReCalc, in degrees
+    public static double MM_ACCELERATION = 500;     //calculated from ReCalc, in degrees
+    public static double MM_JERK = 2500;            //this value is optional, in degrees
+
+    public static boolean IS_MAGIC_MOTION_ENABLED = true;
+  }
   public static class ElevatorConstants {
     public static final double PULLEY_DIAMATER = 0.1;               // TODO: Validate this measurement, its in meters
     public static final double PULLEY_CIRCUMFERENCE = PULLEY_DIAMATER * Math.PI;
