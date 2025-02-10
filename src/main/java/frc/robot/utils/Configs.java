@@ -19,14 +19,10 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.units.AngularAccelerationUnit;
-import edu.wpi.first.units.AngularMomentumUnit;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.units.measure.AngularVelocity;
 import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.Arm;
 
 
 public final class Configs {
