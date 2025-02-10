@@ -69,8 +69,10 @@ public final class Constants {
 
     public static InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
-    public static double ARM_LOW_ANGLE = -80;   //test value, in degrees
-    public static double ARM_HIGH_ANGLE = 60;   //test value, in degrees
+    public static double INTAKE_ANGLE = -85;
+    public static final double L4_ANGLE = 56;
+    public static final double L32_ANGLE = 65;
+    public static final double L1_ANGLE = -31;
 
     public static boolean MAXIMUM_VALUE_ENABLED = true;
     public static boolean MINIMUM_VALUE_ENABLED = true;
@@ -101,9 +103,13 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double LOW_POSITION_HEIGHT = 0.1;               // Example values - in meters
-    public static final double HIGH_POSITION_HEIGHT = 1.26;             // Example values - in meters
-
+    public static final double PRE_INTAKE_POSITION = 0.565;
+    public static final double INTAKE_POSITION = 0.4125;
+    public static final double L4_POSITION = 1.254;
+    public static final double L3_POSITION = 0.584;
+    public static final double L2_POSITION = 0.223;
+    public static final double L1_POSITION = 0.701;
+    
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0;             // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
     public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;           // This value is in meters

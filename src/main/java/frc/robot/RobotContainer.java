@@ -20,7 +20,10 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -60,17 +63,8 @@ public class RobotContainer {
   private void configureBindings() {
     // -------------- OPERATOR BUTTONS --------------
 
-    // Arm buttons
-    JoystickButton armSetLow = new JoystickButton(m_operatorController, OperatorConstants.ARM_LOW_STATE);   //raises arm to low state
-    armSetLow.onTrue((new ArmReachAngle(mArm, ArmState.LOW)));
-    JoystickButton armSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ARM_HIGH_STATE); //raises arm to high state
-    armSetHigh.onTrue((new ArmReachAngle(mArm, ArmState.HIGH)));
-
-    // Elevator buttons
-    JoystickButton elevatorSetLow = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
-    elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
-    JoystickButton elevatorSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
-    elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
+    Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
+    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE)), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
 
     // -------------- DRIVER BUTTONS -------------
 
