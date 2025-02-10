@@ -9,6 +9,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -38,8 +39,8 @@ public final class Constants {
     public static final int ELEVATOR_HIGH_STATE = XboxController.Button.kY.value;
     
     // Arm operator constants
-    public static int ARM_LOW_STATE = XboxController.Button.kA.value;
-    public static int ARM_HIGH_STATE = XboxController.Button.kB.value;
+    public static int ARM_LOW_STATE = PS4Controller.Button.kCircle.value;
+    public static int ARM_HIGH_STATE = PS4Controller.Button.kCross.value;
 
 
   }
