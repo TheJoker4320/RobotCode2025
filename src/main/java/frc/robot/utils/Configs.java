@@ -1,5 +1,6 @@
 package frc.robot.utils;
 
+import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.DegreesPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Second;
@@ -34,31 +35,38 @@ public final class Configs {
 
         static {
             Slot0Configs slot0Configs = ELEVATOR_TALONFX_CONFIG.Slot0;
+            slot0Configs.GravityType = GravityTypeValue.Elevator_Static;
             slot0Configs.kP = ElevatorConstants.ELEVATOR_P_CONSTANT;
             slot0Configs.kI = ElevatorConstants.ELEVATOR_I_CONSTANT;
             slot0Configs.kD = ElevatorConstants.ELEVATOR_D_CONSTANT;
             slot0Configs.kG = ElevatorConstants.ELEVATOR_G_CONSTANT;
+            // Note that we are using motion magic
+            slot0Configs.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
+            slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
+            slot0Configs.kS = ElevatorConstants.ELEVATOR_S_CONSTANT;
+
+            MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
+            motionMagicConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;
+            motionMagicConfigs.MotionMagicAcceleration = ElevatorConstants.MM_ACCELERATION;
+            motionMagicConfigs.MotionMagicJerk = ElevatorConstants.MM_JERK;
 
             SoftwareLimitSwitchConfigs limitSwitchConfigs = ELEVATOR_TALONFX_CONFIG.SoftwareLimitSwitch;
             limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MAXIMUM_VALUE_ENABLED);
-            limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT);
-            limitSwitchConfigs.withForwardSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
-            limitSwitchConfigs.withForwardSoftLimitThreshold(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT);
+            limitSwitchConfigs.withForwardSoftLimitThreshold(Rotations.of(ElevatorConstants.MAXIMUM_ELEVATOR_HEIGHT));
+            limitSwitchConfigs.withReverseSoftLimitEnable(ElevatorConstants.MINIMUM_VALUE_ENABLED);
+            limitSwitchConfigs.withReverseSoftLimitThreshold(Rotations.of(ElevatorConstants.MINIMUM_ELEVATOR_HEIGHT));
 
-            /*
-             * This code is for when we want to add motion magic to the elevator
-             * Notice that when you calculate these values (probably using ReCalc) you recive it in meters - instead of meters you want
-             * it to be rotation - so you MUST convert the meters to rotations
-             */
-            if (ElevatorConstants.MOTIONMAGIC_ENABLED) {
-                slot0Configs.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
-                slot0Configs.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
+            FeedbackConfigs feedbackConfigs = ELEVATOR_TALONFX_CONFIG.Feedback;
+            feedbackConfigs.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+            feedbackConfigs.SensorToMechanismRatio = ElevatorConstants.ELV_SENSOR_TO_MECAHNISM_RATIO;
 
-                MotionMagicConfigs motionMagicConfigs = ELEVATOR_TALONFX_CONFIG.MotionMagic;
-                motionMagicConfigs.withMotionMagicCruiseVelocity(ElevatorConstants.MM_CRUISE_VELOCITY);
-                motionMagicConfigs.withMotionMagicAcceleration(ElevatorConstants.MM_ACCELERATION);
-                motionMagicConfigs.withMotionMagicJerk(ElevatorConstants.MM_JERK);            // Optional
-            }
+            MotorOutputConfigs motorOutputConfigs = ELEVATOR_TALONFX_CONFIG.MotorOutput;
+            motorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
+            motorOutputConfigs.Inverted = ElevatorConstants.RIGHT_MOTOR_INVERTED;
+
+            CurrentLimitsConfigs currentLimitsConfigs = ELEVATOR_TALONFX_CONFIG.CurrentLimits;
+            currentLimitsConfigs.withStatorCurrentLimitEnable(ElevatorConstants.CURRENT_LIMIT_ENABLED);
+            currentLimitsConfigs.withStatorCurrentLimit(ElevatorConstants.CURRENT_LIMIT);
         }
     }
 

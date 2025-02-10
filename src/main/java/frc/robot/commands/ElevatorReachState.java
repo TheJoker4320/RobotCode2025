@@ -29,6 +29,7 @@ public class ElevatorReachState extends Command {
   @Override
   public void initialize() {
     mTimer.start();
+    mTimer.reset();
     mElevator.setSetpoint(mDesiredState);
   }
 
