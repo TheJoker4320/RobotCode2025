@@ -118,11 +118,8 @@ public final class Configs {
             CurrentLimitsConfigs currentLimit = ARM_TALONFX_CONFIG.CurrentLimits;
             currentLimit.StatorCurrentLimitEnable = ArmConstants.SMART_CURRENT_LIMIT_ENABLED;
             currentLimit.StatorCurrentLimit = ArmConstants.SMART_CURRENT_LIMIT;
-             /*
-             * This code is for when we want to add motion magic to the arm
-             * Notice that when you calculate these values (probably using ReCalc) you recive it in radians - instead of radians you want
-             * it to be degrees - so you MUST convert the radians to degrees either from:
-             */
+             
+            //this code uses motion magic for the arm
             if (ArmConstants.IS_MAGIC_MOTION_ENABLED) {
                 slot0Configs.kS = ArmConstants.ARM_KS;
                 slot0Configs.kV = ArmConstants.ARM_KV;

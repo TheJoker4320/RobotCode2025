@@ -105,11 +105,8 @@ public class Arm extends SubsystemBase {
         PositionVoltage m_request = new PositionVoltage(0);
         mMotor.setControl(m_request.withPosition(Degree.of(mSetpoint)));
       }
-      /*
-      * this code is for when we want to add magic motion to the arm
-      * notice here that just as it is in the rest of the arm code the setpoint should be
-      * in degrees and not radians
-      */
+      
+      //this code uses motion magic for the arm
       else {  
         MotionMagicVoltage m_request = new MotionMagicVoltage(0);
         mMotor.setControl(m_request.withPosition(Degree.of(mSetpoint)));
@@ -117,8 +114,8 @@ public class Arm extends SubsystemBase {
     }
 
     //sends to smart dashboard if encoders are out of sync
-    //Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
-    //encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
+    Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
+    encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
     
     //if (mSetpointInitiallied && isAtState(mSetpointState))
     //  mSetpointInitiallied = false;

@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    
+
     // Swerve operator constants
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
@@ -39,6 +39,8 @@ public final class Constants {
     // Arm operator constants
     public static int ARM_LOW_STATE = XboxController.Button.kA.value;
     public static int ARM_HIGH_STATE = XboxController.Button.kB.value;
+
+
   }
   public static class ArmConstants {
 	  public static double MOTOR_TO_ARM_GEAR_RATIO = (4.0 * 4.0 * 3.0 * 42.0) / (18.0);
@@ -78,7 +80,6 @@ public final class Constants {
     public static double MM_JERK = 2500;            //this value is optional, in degrees
 
     public static boolean IS_MAGIC_MOTION_ENABLED = true;
-    //TODO: set all constants
   }
   public static class ElevatorConstants {
     public static final double PULLEY_DIAMATER = 0.1;               // TODO: Validate this measurement, its in meters
