@@ -25,9 +25,9 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
 import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
-
 
 public final class Configs {
     public static class ElevatorConfigs {
@@ -94,6 +94,18 @@ public final class Configs {
             TURNING_CONFIG.closedLoop.outputRange(-1, 1);
             TURNING_CONFIG.closedLoop.positionWrappingEnabled(true);
             TURNING_CONFIG.closedLoop.positionWrappingInputRange(0, NeoModuleConstants.MAX_TURNING_ENCODER_VALUE);
+        }
+    }
+
+    public static class ManipulatorConfigs {
+        public static final SparkMaxConfig BALL_COLLECTOR_CONFIG = new SparkMaxConfig();
+        public static final SparkMaxConfig CORAL_COLLECTOR_CONFIG = new SparkMaxConfig();
+
+        static {
+            BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
+            BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
+            CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
     }
    public static class ArmConfigs {
