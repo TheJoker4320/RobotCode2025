@@ -13,32 +13,59 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import frc.robot.commands.ManipulatorCollectBall;
+import frc.robot.commands.ManipulatorCollectCoral;
+import frc.robot.commands.ManipulatorBallEject;
+import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.subsystems.Manipulator;
+import frc.robot.commands.ArmReachAngle;
+import frc.robot.subsystems.Arm;
+import frc.robot.utils.ArmState;
+
 import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
 import frc.robot.utils.ElevatorState;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
-import frc.robot.subsystems.Swerve.SwerveModuleType;
+import frc.robot.subsystems.Swerve.SwerveModuleType=======
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 
 import edu.wpi.first.math.MathUtil;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+
 public class RobotContainer {
+  /**
+   * This class is where the bulk of the robot should be declared. Since Command-based is a
+   * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+   * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+   * subsystems, commands, and trigger mappings) should be declared here.
+   */
+  private final Manipulator mManipulator = Manipulator.getInstance();
   // The robot's subsystems and commands are defined here...
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final BallCollector mBallCollector = BallCollector.getInstance();
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
-  
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort); 
+
+  private Arm mArm = Arm.getInstance();
+  private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
+  private final Elevator mElevatorSubsystem = Elevator.getInstance();
+
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final XboxController m_driverController = new XboxController(OperatorConstants.DRIVING_CONTROLLER_PORT);
+  private final PS4Controller m_operatorController = new PS4Controller(OperatorConstants.OPERATOR_CONTROLLER_PORT);
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -46,6 +73,7 @@ public class RobotContainer {
   }
   
   private void configureBindings() {
+
     //BallCollector Buttons
 
     JoystickButton BallCollectorButton = new JoystickButton(m_driverController , OperatorConstants.BALL_COLLECT_BUTTON); //Button for turn on the Ball Collector
@@ -57,11 +85,32 @@ public class RobotContainer {
     JoystickButton CloseBallCollectorButton = new JoystickButton(m_driverController,OperatorConstants.CLOSE_BALL_COLLECTOR_BUTTON); //Button for closing the Ball Collector
     CloseBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector));
 
+    // -------------- OPERATOR BUTTONS --------------
+  
+    // Manipulator buttons
+    
+    JoystickButton manipulatorCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
+    manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
+    JoystickButton manipulatorCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
+    manipulatorCollectCoralButton.toggleOnTrue(new ManipulatorCollectCoral(mManipulator));
+    JoystickButton manipulatorEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
+    manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
+    JoystickButton manipulatorEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
+    manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
+
+    // Arm buttons
+    JoystickButton armSetLow = new JoystickButton(m_operatorController, OperatorConstants.ARM_LOW_STATE);   //raises arm to low state
+    armSetLow.onTrue((new ArmReachAngle(mArm, ArmState.LOW)));
+    JoystickButton armSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ARM_HIGH_STATE); //raises arm to high state
+    armSetHigh.onTrue((new ArmReachAngle(mArm, ArmState.HIGH)));
+
     // Elevator buttons
-    JoystickButton elevatorSetLow = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
+    JoystickButton elevatorSetLow = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
     elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
-    JoystickButton elevatorSetHigh = new JoystickButton(m_driverController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
+    JoystickButton elevatorSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
     elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
+
+    // -------------- DRIVER BUTTONS -------------
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
@@ -76,6 +125,7 @@ public class RobotContainer {
 
     JoystickButton switchReferenceFrameButton = new JoystickButton(m_driverController, OperatorConstants.REFERENCE_FRAME_SWERVE_BUTTON); // Switches between driving field-relative and robot-relative
     switchReferenceFrameButton.onChange(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
+
 
     mSwerveSubsystem.setDefaultCommand(
       new RunCommand(
