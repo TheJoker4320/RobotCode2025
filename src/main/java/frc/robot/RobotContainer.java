@@ -33,13 +33,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
+  /**
+   * This class is where the bulk of the robot should be declared. Since Command-based is a
+   * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+   * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+   * subsystems, commands, and trigger mappings) should be declared here.
+   */
   private final Manipulator mManipulator = Manipulator.getInstance();
   // The robot's subsystems and commands are defined here...
   private Arm mArm = Arm.getInstance();
@@ -71,17 +71,12 @@ public class RobotContainer {
   
     // Manipulator buttons
     
-    //button to collect balls 
     JoystickButton manipulatorCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
     manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
-    //button to collect coral 
     JoystickButton manipulatorCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
     manipulatorCollectCoralButton.toggleOnTrue(new ManipulatorCollectCoral(mManipulator));
-
-    //button to eject balls 
     JoystickButton manipulatorEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
     manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
-    //button to eject coral
     JoystickButton manipulatorEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
     manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
 

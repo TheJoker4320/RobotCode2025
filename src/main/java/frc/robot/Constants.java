@@ -103,8 +103,10 @@ public final class Constants {
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
 
 
-    public static final double BALL_COLLECTOR_SPEED = 0.5;
-    public static final double CORAL_COLLECTOR_SPEED = 0.5;
+    public static final double BALL_COLLECT_SPEED = 0.5; //TODO: set correct speed for manipulator
+    public static final double CORAL_COLLECT_SPEED = 0.5;
+    public static final double BALL_EJECT_SPEED = 0.5;
+    public static final double CORAL_EJECT_SPEED = 0.5;
     
   }
   

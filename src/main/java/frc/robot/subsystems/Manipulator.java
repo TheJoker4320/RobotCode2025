@@ -53,16 +53,16 @@ public class Manipulator extends SubsystemBase {
  * @param isForward - true if the motor should move forward, false if the motor should move backward.
  */
   public void collectBall(){
-    mBallMotor.set(ManipulatorConstants.BALL_COLLECTOR_SPEED);
+    mBallMotor.set(ManipulatorConstants.BALL_COLLECT_SPEED);
   }
   public void collectCoral(){
-    mCoralMotor.set(ManipulatorConstants.CORAL_COLLECTOR_SPEED);
+    mCoralMotor.set(ManipulatorConstants.CORAL_COLLECT_SPEED);
   }
   public void ejectBall(){
-    mBallMotor.set(-ManipulatorConstants.BALL_COLLECTOR_SPEED);
+    mBallMotor.set(ManipulatorConstants.BALL_EJECT_SPEED);
   }
   public void ejectCoral(){
-    mCoralMotor.set(-ManipulatorConstants.CORAL_COLLECTOR_SPEED);
+    mCoralMotor.set(ManipulatorConstants.CORAL_EJECT_SPEED);
   }
 
 
