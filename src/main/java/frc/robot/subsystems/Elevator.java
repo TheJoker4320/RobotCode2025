@@ -60,10 +60,15 @@ public class Elevator extends SubsystemBase {
   public boolean isAtState(ElevatorState state) {
     if (Math.abs(state.height() - getCurrentHeight()) < ElevatorConstants.ELEVATOR_POSITION_TOLERANCE) {
       mSetpointInitiallied = false;
-      mRightMotorController.set(0);
+      stopMotorInPlace();
       return true;
     }
     return false; 
+  }
+
+  public void stopMotorInPlace() {
+    mRightMotorController.set(0);
+    mRightMotorController.setNeutralMode(NeutralModeValue.Brake);
   }
 
   @Override
