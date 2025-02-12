@@ -73,9 +73,9 @@ public class RobotContainer {
     // -------------- OPERATOR BUTTONS --------------
 
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
-    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator)), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
+    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator), new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE)));
     Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
-    Command l2Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32));
+    Command l2Command = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.ZERO), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
     Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
     Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
     Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
