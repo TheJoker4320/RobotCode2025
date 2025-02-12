@@ -62,9 +62,9 @@ public final class Constants {
     public static final double ARM_KP = 33.1816;
     public static final double ARM_KI = 0;
     public static final double ARM_KD = 5.280688;
-    public static final double ARM_KG = 0.414284;  //calculated from ReCalc
-    public static final double ARM_KV = 10.32784;  //calculated from ReCalc
-    public static final double ARM_KA = 0.689612;  //calculated from ReCalc
+    public static final double ARM_KG = 0.414284;  
+    public static final double ARM_KV = 10.32784;  
+    public static final double ARM_KA = 0.689612;  
     public static final double ARM_KS = 0.52706;
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
@@ -73,17 +73,17 @@ public final class Constants {
     public static final double L4_ANGLE = 56;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
-    public static final double L4_PLACED_ANGLE = 50;
-    public static final double L32_PLACED_ANGLE = 58;
+    public static final double L4_PLACED_ANGLE = 50;     // This angle isnt final - needs to be tested
+    public static final double L32_PLACED_ANGLE = 58;    // This angle isnt final - needs to be tested
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MINIMUM_ARM_ANGLE = -87; //current min - not final - in degrees
-    public static final double MAXIMUM_ARM_ANGLE = 70;  //current max - not final - in degrees
+    public static final double MINIMUM_ARM_ANGLE = -87;       // min - in degrees
+    public static final double MAXIMUM_ARM_ANGLE = 70;        // max - in degrees
 
-    public static final double MM_CRUISE_VELOCITY = 250;  //calculated from ReCalc, in degrees
-    public static final double MM_ACCELERATION = 500;     //calculated from ReCalc, in degrees
-    public static final double MM_JERK = 2500;            //this value is optional, in degrees
+    public static final double MM_CRUISE_VELOCITY = 250;  // degrees per second
+    public static final double MM_ACCELERATION = 500;     // degrees per second^2
+    public static final double MM_JERK = 2500;            // degrees per second^3
 
     public static final boolean IS_MAGIC_MOTION_ENABLED = true;
   }
@@ -112,7 +112,7 @@ public final class Constants {
     public static final double L2_POSITION = 0.223;
     public static final double L1_POSITION = 0.701;
     
-    public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;             // This value is in meters
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
     public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;           // This value is in meters
     public static final boolean MAXIMUM_VALUE_ENABLED = true;

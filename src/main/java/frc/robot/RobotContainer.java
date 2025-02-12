@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
@@ -63,12 +64,15 @@ public class RobotContainer {
   private void configureBindings() {
     // -------------- OPERATOR BUTTONS --------------
 
+    // The commands that have parallel command groups in them that are empty - means that a command that controls the manipulator will be added to it
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
     Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE)), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
     Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
     Command l2Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32));
     Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
     Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
+
+    Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm));
 
     // -------------- DRIVER BUTTONS -------------
 
