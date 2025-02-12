@@ -58,6 +58,20 @@ public class Arm extends SubsystemBase {
     mSetpointState = setpoint;
     mSetpoint = setpoint.angle();
   }
+  public ArmState setPlaceCoralSetpoint() {
+    if (mSetpointState == ArmState.L1)
+      return null;
+    else if (mSetpointState == ArmState.L32) {
+      setSetpoint(ArmState.L32_PLACED);
+      return ArmState.L32_PLACED;
+    }
+    else if (mSetpointState == ArmState.L4) {
+      setSetpoint(ArmState.L4_PLACED);
+      return ArmState.L4_PLACED;
+    }
+    else
+      return null; 
+  }
 
   private double getCurrentAngle() {
     return mMotor.getPosition().getValue().in(Degree);
