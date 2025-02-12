@@ -36,12 +36,13 @@ public final class Constants {
     public static final double DRIVE_DEADBAND = 0.05;
     
     // Elevator operator constants
-    public static final int ELEVATOR_LOW_STATE = PS4Controller.Button.kSquare.value;
-    public static final int ELEVATOR_HIGH_STATE = PS4Controller.Button.kTriangle.value;
-    
-    // Arm operator constants
-    public static final int ARM_LOW_STATE = PS4Controller.Button.kCircle.value;
-    public static final int ARM_HIGH_STATE = PS4Controller.Button.kCross.value;
+    public static final int L1_STATE_BUTTON = PS4Controller.Button.kL1.value;
+    public static final int L2_STATE_BUTTON = PS4Controller.Button.kL2.value;
+    public static final int L3_STATE_BUTTON = PS4Controller.Button.kR1.value;
+    public static final int L4_STATE_BUTTON = PS4Controller.Button.kR2.value;
+    public static final int INTAKE_PREPARE_BUTTON = PS4Controller.Button.kTriangle.value;
+    public static final int PLACE_CORAL_BUTTON = PS4Controller.Button.kCircle.value;
+    public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
   }
   
   public static class ArmConstants {
