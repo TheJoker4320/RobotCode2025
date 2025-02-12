@@ -4,10 +4,15 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Climb;
+import frc.robot.subsystems.Climber;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -19,8 +24,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final Climber mClimber = Climber.getInstance();
+  private final XboxController m_driverController =
+      new XboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -38,7 +44,11 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    JoystickButton HighClimbButton = new JoystickButton(m_driverController,OperatorConstants.HIGH_CLIMBER_BUTTON);
+    HighClimbButton.whileTrue(new Climb(mClimber, ClimberConstants.HIHG_CLIMBING_SPEED));
 
+    JoystickButton LowClimbButton = new JoystickButton(m_driverController, OperatorConstants.LOW_CLIMBER_BUTTON);
+    LowClimbButton.whileTrue(new Climb(mClimber, ClimberConstants.LOW_CLIMBING_SPEED));
   }
 
   /**
