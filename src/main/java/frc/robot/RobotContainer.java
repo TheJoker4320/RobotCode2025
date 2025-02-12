@@ -6,6 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmPlaceCoral;
+import frc.robot.commands.ManipulatorCollectBall;
+import frc.robot.commands.ManipulatorCollectCoral;
+import frc.robot.commands.ManipulatorBallEject;
+import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
@@ -30,13 +35,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+
 public class RobotContainer {
+  /**
+   * This class is where the bulk of the robot should be declared. Since Command-based is a
+   * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+   * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+   * subsystems, commands, and trigger mappings) should be declared here.
+   */
+  private final Manipulator mManipulator = Manipulator.getInstance();
   // The robot's subsystems and commands are defined here...
   private Arm mArm = Arm.getInstance();
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
@@ -62,7 +69,19 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    
     // -------------- OPERATOR BUTTONS --------------
+  
+    // Manipulator buttons
+    
+    JoystickButton manipulatorCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
+    manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
+    JoystickButton manipulatorCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
+    manipulatorCollectCoralButton.toggleOnTrue(new ManipulatorCollectCoral(mManipulator));
+    JoystickButton manipulatorEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
+    manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
+    JoystickButton manipulatorEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
+    manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
 
     // The commands that have parallel command groups in them that are empty - means that a command that controls the manipulator will be added to it
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
@@ -104,6 +123,7 @@ public class RobotContainer {
 
     JoystickButton switchReferenceFrameButton = new JoystickButton(m_driverController, OperatorConstants.REFERENCE_FRAME_SWERVE_BUTTON); // Switches between driving field-relative and robot-relative
     switchReferenceFrameButton.onChange(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
+
 
     mSwerveSubsystem.setDefaultCommand(
       new RunCommand(
