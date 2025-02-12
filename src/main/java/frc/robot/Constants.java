@@ -70,11 +70,13 @@ public final class Constants {
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
     public static final double INTAKE_ANGLE = -85;
+    public static final double OUT_OF_INTAKE_ANGLE = -65;
     public static final double L4_ANGLE = 56;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
     public static final double L4_PLACED_ANGLE = 50;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 58;    // This angle isnt final - needs to be tested
+    public static final double ZERO_ANGLE = 0.0;
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
@@ -89,14 +91,14 @@ public final class Constants {
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 0; //TODO: set motor id
-    public static int CORAL_MOTOR_ID = 0; //TODO: set motor id
+    public static int BALL_MOTOR_ID = 10; //TODO: set motor id
+    public static int CORAL_MOTOR_ID = 9; //TODO: set motor id
 
     /*This is the coral limit switch port */
-    public static int CORAL_SWITCH_PORT = 0; //TODO: set port
+    public static int CORAL_SWITCH_PORT = 1; //TODO: set port
     
     /*This is the ball limit switch port */
-    public static int BALL_SWITCH_PORT = 0; //TODO: set port
+    public static int BALL_SWITCH_PORT = 2; //TODO: set port
 
     public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
@@ -125,8 +127,9 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double PRE_INTAKE_POSITION = 0.565;
+    public static final double PRE_INTAKE_POSITION = 0.55;
     public static final double INTAKE_POSITION = 0.4125;
+    public static final double PRE_SCORING = 0.55;
     public static final double L4_POSITION = 1.254;
     public static final double L3_POSITION = 0.584;
     public static final double L2_POSITION = 0.223;
