@@ -71,26 +71,14 @@ public class RobotContainer {
   private void configureBindings() {
     
     // -------------- OPERATOR BUTTONS --------------
-  
-    // Manipulator buttons
-    
-    JoystickButton manipulatorCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
-    manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
-    JoystickButton manipulatorCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
-    manipulatorCollectCoralButton.toggleOnTrue(new ManipulatorCollectCoral(mManipulator));
-    JoystickButton manipulatorEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
-    manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
-    JoystickButton manipulatorEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
-    manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
 
-    // The commands that have parallel command groups in them that are empty - means that a command that controls the manipulator will be added to it
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
-    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE)), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
+    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator)), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
     Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
     Command l2Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32));
     Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
     Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
-    Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm));
+    Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -106,7 +94,7 @@ public class RobotContainer {
     l2Button.onTrue(l2Command);
     l3Button.onTrue(l3Command);
     l4Button.onTrue(l4Command);
-    placeCoralButton.onTrue(placeCoralCommand);
+    placeCoralButton.whileTrue(placeCoralCommand);
 
     // -------------- DRIVER BUTTONS -------------
 

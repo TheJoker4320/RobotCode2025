@@ -26,11 +26,6 @@ public final class Constants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
 
-    public static final int MANIPULATOR_COLLECT_BALL_BUTTON = 0; //#TODO: set button
-    public static final int MANIPULATOR_COLLECT_CORAL_BUTTON = 0; //#TODO: set button
-    public static final int MANIPULATOR_EJECT_BALL_BUTTON = 0; //#TODO: set button
-    public static final int MANIPULATOR_EJECT_CORAL_BUTTON = 0; //#TODO: set button
-    
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
@@ -94,24 +89,23 @@ public final class Constants {
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 0; //#TODO: set motor id
-    public static int CORAL_MOTOR_ID = 0; //#TODO: set motor id
+    public static int BALL_MOTOR_ID = 0; //TODO: set motor id
+    public static int CORAL_MOTOR_ID = 0; //TODO: set motor id
 
     /*This is the coral limit switch port */
-    public static int CORAL_SWITCH_PORT = 0; //#TODO: set port
+    public static int CORAL_SWITCH_PORT = 0; //TODO: set port
     
     /*This is the ball limit switch port */
-    public static int BALL_SWITCH_PORT = 0; //#TODO: set port
+    public static int BALL_SWITCH_PORT = 0; //TODO: set port
 
-    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
-    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
+    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
+    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
 
-
-    public static final double BALL_COLLECT_SPEED = 0.5; //TODO: set correct speed for manipulator
+    //TODO: set correct speed for manipulator
+    public static final double BALL_COLLECT_SPEED = 0.5; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = 0.5;
     public static final double CORAL_EJECT_SPEED = 0.5;
-    
   }
   
   public static class ElevatorConstants {

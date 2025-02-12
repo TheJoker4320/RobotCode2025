@@ -48,10 +48,6 @@ public class Manipulator extends SubsystemBase {
     return mCoralSwitch.get();
   }
 
-/**
- * This method sets the speed of the ball collector motor.
- * @param isForward - true if the motor should move forward, false if the motor should move backward.
- */
   public void collectBall(){
     mBallMotor.set(ManipulatorConstants.BALL_COLLECT_SPEED);
   }
@@ -65,7 +61,6 @@ public class Manipulator extends SubsystemBase {
     mCoralMotor.set(ManipulatorConstants.CORAL_EJECT_SPEED);
   }
 
-
   public void stopBallCollector() {
     mBallMotor.set(0);
   }
@@ -73,7 +68,6 @@ public class Manipulator extends SubsystemBase {
   public void stopCoralCollector() {
     mCoralMotor.set(0);
   }
-
 
   @Override
   public void periodic() {
