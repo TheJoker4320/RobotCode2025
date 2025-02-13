@@ -37,7 +37,6 @@ public class BallCollect extends Command {
   @Override
   public void end(boolean interrupted) {
     mCollectorBall.setSpeedCollectorBall(BallCollectorConstants.STOP_SPEED);
-
   }
 
   // Returns true when the command should end.
