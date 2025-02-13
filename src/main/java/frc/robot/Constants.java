@@ -52,12 +52,12 @@ public final class Constants {
     public static int ARM_HIGH_STATE = PS4Controller.Button.kCross.value;
   }
   public static class ClimberConstants {
-    public static final int CLIMBER_MOTOR_PORT = 1;
-    public static final double HIGH_CLIMBING_SPEED = 1;
-    public static final double LOW_CLIMBING_SPEED = 0.1;
+    public static final int CLIMBER_MOTOR_PORT = 1; //TODO: Validate port
+    public static final double CLIMB_SPEED = 1; //TODO: Need to validate values
+    public static final double OPEN_CLIMBER_SPEED = -0.1; //TODO: Need to validate values
     public static final InvertedValue MOTOR_INVERTED = InvertedValue.Clockwise_Positive; 
-    public static final boolean CURRENT_LIMIT_ENABLED = true;
-    public static final double CURRENT_LIMIT = 50;
+    public static final boolean CURRENT_LIMIT_ENABLED = true; 
+    public static final double CURRENT_LIMIT = 50; //TODO: Need to validate values
   }
   
   public static class ArmConstants {
