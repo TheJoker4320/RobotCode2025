@@ -15,16 +15,14 @@ public class ArmPlaceCoral extends Command {
   private ArmState mDesieredState;
   public ArmPlaceCoral(Arm arm) {
     mArm = arm;
-    mDesieredState = mArm.setPlaceCoralSetpoint(); 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mArm);
   }
-
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (mDesieredState != null)
-      mArm.setSetpoint(mDesieredState);
+    mDesieredState = mArm.setPlaceCoralSetpoint();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

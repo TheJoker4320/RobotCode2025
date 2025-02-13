@@ -59,9 +59,7 @@ public class Arm extends SubsystemBase {
     mSetpoint = setpoint.angle();
   }
   public ArmState setPlaceCoralSetpoint() {
-    if (mSetpointState == ArmState.L1)
-      return null;
-    else if (mSetpointState == ArmState.L32) {
+    if (mSetpointState == ArmState.L32) {
       setSetpoint(ArmState.L32_PLACED);
       return ArmState.L32_PLACED;
     }
@@ -69,8 +67,7 @@ public class Arm extends SubsystemBase {
       setSetpoint(ArmState.L4_PLACED);
       return ArmState.L4_PLACED;
     }
-    else
-      return null; 
+    return null; 
   }
 
   private double getCurrentAngle() {
@@ -90,7 +87,6 @@ public class Arm extends SubsystemBase {
   public boolean isAtState(ArmState state) {
     if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE) {
       SmartDashboard.putBoolean("Reached state", true);
-      stopMotorInPlace();
       mSetpointInitiallied = false;
       return true;
     }
@@ -107,6 +103,7 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("setpoint", mSetpoint);
+    SmartDashboard.putBoolean("setpointInitialized", mSetpointInitiallied);
     SmartDashboard.putNumber("arm angle", getAbsoluteEncoderValue());
     SmartDashboard.putNumber("arm motor", mMotor.get());
     SmartDashboard.putNumber("inner value", mMotor.getPosition().getValue().in(Degrees));
