@@ -69,13 +69,14 @@ public final class Constants {
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
+    public static final double MIN_ANGLE_L2_HEIGHT = -30;
     public static final double INTAKE_ANGLE = -85;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
-    public static final double L4_ANGLE = 56;
+    public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
-    public static final double L4_PLACED_ANGLE = 50;     // This angle isnt final - needs to be tested
-    public static final double L32_PLACED_ANGLE = 58;    // This angle isnt final - needs to be tested
+    public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
+    public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
@@ -91,8 +92,8 @@ public final class Constants {
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 10; //TODO: set motor id
-    public static int CORAL_MOTOR_ID = 9; //TODO: set motor id
+    public static int BALL_MOTOR_ID = 9; //TODO: set motor id
+    public static int CORAL_MOTOR_ID = 10; //TODO: set motor id
 
     /*This is the coral limit switch port */
     public static int CORAL_SWITCH_PORT = 1; //TODO: set port
@@ -106,8 +107,8 @@ public final class Constants {
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.5; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = 0.5;
-    public static final double CORAL_EJECT_SPEED = 0.5;
+    public static final double BALL_EJECT_SPEED = -0.1;
+    public static final double CORAL_EJECT_SPEED = -0.2;
   }
   
   public static class ElevatorConstants {
@@ -131,8 +132,8 @@ public final class Constants {
     public static final double INTAKE_POSITION = 0.4125;
     public static final double PRE_SCORING = 0.55;
     public static final double L4_POSITION = 1.254;
-    public static final double L3_POSITION = 0.584;
-    public static final double L2_POSITION = 0.223;
+    public static final double L3_POSITION = 0.615;
+    public static final double L2_POSITION = 0.245;
     public static final double L1_POSITION = 0.701;
     
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters

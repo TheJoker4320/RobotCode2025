@@ -12,6 +12,7 @@ import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
+import frc.robot.commands.ElevatorReachL2;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
@@ -79,7 +80,7 @@ public class RobotContainer {
     // command for adjusting elevator and arm for l1
     Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
     // command for adjusting elevator and arm for l2
-    Command l2Command = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.ZERO), new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2), new ArmReachAngle(mArm, ArmState.L32)));
+    Command l2Command = new ParallelCommandGroup(new ElevatorReachL2(mElevatorSubsystem, mArm), new ArmReachAngle(mArm, ArmState.L32));
     // command for adjusting elevator and arm for l3
     Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
     // command for adjusting elevator and arm for l4

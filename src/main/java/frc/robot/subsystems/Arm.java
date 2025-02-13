@@ -70,7 +70,7 @@ public class Arm extends SubsystemBase {
     return null; 
   }
 
-  private double getCurrentAngle() {
+  public double getCurrentAngle() {
     return mMotor.getPosition().getValue().in(Degree);
   }
   private void syncEncoders() {

@@ -53,7 +53,7 @@ public class Elevator extends SubsystemBase {
     mSetpointInitiallied = true;
   }
 
-  private double getCurrentHeight() {
+  public double getCurrentHeight() {
     return mRightMotorController.getPosition().getValueAsDouble();
   }
 
