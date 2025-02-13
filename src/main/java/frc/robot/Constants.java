@@ -53,9 +53,11 @@ public final class Constants {
   }
   public static class ClimberConstants {
     public static final int CLIMBER_MOTOR_PORT = 1;
-    public static final double HIHG_CLIMBING_SPEED = 1;
+    public static final double HIGH_CLIMBING_SPEED = 1;
     public static final double LOW_CLIMBING_SPEED = 0.1;
-    public static final double STOP_SPEED = 0;
+    public static final InvertedValue MOTOR_INVERTED = InvertedValue.Clockwise_Positive; 
+    public static final boolean CURRENT_LIMIT_ENABLED = true;
+    public static final double CURRENT_LIMIT = 50;
   }
   
   public static class ArmConstants {

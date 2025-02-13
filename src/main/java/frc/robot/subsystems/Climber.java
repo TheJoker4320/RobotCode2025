@@ -4,8 +4,12 @@
 
 package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.utils.Configs.ClimberConfig;
+
 
 public class Climber extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -19,7 +23,9 @@ public class Climber extends SubsystemBase {
   }
 
   private Climber() {
-    mMotor = new TalonFX(1);
+    mMotor = new TalonFX(ClimberConstants.CLIMBER_MOTOR_PORT);
+    mMotor.getConfigurator().apply(ClimberConfig.CLIMBER_TALONFX_CONFIG);
+    mMotor.setNeutralMode(NeutralModeValue.Brake);
   } 
 
   public void setSpeed(double speed) {
@@ -29,6 +35,5 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashBoard.putNumber("setSpeed" , speed)
   }
 }

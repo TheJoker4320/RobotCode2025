@@ -70,7 +70,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     JoystickButton HighClimbButton = new JoystickButton(m_driverController,OperatorConstants.HIGH_CLIMBER_BUTTON);
-    HighClimbButton.whileTrue(new Climb(mClimber, ClimberConstants.HIHG_CLIMBING_SPEED));
+    HighClimbButton.whileTrue(new Climb(mClimber, ClimberConstants.HIGH_CLIMBING_SPEED));
 
     JoystickButton LowClimbButton = new JoystickButton(m_driverController, OperatorConstants.LOW_CLIMBER_BUTTON);
     LowClimbButton.whileTrue(new Climb(mClimber, ClimberConstants.LOW_CLIMBING_SPEED));
