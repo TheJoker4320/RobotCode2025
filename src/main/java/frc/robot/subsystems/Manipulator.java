@@ -41,11 +41,11 @@ public class Manipulator extends SubsystemBase {
   }
 
   public boolean getBallSwitchState() {
-    return mBallSwitch.get();
+    return !mBallSwitch.get();
   }
 
   public boolean getCoralSwitchState() {
-    return mCoralSwitch.get();
+    return !mCoralSwitch.get();
   }
 
   public void collectBall(){
