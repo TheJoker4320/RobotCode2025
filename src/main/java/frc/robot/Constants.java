@@ -25,7 +25,8 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
-
+    public static final int HIGH_CLIMBER_BUTTON = XboxController.Button.kX.value;
+    public static final int LOW_CLIMBER_BUTTON = XboxController.Button.kY.value;
 
     public static final int MANIPULATOR_COLLECT_BALL_BUTTON = 0; //#TODO: set button
     public static final int MANIPULATOR_COLLECT_CORAL_BUTTON = 0; //#TODO: set button
@@ -40,6 +41,8 @@ public final class Constants {
 
     public static final double DRIVE_DEADBAND = 0.05;
     
+    
+
     // Elevator operator constants
     public static final int ELEVATOR_LOW_STATE = PS4Controller.Button.kSquare.value;
     public static final int ELEVATOR_HIGH_STATE = PS4Controller.Button.kTriangle.value;
@@ -47,6 +50,12 @@ public final class Constants {
     // Arm operator constants
     public static int ARM_LOW_STATE = PS4Controller.Button.kCircle.value;
     public static int ARM_HIGH_STATE = PS4Controller.Button.kCross.value;
+  }
+  public static class ClimberConstants {
+    public static final int CLIMBER_MOTOR_PORT = 1;
+    public static final double HIHG_CLIMBING_SPEED = 1;
+    public static final double LOW_CLIMBING_SPEED = 0.1;
+    public static final double STOP_SPEED = 0;
   }
   
   public static class ArmConstants {

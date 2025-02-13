@@ -26,14 +26,11 @@ import frc.robot.subsystems.Swerve.SwerveModuleType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -53,8 +50,6 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
-  private final XboxController m_driverController =
-      new XboxController(OperatorConstants.kDriverControllerPort);
   private final XboxController m_driverController = new XboxController(OperatorConstants.DRIVING_CONTROLLER_PORT);
   private final PS4Controller m_operatorController = new PS4Controller(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
