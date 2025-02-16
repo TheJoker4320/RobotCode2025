@@ -42,6 +42,9 @@ public final class Constants {
     public static final int INTAKE_PREPARE_BUTTON = PS4Controller.Button.kTriangle.value;
     public static final int PLACE_CORAL_BUTTON = PS4Controller.Button.kCircle.value;
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
+    public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
+    public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
+    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kPS.value;
   }
   
   public static class ArmConstants {
@@ -75,6 +78,7 @@ public final class Constants {
     public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
+    public static final double L32_BALL_ANGLE = 10; //TODO: validate angle
     public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -89,11 +93,12 @@ public final class Constants {
     public static final double MM_JERK = 2500;            // degrees per second^3
 
     public static final boolean IS_MAGIC_MOTION_ENABLED = true;
+
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 9; //TODO: set motor id
-    public static int CORAL_MOTOR_ID = 10; //TODO: set motor id
+    public static int BALL_MOTOR_ID = 9;
+    public static int CORAL_MOTOR_ID = 10;
 
     /*This is the coral limit switch port */
     public static int CORAL_SWITCH_PORT = 1; //TODO: set port
@@ -106,7 +111,7 @@ public final class Constants {
 
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.5; 
-    public static final double CORAL_COLLECT_SPEED = 0.2; //TODO: revert back to 0.5
+    public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
@@ -131,6 +136,8 @@ public final class Constants {
     public static final double PRE_INTAKE_POSITION = 0.55;
     public static final double INTAKE_POSITION = 0.4125; //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
+    public static final double L2_BALL_POSITION = 0.5; //TODO: validate value
+    public static final double L3_BALL_POSITION = 0.8; //TODO: validate value
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.245;
@@ -163,6 +170,7 @@ public final class Constants {
     public static final InvertedValue RIGHT_MOTOR_INVERTED = InvertedValue.Clockwise_Positive;
 
     public static final Angle MOTOR_OFFSET = Rotation.of(0.0835);   // This is a measured value - might need to measure and validate it once in a while
+
   }
 
   public static class SwerveSubsystemConstants {
