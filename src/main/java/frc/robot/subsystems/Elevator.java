@@ -78,10 +78,5 @@ public class Elevator extends SubsystemBase {
       final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
     }
-
-    SmartDashboard.putNumber("ELEVATOR: Setpoint", mSetpoint);
-    SmartDashboard.putNumber("ELEVATOR: Current position", getCurrentHeight());
-    SmartDashboard.putNumber("velocity", mRightMotorController.getVelocity().getValue().in(RotationsPerSecond));
-    SmartDashboard.putBoolean("initiallized", mSetpointInitiallied);
   }
 }

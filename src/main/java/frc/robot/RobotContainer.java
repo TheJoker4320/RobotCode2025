@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ManipulatorCollectBall;
@@ -21,6 +22,18 @@ import frc.robot.utils.ElevatorState;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType;
+
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.FileVersionException;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.PS4Controller;
@@ -56,6 +69,28 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    RobotConfig config = null;
+    try{
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
+
+    AutoBuilder.configure(
+      mSwerveSubsystem::getPose, 
+      mSwerveSubsystem::resetOdometry, 
+      mSwerveSubsystem::getRobotRelativeSpeeds, 
+      (speeds, feedforwards) -> mSwerveSubsystem.setModuleStates(SwerveSubsystemConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds)), 
+      new PPHolonomicDriveController(
+        new PIDConstants(AutonomousConstants.TRANSLATION_P_CONSTANT, AutonomousConstants.TRANSLATION_I_CONSTANT, AutonomousConstants.TRANSLATION_D_CONSTANT), 
+        new PIDConstants(AutonomousConstants.ROTATION_P_CONSTANT, AutonomousConstants.ROTATION_I_CONSTANT, AutonomousConstants.ROTATION_D_CONSTANT)
+      ), 
+      config, 
+      () -> { return false; }, 
+      mSwerveSubsystem
+    );
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -146,7 +181,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return new WaitCommand(0);
+    PathPlannerPath path;
+    try {
+      path = PathPlannerPath.fromPathFile("WWWDotZoharDotYemeniteJews");
+      mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
+      return AutoBuilder.followPath(path);
+    } catch (Exception e) {
+      return null;
+    }
   }
 }

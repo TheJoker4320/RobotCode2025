@@ -102,14 +102,6 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("setpoint", mSetpoint);
-    SmartDashboard.putBoolean("setpointInitialized", mSetpointInitiallied);
-    SmartDashboard.putNumber("arm angle", getAbsoluteEncoderValue());
-    SmartDashboard.putNumber("arm motor", mMotor.get());
-    SmartDashboard.putNumber("inner value", mMotor.getPosition().getValue().in(Degrees));
-    SmartDashboard.putNumber("arm velocity", mMotor.getVelocity().getValue().in(DegreesPerSecond));
-    SmartDashboard.putNumber("arm current usage", mMotor.getStatorCurrent().getValue().in(Amps));
-
     if (mSetpointInitiallied) {
       // This method will be called once per scheduler run
       if (!ArmConstants.IS_MAGIC_MOTION_ENABLED) {

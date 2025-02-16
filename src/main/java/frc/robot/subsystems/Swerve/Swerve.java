@@ -148,13 +148,24 @@ public class Swerve extends SubsystemBase {
         mRearRight.displayData();
     }
 
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return SwerveSubsystemConstants.DRIVE_KINEMATICS.toChassisSpeeds(
+            mFrontLeft.getState(),
+            mFrontRight.getState(),
+            mRearLeft.getState(),
+            mRearRight.getState()
+        );
+    }
+
     @Override
     public void periodic() {
         mOdometry.update(
             getRotation(), 
             getModulePositions()
         );
-        SmartDashboard.putBoolean("Field Relative", mFieldRelative);
-        SmartDashboard.putNumber("ROBOT HEADING", mGyro.getRotation2d().getDegrees()); // Displays angle in degrees ( not radians as it is less intuitive with radians )
+
+        SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
+        SmartDashboard.putNumber("ROT", mOdometry.getPoseMeters().getRotation().getDegrees());
     }
 }
