@@ -134,7 +134,7 @@ public final class Constants {
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
     public static final double PRE_INTAKE_POSITION = 0.55;
-    public static final double INTAKE_POSITION = 0.4125; //TODO: add to value +- 2 centimeters
+    public static final double INTAKE_POSITION = 0.4525; //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
     public static final double L2_BALL_POSITION = 0.5; //TODO: validate value
     public static final double L3_BALL_POSITION = 0.8; //TODO: validate value

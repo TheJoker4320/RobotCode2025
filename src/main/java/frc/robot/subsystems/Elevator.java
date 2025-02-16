@@ -67,8 +67,8 @@ public class Elevator extends SubsystemBase {
   }
 
   public void stopMotorInPlace() {
-    //TODO: check if elevator stops in place
-    mRightMotorController.setVoltage(ElevatorConstants.ELEVATOR_S_CONSTANT + ElevatorConstants.ELEVATOR_G_CONSTANT);
+    mRightMotorController.set(0);
+    //mRightMotorController.setVoltage(ElevatorConstants.ELEVATOR_S_CONSTANT + ElevatorConstants.ELEVATOR_G_CONSTANT);
   }
 
   @Override
