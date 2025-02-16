@@ -4,8 +4,12 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
@@ -46,6 +50,17 @@ public final class Constants {
     // but for the red alliance we would expect 0 to face the blue alliance drivers so we must shift the gyro angle by 180 degrees;
     public static final double BLUE_GYRO_OFFSET = 0;          // Values is in degrees
     public static final double RED_GYRO_OFFSET = 180;         // Values is in degrees
+
+    public static final HashMap<Integer, Pose2d> REEF_APRIL_TAG_POSITIONS = new HashMap<Integer, Pose2d>();
+    
+    static {
+      REEF_APRIL_TAG_POSITIONS.put(6, new Pose2d(13.474, 3.306, Rotation2d.fromDegrees(300)));
+      REEF_APRIL_TAG_POSITIONS.put(7, new Pose2d(13.89, 4.0259, Rotation2d.fromDegrees(0)));
+      REEF_APRIL_TAG_POSITIONS.put(8, new Pose2d(13.474, 4.745, Rotation2d.fromDegrees(60)));
+      REEF_APRIL_TAG_POSITIONS.put(9, new Pose2d(12.643, 4.745, Rotation2d.fromDegrees(120)));
+      REEF_APRIL_TAG_POSITIONS.put(10, new Pose2d(12.227, 4.0259, Rotation2d.fromDegrees(180)));
+      REEF_APRIL_TAG_POSITIONS.put(11, new Pose2d(12.643, 3.306, Rotation2d.fromDegrees(240)));
+    }
   }
 
   public static class SwerveSubsystemConstants {
