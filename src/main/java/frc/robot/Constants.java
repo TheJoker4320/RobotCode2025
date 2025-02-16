@@ -106,7 +106,7 @@ public final class Constants {
 
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.5; 
-    public static final double CORAL_COLLECT_SPEED = 0.5;
+    public static final double CORAL_COLLECT_SPEED = 0.2; //TODO: revert back to 0.5
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
@@ -129,10 +129,10 @@ public final class Constants {
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
     public static final double PRE_INTAKE_POSITION = 0.55;
-    public static final double INTAKE_POSITION = 0.4125;
+    public static final double INTAKE_POSITION = 0.4125; //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
-    public static final double L4_POSITION = 1.254;
-    public static final double L3_POSITION = 0.615;
+    public static final double L4_POSITION = 1.257;
+    public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.245;
     public static final double L1_POSITION = 0.701;
     
@@ -185,7 +185,7 @@ public final class Constants {
 
     public static final double X_STATE_ANGLE = Math.PI / 4;         // Radians
 
-    public static final int PIGEON_DEVICE_ID = 0;                   // TODO: Validate device id
+    public static final int PIGEON_DEVICE_ID = 14;                  // TODO: Validate device id
   }
 
   public static final class NeoModuleConstants {

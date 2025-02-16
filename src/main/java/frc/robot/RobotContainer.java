@@ -73,14 +73,17 @@ public class RobotContainer {
     
     // -------------- OPERATOR BUTTONS --------------
 
+    //temporary button of collecting
+    Command tempCollect = new ManipulatorCollectCoral(mManipulator);
+
     // command for preparing to collect a coral
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
     // command for collecting a coral
-    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator)), new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE));
+    //Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator)), new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE));
     // command for adjusting elevator and arm for l1
     Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
     // command for adjusting elevator and arm for l2
-    Command l2Command = new ParallelCommandGroup(new ElevatorReachL2(mElevatorSubsystem, mArm), new ArmReachAngle(mArm, ArmState.L32));
+    //Command l2Command = new ParallelCommandGroup(new ElevatorReachL2(mElevatorSubsystem, mArm), new ArmReachAngle(mArm, ArmState.L32));
     // command for adjusting elevator and arm for l3
     Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
     // command for adjusting elevator and arm for l4
@@ -88,18 +91,22 @@ public class RobotContainer {
     // command for ejecting a coral
     Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
 
+    JoystickButton tempCollectButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
+
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
-    JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
+    //JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
     JoystickButton l1Button = new JoystickButton(m_operatorController, OperatorConstants.L1_STATE_BUTTON);
-    JoystickButton l2Button = new JoystickButton(m_operatorController, OperatorConstants.L2_STATE_BUTTON);
+    //JoystickButton l2Button = new JoystickButton(m_operatorController, OperatorConstants.L2_STATE_BUTTON);
     JoystickButton l3Button = new JoystickButton(m_operatorController, OperatorConstants.L3_STATE_BUTTON);
     JoystickButton l4Button = new JoystickButton(m_operatorController, OperatorConstants.L4_STATE_BUTTON);
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
 
+    tempCollectButton.onTrue(tempCollect);
+
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
-    intakeButton.onTrue(intakeSequenceCommand);
+    //intakeButton.onTrue(intakeSequenceCommand);
     l1Button.onTrue(l1Command);
-    l2Button.onTrue(l2Command);
+    //l2Button.onTrue(l2Command);
     l3Button.onTrue(l3Command);
     l4Button.onTrue(l4Command);
     placeCoralButton.toggleOnTrue(placeCoralCommand);
@@ -118,7 +125,7 @@ public class RobotContainer {
     resetHeadingButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.zeroHeading(), mSwerveSubsystem));
 
     JoystickButton switchReferenceFrameButton = new JoystickButton(m_driverController, OperatorConstants.REFERENCE_FRAME_SWERVE_BUTTON); // Switches between driving field-relative and robot-relative
-    switchReferenceFrameButton.onChange(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
+    switchReferenceFrameButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
 
 
     mSwerveSubsystem.setDefaultCommand(

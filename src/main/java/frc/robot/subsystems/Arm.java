@@ -125,8 +125,8 @@ public class Arm extends SubsystemBase {
     }
 
     //sends to smart dashboard if encoders are out of sync
-    Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
-    encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
+    //Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
+    //encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
     
     //if (mSetpointInitiallied && isAtState(mSetpointState))
     //  mSetpointInitiallied = false;
