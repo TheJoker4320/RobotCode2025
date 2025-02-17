@@ -25,8 +25,8 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
-    public static final int HIGH_CLIMBER_BUTTON = XboxController.Button.kX.value;
-    public static final int LOW_CLIMBER_BUTTON = XboxController.Button.kY.value;
+    public static final int CLIMBER_BUTTON = XboxController.Button.kX.value;
+    public static final int OPEN_CLIMBER_BUTTON = XboxController.Button.kY.value;
 
     public static final int MANIPULATOR_COLLECT_BALL_BUTTON = 0; //#TODO: set button
     public static final int MANIPULATOR_COLLECT_CORAL_BUTTON = 0; //#TODO: set button
