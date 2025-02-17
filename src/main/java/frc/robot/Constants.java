@@ -4,6 +4,17 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.Rotation;
 import com.ctre.phoenix6.signals.InvertedValue;
 
@@ -42,6 +53,9 @@ public final class Constants {
     public static final int INTAKE_PREPARE_BUTTON = PS4Controller.Button.kTriangle.value;
     public static final int PLACE_CORAL_BUTTON = PS4Controller.Button.kCircle.value;
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
+    public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
+    public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
+    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kPS.value;
   }
   
   public static class ArmConstants {
@@ -75,6 +89,7 @@ public final class Constants {
     public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
+    public static final double L32_BALL_ANGLE = 10; //TODO: validate angle
     public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -89,11 +104,12 @@ public final class Constants {
     public static final double MM_JERK = 2500;            // degrees per second^3
 
     public static final boolean IS_MAGIC_MOTION_ENABLED = true;
+
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 9; //TODO: set motor id
-    public static int CORAL_MOTOR_ID = 10; //TODO: set motor id
+    public static int BALL_MOTOR_ID = 9;
+    public static int CORAL_MOTOR_ID = 10;
 
     /*This is the coral limit switch port */
     public static int CORAL_SWITCH_PORT = 1; //TODO: set port
@@ -106,7 +122,7 @@ public final class Constants {
 
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.5; 
-    public static final double CORAL_COLLECT_SPEED = 0.2; //TODO: revert back to 0.5
+    public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
@@ -129,8 +145,10 @@ public final class Constants {
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
     public static final double PRE_INTAKE_POSITION = 0.55;
-    public static final double INTAKE_POSITION = 0.4125; //TODO: add to value +- 2 centimeters
+    public static final double INTAKE_POSITION = 0.4525; //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
+    public static final double L2_BALL_POSITION = 0.5; //TODO: validate value
+    public static final double L3_BALL_POSITION = 0.8; //TODO: validate value
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.245;
@@ -163,6 +181,44 @@ public final class Constants {
     public static final InvertedValue RIGHT_MOTOR_INVERTED = InvertedValue.Clockwise_Positive;
 
     public static final Angle MOTOR_OFFSET = Rotation.of(0.0835);   // This is a measured value - might need to measure and validate it once in a while
+
+  }
+
+  public static class PoseEstimatorConstants {
+    // The larger the following values are the less the pose estimator trusts the measurements - if we see 
+    // large ambiguity increase the values, if we see high precision than decrease the values
+    public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));      // TODO: Calibrate values
+    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15));      // These values are most likely too high - should be tested, TODO: Calibrate values
+  
+    public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
+
+    public static final double REEF_X_OFFSET = -0.4;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_Y_RIGHT_OFFSET = -0.17;   // The distance between the center of the april tag and reef thingy
+    public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef thingy
+    public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
+
+    // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
+    // but for the red alliance we would expect 0 to face the blue alliance drivers so we must shift the gyro angle by 180 degrees;
+    public static final double BLUE_GYRO_OFFSET = 0;          // Values is in degrees
+    public static final double RED_GYRO_OFFSET = 180;         // Values is in degrees
+
+    public static final HashMap<Integer, Pose2d> REEF_APRIL_TAG_POSITIONS = new HashMap<Integer, Pose2d>();
+    
+    static {
+      REEF_APRIL_TAG_POSITIONS.put(6, new Pose2d(13.474, 3.306, Rotation2d.fromDegrees(300)));
+      REEF_APRIL_TAG_POSITIONS.put(7, new Pose2d(13.89, 4.0259, Rotation2d.fromDegrees(0)));
+      REEF_APRIL_TAG_POSITIONS.put(8, new Pose2d(13.474, 4.745, Rotation2d.fromDegrees(60)));
+      REEF_APRIL_TAG_POSITIONS.put(9, new Pose2d(12.643, 4.745, Rotation2d.fromDegrees(120)));
+      REEF_APRIL_TAG_POSITIONS.put(10, new Pose2d(12.227, 4.0259, Rotation2d.fromDegrees(180)));
+      REEF_APRIL_TAG_POSITIONS.put(11, new Pose2d(12.643, 3.306, Rotation2d.fromDegrees(240)));
+    
+      REEF_APRIL_TAG_POSITIONS.put(17, new Pose2d(4.074, 3.306, Rotation2d.fromDegrees(240)));
+      REEF_APRIL_TAG_POSITIONS.put(18, new Pose2d(3.657, 4.025, Rotation2d.fromDegrees(180)));
+      REEF_APRIL_TAG_POSITIONS.put(19, new Pose2d(4.074, 4.745, Rotation2d.fromDegrees(120)));
+      REEF_APRIL_TAG_POSITIONS.put(20, new Pose2d(4.904, 4.745, Rotation2d.fromDegrees(60)));
+      REEF_APRIL_TAG_POSITIONS.put(21, new Pose2d(5.321, 4.025, Rotation2d.fromDegrees(0)));
+      REEF_APRIL_TAG_POSITIONS.put(22, new Pose2d(4.904, 3.306, Rotation2d.fromDegrees(300)));
+    }
   }
 
   public static class SwerveSubsystemConstants {
@@ -185,7 +241,7 @@ public final class Constants {
 
     public static final double X_STATE_ANGLE = Math.PI / 4;         // Radians
 
-    public static final int PIGEON_DEVICE_ID = 14;                  // TODO: Validate device id
+    public static final int PIGEON_DEVICE_ID = 14;                   // TODO: Validate device id
   }
 
   public static final class NeoModuleConstants {

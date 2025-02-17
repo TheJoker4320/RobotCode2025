@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Radians;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -73,7 +74,7 @@ public class Arm extends SubsystemBase {
   public double getCurrentAngle() {
     return mMotor.getPosition().getValue().in(Degree);
   }
-  private void syncEncoders() {
+  private void syncEncoders() { 
     mMotor.setPosition(Degree.of(getAbsoluteEncoderValue()));
   }
   private boolean verifyEncoderSync() {
@@ -95,8 +96,8 @@ public class Arm extends SubsystemBase {
   }
 
   public void stopMotorInPlace() {
-    mMotor.set(0);
-    mMotor.setNeutralMode(NeutralModeValue.Brake);
+    //TODO: check if arm stays in place
+    mMotor.setVoltage(ArmConstants.ARM_KG * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
   }
 
 
