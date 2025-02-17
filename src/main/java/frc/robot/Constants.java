@@ -44,7 +44,7 @@ public final class Constants {
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
     public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
-    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kPS.value;
+    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
   }
   
   public static class ArmConstants {
@@ -78,7 +78,8 @@ public final class Constants {
     public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
-    public static final double L32_BALL_ANGLE = 10; //TODO: validate angle
+    public static final double L32_BALL_PRE_COLLECT_ANGLE = -20; //TODO: validate angle
+    public static final double L32_BALL_COLLECT_ANGLE = -5; //TODO: validate angle
     public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -105,6 +106,8 @@ public final class Constants {
     
     /*This is the ball limit switch port */
     public static int BALL_SWITCH_PORT = 2; //TODO: set port
+
+    public static final boolean BALL_COLLECTOR_INVERTED = true;
 
     public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
@@ -136,8 +139,8 @@ public final class Constants {
     public static final double PRE_INTAKE_POSITION = 0.55;
     public static final double INTAKE_POSITION = 0.4525; //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
-    public static final double L2_BALL_POSITION = 0.5; //TODO: validate value
-    public static final double L3_BALL_POSITION = 0.8; //TODO: validate value
+    public static final double L2_BALL_POSITION = 0.475; //TODO: validate value
+    public static final double L3_BALL_POSITION = 0.84; //TODO: validate value
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.245;

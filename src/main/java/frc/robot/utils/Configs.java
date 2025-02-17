@@ -100,6 +100,7 @@ public final class Configs {
         static {
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            BALL_COLLECTOR_CONFIG.inverted(ManipulatorConstants.BALL_COLLECTOR_INVERTED);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
