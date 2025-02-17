@@ -9,10 +9,10 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class OpenClimber extends Command {
+public class CloseClimber extends Command {
   /** Creates a new ExampleCommand. */
   private final Climber mClimber;
-  public OpenClimber(Climber climber) {
+  public CloseClimber(Climber climber) {
     mClimber = climber;
     addRequirements(mClimber);
   }
@@ -20,7 +20,7 @@ public class OpenClimber extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mClimber.setSpeed(ClimberConstants.OPEN_CLIMBER_SPEED);
+    mClimber.setSpeed(ClimberConstants.CLOSE_CLIMBER_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

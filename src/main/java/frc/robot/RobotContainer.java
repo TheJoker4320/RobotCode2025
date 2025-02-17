@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
@@ -13,7 +11,7 @@ import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
-import frc.robot.commands.OpenClimber;
+import frc.robot.commands.CloseClimber;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.subsystems.Arm;
@@ -77,8 +75,8 @@ public class RobotContainer {
     JoystickButton ClimbButton = new JoystickButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
     ClimbButton.whileTrue(new Climb(mClimber));
 
-    JoystickButton OpenClimbButton = new JoystickButton(m_driverController, OperatorConstants.OPEN_CLIMBER_BUTTON); // lock the clibimg to be stable
-    OpenClimbButton.whileTrue(new OpenClimber(mClimber));
+    JoystickButton CloseClimbButton = new JoystickButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
+    CloseClimbButton.whileTrue(new CloseClimber(mClimber));
     
 
     // Manipulator buttons

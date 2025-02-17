@@ -26,7 +26,7 @@ public final class Constants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
     public static final int CLIMBER_BUTTON = XboxController.Button.kX.value;
-    public static final int OPEN_CLIMBER_BUTTON = XboxController.Button.kY.value;
+    public static final int CLOSE_CLIMBER_BUTTON = XboxController.Button.kY.value;
 
     public static final int MANIPULATOR_COLLECT_BALL_BUTTON = 0; //#TODO: set button
     public static final int MANIPULATOR_COLLECT_CORAL_BUTTON = 0; //#TODO: set button
@@ -54,7 +54,7 @@ public final class Constants {
   public static class ClimberConstants {
     public static final int CLIMBER_MOTOR_PORT = 1; //TODO: Validate port
     public static final double CLIMB_SPEED = 1; //TODO: Need to validate values
-    public static final double OPEN_CLIMBER_SPEED = -0.1; //TODO: Need to validate values
+    public static final double CLOSE_CLIMBER_SPEED = -0.1; //TODO: Need to validate values
     public static final InvertedValue MOTOR_INVERTED = InvertedValue.Clockwise_Positive; 
     public static final boolean CURRENT_LIMIT_ENABLED = true; 
     public static final double CURRENT_LIMIT = 50; //TODO: Need to validate values
