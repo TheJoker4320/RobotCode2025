@@ -88,33 +88,7 @@ public class RobotContainer {
 
     JoystickButton CloseClimbButton = new JoystickButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
     CloseClimbButton.whileTrue(new CloseClimber(mClimber));
-    
 
-    // Manipulator buttons
-    
-    JoystickButton manipulatorCollectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_BALL_BUTTON);
-    manipulatorCollectBallButton.toggleOnTrue(new ManipulatorCollectBall(mManipulator));
-    JoystickButton manipulatorCollectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_COLLECT_CORAL_BUTTON);
-    manipulatorCollectCoralButton.toggleOnTrue(new ManipulatorCollectCoral(mManipulator));
-    JoystickButton manipulatorEjectBallButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_BALL_BUTTON);
-    manipulatorEjectBallButton.whileTrue(new ManipulatorBallEject(mManipulator));
-    JoystickButton manipulatorEjectCoralButton = new JoystickButton(m_driverController, OperatorConstants.MANIPULATOR_EJECT_CORAL_BUTTON);
-    manipulatorEjectCoralButton.whileTrue(new ManipulatorCoralEject(mManipulator));
-
-    // Arm buttons
-    JoystickButton armSetLow = new JoystickButton(m_operatorController, OperatorConstants.ARM_LOW_STATE);   //raises arm to low state
-    armSetLow.onTrue((new ArmReachAngle(mArm, ArmState.LOW)));
-    JoystickButton armSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ARM_HIGH_STATE); //raises arm to high state
-    armSetHigh.onTrue((new ArmReachAngle(mArm, ArmState.HIGH)));
-
-    // Elevator buttons
-    JoystickButton elevatorSetLow = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_LOW_STATE);           // Lowers/raises the elevator to the predefined state: LOW
-    elevatorSetLow.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.LOW));
-    JoystickButton elevatorSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
-    elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
-
-    //temporary button of collecting
-    Command tempCollect = new ManipulatorCollectCoral(mManipulator);
 
     // command for preparing to collect a coral
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
