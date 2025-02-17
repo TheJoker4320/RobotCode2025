@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Radians;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -58,11 +59,22 @@ public class Arm extends SubsystemBase {
     mSetpointState = setpoint;
     mSetpoint = setpoint.angle();
   }
+  public ArmState setPlaceCoralSetpoint() {
+    if (mSetpointState == ArmState.L32) {
+      setSetpoint(ArmState.L32_PLACED);
+      return ArmState.L32_PLACED;
+    }
+    else if (mSetpointState == ArmState.L4) {
+      setSetpoint(ArmState.L4_PLACED);
+      return ArmState.L4_PLACED;
+    }
+    return null; 
+  }
 
-  private double getCurrentAngle() {
+  public double getCurrentAngle() {
     return mMotor.getPosition().getValue().in(Degree);
   }
-  private void syncEncoders() {
+  private void syncEncoders() { 
     mMotor.setPosition(Degree.of(getAbsoluteEncoderValue()));
   }
   private boolean verifyEncoderSync() {
@@ -76,7 +88,6 @@ public class Arm extends SubsystemBase {
   public boolean isAtState(ArmState state) {
     if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE) {
       SmartDashboard.putBoolean("Reached state", true);
-      stopMotorInPlace();
       mSetpointInitiallied = false;
       return true;
     }
@@ -85,14 +96,15 @@ public class Arm extends SubsystemBase {
   }
 
   public void stopMotorInPlace() {
-    mMotor.set(0);
-    mMotor.setNeutralMode(NeutralModeValue.Brake);
+    //TODO: check if arm stays in place
+    mMotor.setVoltage(ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
   }
 
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("setpoint", mSetpoint);
+    SmartDashboard.putBoolean("setpointInitialized", mSetpointInitiallied);
     SmartDashboard.putNumber("arm angle", getAbsoluteEncoderValue());
     SmartDashboard.putNumber("arm motor", mMotor.get());
     SmartDashboard.putNumber("inner value", mMotor.getPosition().getValue().in(Degrees));
@@ -114,8 +126,8 @@ public class Arm extends SubsystemBase {
     }
 
     //sends to smart dashboard if encoders are out of sync
-    Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
-    encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
+    //Alert encoderDesyncAlert = new Alert("WARNING: ENCODER VALUES ARE OUT OF SYNC", AlertType.kWarning);
+    //encoderDesyncAlert.set(verifyEncoderSync()); //TODO: check if SmartDashBoard puts this value
     
     //if (mSetpointInitiallied && isAtState(mSetpointState))
     //  mSetpointInitiallied = false;

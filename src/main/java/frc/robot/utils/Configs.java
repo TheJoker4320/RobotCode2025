@@ -19,15 +19,11 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.units.AngularAccelerationUnit;
-import edu.wpi.first.units.AngularMomentumUnit;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.units.measure.AngularVelocity;
 import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.Arm;
 
 public final class Configs {
     public static class ElevatorConfigs {
@@ -104,6 +100,7 @@ public final class Configs {
         static {
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            BALL_COLLECTOR_CONFIG.inverted(ManipulatorConstants.BALL_COLLECTOR_INVERTED);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
