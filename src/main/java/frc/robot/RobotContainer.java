@@ -7,6 +7,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
@@ -14,6 +15,7 @@ import frc.robot.commands.ManipulatorCoralEject;
 import frc.robot.commands.CloseClimber;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
+import frc.robot.commands.ElevatorReachL2;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
@@ -31,7 +33,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -76,7 +81,7 @@ public class RobotContainer {
   private void configureBindings() {
 
     // -------------- OPERATOR BUTTONS --------------
-  
+
     //Climber buttons
     JoystickButton ClimbButton = new JoystickButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
     ClimbButton.whileTrue(new Climb(mClimber));
@@ -108,6 +113,53 @@ public class RobotContainer {
     JoystickButton elevatorSetHigh = new JoystickButton(m_operatorController, OperatorConstants.ELEVATOR_HIGH_STATE);         // Lowers/raises the elevator to the predefined state: HIGH
     elevatorSetHigh.onTrue(new ElevatorReachState(mElevatorSubsystem, ElevatorState.HIGH));
 
+    //temporary button of collecting
+    Command tempCollect = new ManipulatorCollectCoral(mManipulator);
+
+    // command for preparing to collect a coral
+    Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
+    // command for collecting a coral
+    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator)), new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE));
+    // command for adjusting elevator and arm for l1
+    Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
+    // command for adjusting elevator and arm for l2
+    //Command l2Command = new ParallelCommandGroup(new ElevatorReachL2(mElevatorSubsystem, mArm), new ArmReachAngle(mArm, ArmState.L32));
+    // command for adjusting elevator and arm for l3
+    Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
+    // command for adjusting elevator and arm for l4
+    Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
+    // command for ejecting a coral
+    Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
+    // command for reaching a ball placed on l2
+    Command reachL2BallCommand = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL));
+    // command for reaching a ball placed on l3
+    Command reachL3BallCommand = new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
+    // command for collecting a ball
+    Command collectBallCommand = new ParallelCommandGroup(new ManipulatorCollectBall(mManipulator), new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE));
+
+    JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
+    JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
+    JoystickButton l1Button = new JoystickButton(m_operatorController, OperatorConstants.L1_STATE_BUTTON);
+    //JoystickButton l2Button = new JoystickButton(m_operatorController, OperatorConstants.L2_STATE_BUTTON);
+    JoystickButton l3Button = new JoystickButton(m_operatorController, OperatorConstants.L3_STATE_BUTTON);
+    JoystickButton l4Button = new JoystickButton(m_operatorController, OperatorConstants.L4_STATE_BUTTON);
+    JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
+    JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
+    JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON); //TODO: check constants before running
+    JoystickButton collectCoralButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
+
+
+    intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
+    intakeButton.onTrue(intakeSequenceCommand);
+    l1Button.onTrue(l1Command);
+    //l2Button.onTrue(l2Command);
+    l3Button.onTrue(l3Command);
+    l4Button.onTrue(l4Command);
+    placeCoralButton.toggleOnTrue(placeCoralCommand);
+    reachL2BallButton.onTrue(reachL2BallCommand);
+    reachL3BallButton.onTrue(reachL3BallCommand);
+    collectCoralButton.toggleOnTrue(collectBallCommand);
+
     // -------------- DRIVER BUTTONS -------------
 
     // Swerve buttons
@@ -122,7 +174,7 @@ public class RobotContainer {
     resetHeadingButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.resetHeading(0), mSwerveSubsystem));
 
     JoystickButton switchReferenceFrameButton = new JoystickButton(m_driverController, OperatorConstants.REFERENCE_FRAME_SWERVE_BUTTON); // Switches between driving field-relative and robot-relative
-    switchReferenceFrameButton.onChange(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
+    switchReferenceFrameButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
 
 
     mSwerveSubsystem.setDefaultCommand(
