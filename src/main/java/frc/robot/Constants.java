@@ -4,6 +4,17 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.Rotation;
 import com.ctre.phoenix6.signals.InvertedValue;
 
@@ -173,6 +184,43 @@ public final class Constants {
 
   }
 
+  public static class PoseEstimatorConstants {
+    // The larger the following values are the less the pose estimator trusts the measurements - if we see 
+    // large ambiguity increase the values, if we see high precision than decrease the values
+    public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));      // TODO: Calibrate values
+    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15));      // These values are most likely too high - should be tested, TODO: Calibrate values
+  
+    public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
+
+    public static final double REEF_X_OFFSET = -0.4;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_Y_RIGHT_OFFSET = -0.17;   // The distance between the center of the april tag and reef thingy
+    public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef thingy
+    public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
+
+    // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
+    // but for the red alliance we would expect 0 to face the blue alliance drivers so we must shift the gyro angle by 180 degrees;
+    public static final double BLUE_GYRO_OFFSET = 0;          // Values is in degrees
+    public static final double RED_GYRO_OFFSET = 180;         // Values is in degrees
+
+    public static final HashMap<Integer, Pose2d> REEF_APRIL_TAG_POSITIONS = new HashMap<Integer, Pose2d>();
+    
+    static {
+      REEF_APRIL_TAG_POSITIONS.put(6, new Pose2d(13.474, 3.306, Rotation2d.fromDegrees(300)));
+      REEF_APRIL_TAG_POSITIONS.put(7, new Pose2d(13.89, 4.0259, Rotation2d.fromDegrees(0)));
+      REEF_APRIL_TAG_POSITIONS.put(8, new Pose2d(13.474, 4.745, Rotation2d.fromDegrees(60)));
+      REEF_APRIL_TAG_POSITIONS.put(9, new Pose2d(12.643, 4.745, Rotation2d.fromDegrees(120)));
+      REEF_APRIL_TAG_POSITIONS.put(10, new Pose2d(12.227, 4.0259, Rotation2d.fromDegrees(180)));
+      REEF_APRIL_TAG_POSITIONS.put(11, new Pose2d(12.643, 3.306, Rotation2d.fromDegrees(240)));
+    
+      REEF_APRIL_TAG_POSITIONS.put(17, new Pose2d(4.074, 3.306, Rotation2d.fromDegrees(240)));
+      REEF_APRIL_TAG_POSITIONS.put(18, new Pose2d(3.657, 4.025, Rotation2d.fromDegrees(180)));
+      REEF_APRIL_TAG_POSITIONS.put(19, new Pose2d(4.074, 4.745, Rotation2d.fromDegrees(120)));
+      REEF_APRIL_TAG_POSITIONS.put(20, new Pose2d(4.904, 4.745, Rotation2d.fromDegrees(60)));
+      REEF_APRIL_TAG_POSITIONS.put(21, new Pose2d(5.321, 4.025, Rotation2d.fromDegrees(0)));
+      REEF_APRIL_TAG_POSITIONS.put(22, new Pose2d(4.904, 3.306, Rotation2d.fromDegrees(300)));
+    }
+  }
+
   public static class SwerveSubsystemConstants {
     public static final double TRACK_WIDTH = 0.675;                 // distance between centers of right and left modules TODO: Validate measurment
     public static final double WHEEL_BASE = 0.675;                  // distance between centers of front and rear modules TODO: Validate measurment
@@ -193,7 +241,7 @@ public final class Constants {
 
     public static final double X_STATE_ANGLE = Math.PI / 4;         // Radians
 
-    public static final int PIGEON_DEVICE_ID = 14;                  // TODO: Validate device id
+    public static final int PIGEON_DEVICE_ID = 14;                   // TODO: Validate device id
   }
 
   public static final class NeoModuleConstants {
