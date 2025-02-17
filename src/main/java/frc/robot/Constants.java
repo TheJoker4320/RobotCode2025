@@ -70,6 +70,8 @@ public final class Constants {
     public static final double ARM_KA = 0.689612;  
     public static final double ARM_KS = 0.52706;
 
+    public static final double ARM_KG_STAY = 0.1;
+
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
     public static final double MIN_ANGLE_L2_HEIGHT = -30;
@@ -113,7 +115,7 @@ public final class Constants {
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
 
     //TODO: set correct speed for manipulator
-    public static final double BALL_COLLECT_SPEED = 0.5; 
+    public static final double BALL_COLLECT_SPEED = 1.0; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;
