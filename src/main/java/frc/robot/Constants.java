@@ -18,8 +18,6 @@ import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.Rotation;
 import com.ctre.phoenix6.signals.InvertedValue;
 
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -192,7 +190,7 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double REEF_X_OFFSET = -0.4;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_X_OFFSET = -0.5;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
     public static final double REEF_Y_RIGHT_OFFSET = -0.17;   // The distance between the center of the april tag and reef thingy
     public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef thingy
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;

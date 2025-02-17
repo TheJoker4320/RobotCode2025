@@ -175,7 +175,6 @@ public class RobotContainer {
     JoystickButton switchReferenceFrameButton = new JoystickButton(m_driverController, OperatorConstants.REFERENCE_FRAME_SWERVE_BUTTON); // Switches between driving field-relative and robot-relative
     switchReferenceFrameButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
 
-
     mSwerveSubsystem.setDefaultCommand(
       new RunCommand(
         () -> mSwerveSubsystem.drive(
@@ -194,25 +193,26 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerPath path;
-    try {
-      path = PathPlannerPath.fromPathFile("WWWDotZoharDotYemeniteJews");
-      mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
-      return AutoBuilder.followPath(path);
-    } catch (Exception e) {
-      return null;
-    }
-
-    // When you load here the autonomous command you must firstly reset the poseEstimator and swerve's odometry
-    // with the first pose of the autonomous command.
-    // use: mPoseEstimator.resetPose(...);
-    // use: mSwerveSubsystem.resetOdometry(...);
-
     // An example command will be run in autonomous
     mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
     // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
     // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
-    mSwerveSubsystem.resetHeading(180);
-    return new WaitCommand(0);
+
+    JoystickButton rightAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+    rightAlignButton.whileTrue(mPoseEstimatorSubsystem.getAlignRightReef());
+
+    /*
+    PathPlannerPath path;
+    try {
+      path = PathPlannerPath.fromPathFile("WWWDotZoharDotYemeniteJews");
+      mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
+      mSwerveSubsystem.resetHeading(path.getStartingHolonomicPose().get().getRotation().getDegrees());
+      return AutoBuilder.followPath(path);
+    } catch (Exception e) {
+      return null;
+    }
+    */
+
+    return null;
   }
 }

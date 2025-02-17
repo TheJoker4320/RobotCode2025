@@ -4,28 +4,41 @@
 
 package frc.robot.subsystems;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import static edu.wpi.first.units.Units.Amp;
 
-import com.fasterxml.jackson.databind.util.RootNameLookup;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.AutonomousConstants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
-
   private final Field2d mField;
   
   private final SwerveDrivePoseEstimator mPoseEstimator;
@@ -80,21 +93,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
-  public Pose2d getReefToAlignRight() {
-    Pose2d robotPose = mPoseEstimator.getEstimatedPosition();
-    List<Pose2d> mReefAprilTags = new ArrayList<Pose2d>(PoseEstimatorConstants.REEF_APRIL_TAG_POSITIONS.values());
-    Pose2d reefToAlign = robotPose.nearest(mReefAprilTags);
-
-    final double xOffset = PoseEstimatorConstants.REEF_X_OFFSET;
-    final double yOffset = PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET;
-    final double angleOffset = PoseEstimatorConstants.APRIL_TAG_ANGLE_OFFSET;
-
-    double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
-    double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
-
-    return reefToAlign.plus(new Transform2d(-1 * deltaX, -1 * deltaY, Rotation2d.fromDegrees(180)));
-  }
-
   @Override
   public void periodic() {
     boolean rejectVisionUpdate = false;
@@ -134,6 +132,70 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("AlignTo x", alignTo.getX());
     SmartDashboard.putNumber("AlignTo y", alignTo.getY());
     SmartDashboard.putNumber("AlignTo angle", alignTo.getRotation().getDegrees());
+  }
 
+  public Pose2d getReefToAlignRight() {
+    Pose2d robotPose = mPoseEstimator.getEstimatedPosition();
+    List<Pose2d> mReefAprilTags = new ArrayList<Pose2d>(PoseEstimatorConstants.REEF_APRIL_TAG_POSITIONS.values());
+    Pose2d reefToAlign = robotPose.nearest(mReefAprilTags);
+
+    final double xOffset = PoseEstimatorConstants.REEF_X_OFFSET;
+    final double yOffset = PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET;
+    final double angleOffset = PoseEstimatorConstants.APRIL_TAG_ANGLE_OFFSET;
+
+    double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
+    double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
+
+    return reefToAlign.plus(new Transform2d(-1 * deltaX, -1 * deltaY, Rotation2d.fromDegrees(180)));
+  }
+
+  public Command getAlignRightReef() {
+    Pose2d curPose = mPoseEstimator.getEstimatedPosition();
+    Pose2d goalPose = getReefToAlignRight();
+
+    List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+      new Pose2d(curPose.getX(), curPose.getY(), Rotation2d.fromDegrees(0)),
+      new Pose2d(goalPose.getX(), goalPose.getY(), Rotation2d.fromDegrees(0))
+    );
+
+    PathConstraints constraints = new PathConstraints(0.5, 1, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+
+    PathPlannerPath alignmentPath = new PathPlannerPath(
+      waypoints,
+      constraints,
+      null,
+      new GoalEndState(0, goalPose.getRotation())
+    );
+    
+    try {
+      mSwerve.resetHeading(curPose.getRotation().getDegrees() + mGyroOffset);
+      mSwerve.resetOdometry(mPoseEstimator.getEstimatedPosition());
+
+      RobotConfig config = null;
+      try{
+        config = RobotConfig.fromGUISettings();
+      } catch (Exception e) {
+        // Handle exception as needed
+        e.printStackTrace();
+      }
+
+      AutoBuilder.configure(
+        mPoseEstimator::getEstimatedPosition, 
+        mPoseEstimator::resetPose, 
+        mSwerve::getRobotRelativeSpeeds, 
+        (speeds, feedforwards) -> mSwerve.setModuleStates(SwerveSubsystemConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds)), 
+        new PPHolonomicDriveController(
+          new PIDConstants(AutonomousConstants.TRANSLATION_P_CONSTANT, AutonomousConstants.TRANSLATION_I_CONSTANT, AutonomousConstants.TRANSLATION_D_CONSTANT), 
+          new PIDConstants(AutonomousConstants.ROTATION_P_CONSTANT, AutonomousConstants.ROTATION_I_CONSTANT, AutonomousConstants.ROTATION_D_CONSTANT)
+        ), 
+        config, 
+        () -> { return false; }, 
+        mSwerve
+      );
+
+      return AutoBuilder.followPath(alignmentPath);
+    } catch (Exception e) {
+      return new WaitCommand(0);
+    }
   }
 }
