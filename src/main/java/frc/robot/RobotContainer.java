@@ -91,6 +91,9 @@ public class RobotContainer {
 
     // An example command will be run in autonomous
     mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
+    // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
+    // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
+    mSwerveSubsystem.resetHeading(180);
     return new WaitCommand(0);
   }
 }
