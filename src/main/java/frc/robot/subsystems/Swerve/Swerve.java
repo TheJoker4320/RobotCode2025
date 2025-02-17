@@ -129,13 +129,17 @@ public class Swerve extends SubsystemBase {
         return mGyro.getAngularVelocityZWorld().getValueAsDouble();
     }
 
-    public void zeroHeading() {
-        mGyro.reset();
-        resetOdometry(new Pose2d(getPose().getTranslation(), new Rotation2d()));
+    public void resetHeading() {
+        resetHeading(0);
     }
 
     public void setInputMultiplier(double inputMultiplier) {
         mInputMultiplier = inputMultiplier;
+    }
+
+    public void resetHeading(double newYaw) {
+        mGyro.setYaw(newYaw);
+        resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(newYaw)));
     }
 
     public void resetOdometry() {

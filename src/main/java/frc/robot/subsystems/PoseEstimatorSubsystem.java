@@ -4,9 +4,17 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.util.RootNameLookup;
+
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -72,6 +80,21 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
+  public Pose2d getReefToAlignRight() {
+    Pose2d robotPose = mPoseEstimator.getEstimatedPosition();
+    List<Pose2d> mReefAprilTags = new ArrayList<Pose2d>(PoseEstimatorConstants.REEF_APRIL_TAG_POSITIONS.values());
+    Pose2d reefToAlign = robotPose.nearest(mReefAprilTags);
+
+    final double xOffset = PoseEstimatorConstants.REEF_X_OFFSET;
+    final double yOffset = PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET;
+    final double angleOffset = PoseEstimatorConstants.APRIL_TAG_ANGLE_OFFSET;
+
+    double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
+    double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
+
+    return reefToAlign.plus(new Transform2d(-1 * deltaX, -1 * deltaY, Rotation2d.fromDegrees(180)));
+  }
+
   @Override
   public void periodic() {
     boolean rejectVisionUpdate = false;
@@ -96,10 +119,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     }
 
     if (!rejectVisionUpdate) {
-      SmartDashboard.putNumber("Limelight reported x", poseEstimate.pose.getX());                                       // Specifically for debugging, should be removed later
-      SmartDashboard.putNumber("Limelight reported y", poseEstimate.pose.getY());                                       // Specifically for debugging, should be removed later
-      SmartDashboard.putNumber("Limelight reported angle", poseEstimate.pose.getRotation().getDegrees());               // Specifically for debugging, should be removed later
-
       mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
     }
 
@@ -110,5 +129,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Estimated x", mPoseEstimator.getEstimatedPosition().getX());                              // Specifically for debugging, should be removed later
     SmartDashboard.putNumber("Estimated y", mPoseEstimator.getEstimatedPosition().getY());                              // Specifically for debugging, should be removed later
     SmartDashboard.putNumber("Estimated angle", mPoseEstimator.getEstimatedPosition().getRotation().getDegrees());      // Specifically for debugging, should be removed later
+  
+    Pose2d alignTo = getReefToAlignRight();
+    SmartDashboard.putNumber("AlignTo x", alignTo.getX());
+    SmartDashboard.putNumber("AlignTo y", alignTo.getY());
+    SmartDashboard.putNumber("AlignTo angle", alignTo.getRotation().getDegrees());
+
   }
 }

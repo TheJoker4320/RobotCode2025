@@ -46,6 +46,11 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
+    public static final double REEF_X_OFFSET = -0.4;
+    public static final double REEF_Y_RIGHT_OFFSET = -0.17;
+    public static final double REEF_Y_LEFT_OFFSET = 0.17;
+    public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
+
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
     // but for the red alliance we would expect 0 to face the blue alliance drivers so we must shift the gyro angle by 180 degrees;
     public static final double BLUE_GYRO_OFFSET = 0;          // Values is in degrees
@@ -60,6 +65,13 @@ public final class Constants {
       REEF_APRIL_TAG_POSITIONS.put(9, new Pose2d(12.643, 4.745, Rotation2d.fromDegrees(120)));
       REEF_APRIL_TAG_POSITIONS.put(10, new Pose2d(12.227, 4.0259, Rotation2d.fromDegrees(180)));
       REEF_APRIL_TAG_POSITIONS.put(11, new Pose2d(12.643, 3.306, Rotation2d.fromDegrees(240)));
+    
+      REEF_APRIL_TAG_POSITIONS.put(17, new Pose2d(4.074, 3.306, Rotation2d.fromDegrees(240)));
+      REEF_APRIL_TAG_POSITIONS.put(18, new Pose2d(3.657, 4.025, Rotation2d.fromDegrees(180)));
+      REEF_APRIL_TAG_POSITIONS.put(19, new Pose2d(4.074, 4.745, Rotation2d.fromDegrees(120)));
+      REEF_APRIL_TAG_POSITIONS.put(20, new Pose2d(4.904, 4.745, Rotation2d.fromDegrees(60)));
+      REEF_APRIL_TAG_POSITIONS.put(21, new Pose2d(5.321, 4.025, Rotation2d.fromDegrees(0)));
+      REEF_APRIL_TAG_POSITIONS.put(22, new Pose2d(4.904, 3.306, Rotation2d.fromDegrees(300)));
     }
   }
 
@@ -83,7 +95,7 @@ public final class Constants {
 
     public static final double X_STATE_ANGLE = Math.PI / 4;         // Radians
 
-    public static final int PIGEON_DEVICE_ID = 0;                   // TODO: Validate device id
+    public static final int PIGEON_DEVICE_ID = 14;                   // TODO: Validate device id
   }
 
   public static final class NeoModuleConstants {
