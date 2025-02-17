@@ -31,6 +31,10 @@ public class Climber extends SubsystemBase {
   public void setSpeed(double speed) {
     mMotor.set(speed);
   }
+
+  public void stopSpeed() {
+    mMotor.set(0);
+  }
   
   @Override
   public void periodic() {

@@ -30,7 +30,7 @@ public class OpenClimber extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mClimber.setSpeed(0);
+    mClimber.stopSpeed();
   }
 
   // Returns true when the command should end.
