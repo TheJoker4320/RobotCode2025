@@ -36,6 +36,8 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
+    public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
+    public static final int CLIMBER_BUTTON = 8; //The Plus button
 
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
@@ -45,6 +47,8 @@ public final class Constants {
 
     public static final double DRIVE_DEADBAND = 0.05;
     
+    
+
     // Elevator operator constants
     public static final int L1_STATE_BUTTON = PS4Controller.Button.kL1.value;
     public static final int L2_STATE_BUTTON = PS4Controller.Button.kL2.value;
@@ -56,6 +60,14 @@ public final class Constants {
     public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
+  }
+  public static class ClimberConstants {
+    public static final int CLIMBER_MOTOR_PORT = 15;
+    public static final double CLIMB_SPEED = 0.2; //TODO: Need to validate values
+    public static final double CLOSE_CLIMBER_SPEED = -0.2; //TODO: Need to validate values
+    public static final InvertedValue MOTOR_INVERTED = InvertedValue.Clockwise_Positive; 
+    public static final boolean CURRENT_LIMIT_ENABLED = true; 
+    public static final double CURRENT_LIMIT = 50; //TODO: Need to validate values
   }
   
   public static class ArmConstants {
