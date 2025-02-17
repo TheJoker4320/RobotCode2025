@@ -27,11 +27,14 @@ import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
 import frc.robot.utils.ElevatorState;
 import frc.robot.Constants.SwerveSubsystemConstants;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType=======
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 
@@ -59,6 +62,7 @@ public class RobotContainer {
 
   private Arm mArm = Arm.getInstance();
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
+  private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -68,6 +72,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -121,7 +126,7 @@ public class RobotContainer {
     regularSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER), mSwerveSubsystem));
 
     JoystickButton resetHeadingButton = new JoystickButton(m_driverController, OperatorConstants.RESET_HEADING_SWERVE_BUTTON); // Resets the robot heading - use when the gyro reports incorrect values
-    resetHeadingButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.zeroHeading(), mSwerveSubsystem));
+    resetHeadingButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.resetHeading(0), mSwerveSubsystem));
 
     JoystickButton switchReferenceFrameButton = new JoystickButton(m_driverController, OperatorConstants.REFERENCE_FRAME_SWERVE_BUTTON); // Switches between driving field-relative and robot-relative
     switchReferenceFrameButton.onChange(new InstantCommand(() -> mSwerveSubsystem.switchReferenceFrame(), mSwerveSubsystem));
@@ -145,7 +150,16 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // When you load here the autonomous command you must firstly reset the poseEstimator and swerve's odometry
+    // with the first pose of the autonomous command.
+    // use: mPoseEstimator.resetPose(...);
+    // use: mSwerveSubsystem.resetOdometry(...);
+
     // An example command will be run in autonomous
+    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
+    // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
+    // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
+    mSwerveSubsystem.resetHeading(180);
     return new WaitCommand(0);
   }
 }
