@@ -97,7 +97,9 @@ public class Arm extends SubsystemBase {
 
   public void stopMotorInPlace() {
     //TODO: check if arm stays in place
-    mMotor.setVoltage(ArmConstants.ARM_KG * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
+    mMotor.setVoltage(ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
+    //mMotor.set(0);
+    //mMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 
 

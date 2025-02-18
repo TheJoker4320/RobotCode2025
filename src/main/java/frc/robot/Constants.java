@@ -53,7 +53,7 @@ public final class Constants {
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
     public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
-    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kPS.value;
+    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
   }
   
   public static class ArmConstants {
@@ -78,6 +78,8 @@ public final class Constants {
     public static final double ARM_KV = 10.32784;  
     public static final double ARM_KA = 0.689612;  
     public static final double ARM_KS = 0.52706;
+
+    public static final double ARM_KG_STAY = 0.1;
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
