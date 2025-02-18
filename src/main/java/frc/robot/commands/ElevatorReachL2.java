@@ -6,21 +6,30 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 import frc.robot.utils.ElevatorState;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ElevatorReachState extends Command {
+public class ElevatorReachL2 extends Command {
   
   private final Timer mTimer;
   private final Elevator mElevator;
+  private final Arm mArm;
+
+  private boolean mSetpointInitiallied;
   private final ElevatorState mDesiredState;
 
-  public ElevatorReachState(Elevator elevator, ElevatorState desiredState) {
+  public ElevatorReachL2(Elevator elevator, Arm arm) {
     mElevator = elevator;
-    mDesiredState = desiredState;
+    //mDesiredState = ElevatorState.L2;
+    mDesiredState = ElevatorState.L3; // This value is incorrect - we use it for tests to prevent further accidents
+    mArm = arm;
+
     mTimer = new Timer();
+    mSetpointInitiallied = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mElevator);
   }
@@ -30,12 +39,18 @@ public class ElevatorReachState extends Command {
   public void initialize() {
     mTimer.start();
     mTimer.reset();
-    mElevator.setSetpoint(mDesiredState);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (!mSetpointInitiallied) {
+      if (mArm.getCurrentAngle() >= ArmConstants.MIN_ANGLE_L2_HEIGHT) {
+        mSetpointInitiallied = true;
+        mElevator.setSetpoint(mDesiredState);
+      }
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override

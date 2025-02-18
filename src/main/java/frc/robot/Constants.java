@@ -41,6 +41,8 @@ public final class Constants {
 
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
+    public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
+    public static final int CLIMBER_BUTTON = 8; //The Plus button
 
 
     public static final int MANIPULATOR_COLLECT_BALL_BUTTON = 0; //#TODO: set button
@@ -84,74 +86,101 @@ public final class Constants {
 
 
     
-    // Elevator operator constants
-    public static final int ELEVATOR_LOW_STATE = PS4Controller.Button.kSquare.value;
-    public static final int ELEVATOR_HIGH_STATE = PS4Controller.Button.kTriangle.value;
     
-    // Arm operator constants
-    public static int ARM_LOW_STATE = PS4Controller.Button.kCircle.value;
-    public static int ARM_HIGH_STATE = PS4Controller.Button.kCross.value;
+
+    // Elevator operator constants
+    public static final int L1_STATE_BUTTON = PS4Controller.Button.kL1.value;
+    public static final int L2_STATE_BUTTON = PS4Controller.Button.kL2.value;
+    public static final int L3_STATE_BUTTON = PS4Controller.Button.kR1.value;
+    public static final int L4_STATE_BUTTON = PS4Controller.Button.kR2.value;
+    public static final int INTAKE_PREPARE_BUTTON = PS4Controller.Button.kTriangle.value;
+    public static final int PLACE_CORAL_BUTTON = PS4Controller.Button.kCircle.value;
+    public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
+    public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
+    public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
+    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
+  }
+  public static class ClimberConstants {
+    public static final int CLIMBER_MOTOR_PORT = 15;
+    public static final double CLIMB_SPEED = 0.2; //TODO: Need to validate values
+    public static final double CLOSE_CLIMBER_SPEED = -0.2; //TODO: Need to validate values
+    public static final InvertedValue MOTOR_INVERTED = InvertedValue.Clockwise_Positive; 
+    public static final boolean CURRENT_LIMIT_ENABLED = true; 
+    public static final double CURRENT_LIMIT = 50; //TODO: Need to validate values
   }
   
   public static class ArmConstants {
-	  public static double MOTOR_TO_ARM_GEAR_RATIO = (4.0 * 4.0 * 3.0 * 42.0) / (18.0);
-    public static double ENCODER_TO_ARM_GEAR_RATIO = 1;
+	  public static final double MOTOR_TO_ARM_GEAR_RATIO = (4.0 * 4.0 * 3.0 * 42.0) / (18.0);
+    public static final double ENCODER_TO_ARM_GEAR_RATIO = 1;
     
-    public static boolean SMART_CURRENT_LIMIT_ENABLED = true;
-    public static double SMART_CURRENT_LIMIT = 40;
+    public static final boolean SMART_CURRENT_LIMIT_ENABLED = true;
+    public static final double SMART_CURRENT_LIMIT = 40;
 
-    public static int ENCODER_CHANNEL = 0;
-    public static int MOTOR_ID = 13;
+    public static final int ENCODER_CHANNEL = 0;
+    public static final int MOTOR_ID = 13;
 
-    public static double ARM_POSITION_TOLERANCE = 1;  // in degrees
-    public static double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
-    public static double ARM_ENCODER_OFFSET = -250.7;   // in degrees
+    public static final double ARM_POSITION_TOLERANCE = 1;  // in degrees
+    public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
+    public static final double ARM_ENCODER_OFFSET = -250.7;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
-    public static double ARM_KP = 33.1816;
-    public static double ARM_KI = 0;
-    public static double ARM_KD = 5.280688;
-    public static double ARM_KG = 0.414284;  //calculated from ReCalc
-    public static double ARM_KV = 10.32784;  //calculated from ReCalc
-    public static double ARM_KA = 0.689612;  //calculated from ReCalc
+    public static final double ARM_KP = 33.1816;
+    public static final double ARM_KI = 0;
+    public static final double ARM_KD = 5.280688;
+    public static final double ARM_KG = 0.414284;  
+    public static final double ARM_KV = 10.32784;  
+    public static final double ARM_KA = 0.689612;  
     public static final double ARM_KS = 0.52706;
 
-    public static InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
+    public static final double ARM_KG_STAY = 0.1;
 
-    public static double ARM_LOW_ANGLE = -80;   //test value, in degrees
-    public static double ARM_HIGH_ANGLE = 60;   //test value, in degrees
+    public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
-    public static boolean MAXIMUM_VALUE_ENABLED = true;
-    public static boolean MINIMUM_VALUE_ENABLED = true;
-    public static double MINIMUM_ARM_ANGLE = -87; //current min - not final - in degrees
-    public static double MAXIMUM_ARM_ANGLE = 70;  //current max - not final - in degrees
-    
-    public static double MM_CRUISE_VELOCITY = 250;  //calculated from ReCalc, in degrees
-    public static double MM_ACCELERATION = 500;     //calculated from ReCalc, in degrees
-    public static double MM_JERK = 2500;            //this value is optional, in degrees
+    public static final double MIN_ANGLE_L2_HEIGHT = -30;
+    public static final double INTAKE_ANGLE = -85;
+    public static final double OUT_OF_INTAKE_ANGLE = -65;
+    public static final double L4_ANGLE = 63;
+    public static final double L32_ANGLE = 65;
+    public static final double L1_ANGLE = -31;
+    public static final double L32_BALL_PRE_COLLECT_ANGLE = -20; //TODO: validate angle
+    public static final double L32_BALL_COLLECT_ANGLE = -5; //TODO: validate angle
+    public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
+    public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
+    public static final double ZERO_ANGLE = 0.0;
 
-    public static boolean IS_MAGIC_MOTION_ENABLED = true;
+    public static final boolean MAXIMUM_VALUE_ENABLED = true;
+    public static final boolean MINIMUM_VALUE_ENABLED = true;
+    public static final double MINIMUM_ARM_ANGLE = -87;       // min - in degrees
+    public static final double MAXIMUM_ARM_ANGLE = 70;        // max - in degrees
+
+    public static final double MM_CRUISE_VELOCITY = 250;  // degrees per second
+    public static final double MM_ACCELERATION = 500;     // degrees per second^2
+    public static final double MM_JERK = 2500;            // degrees per second^3
+
+    public static final boolean IS_MAGIC_MOTION_ENABLED = true;
+
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 0; //#TODO: set motor id
-    public static int CORAL_MOTOR_ID = 0; //#TODO: set motor id
+    public static int BALL_MOTOR_ID = 9;
+    public static int CORAL_MOTOR_ID = 10;
 
     /*This is the coral limit switch port */
-    public static int CORAL_SWITCH_PORT = 0; //#TODO: set port
+    public static int CORAL_SWITCH_PORT = 1; //TODO: set port
     
     /*This is the ball limit switch port */
-    public static int BALL_SWITCH_PORT = 0; //#TODO: set port
+    public static int BALL_SWITCH_PORT = 2; //TODO: set port
 
-    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
-    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //#TODO: validate value
+    public static final boolean BALL_COLLECTOR_INVERTED = true;
 
+    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
+    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
 
-    public static final double BALL_COLLECT_SPEED = 0.5; //TODO: set correct speed for manipulator
+    //TODO: set correct speed for manipulator
+    public static final double BALL_COLLECT_SPEED = 1.0; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = 0.5;
-    public static final double CORAL_EJECT_SPEED = 0.5;
-    
+    public static final double BALL_EJECT_SPEED = -0.1;
+    public static final double CORAL_EJECT_SPEED = -0.2;
   }
   
   public static class ElevatorConstants {
@@ -171,10 +200,17 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double LOW_POSITION_HEIGHT = 0.1;               // Example values - in meters
-    public static final double HIGH_POSITION_HEIGHT = 1.26;             // Example values - in meters
-
-    public static final double MINIMUM_ELEVATOR_HEIGHT = 0;             // This value is in meters
+    public static final double PRE_INTAKE_POSITION = 0.55;
+    public static final double INTAKE_POSITION = 0.4525; //TODO: add to value +- 2 centimeters
+    public static final double PRE_SCORING = 0.55;
+    public static final double L2_BALL_POSITION = 0.475; //TODO: validate value
+    public static final double L3_BALL_POSITION = 0.84; //TODO: validate value
+    public static final double L4_POSITION = 1.257;
+    public static final double L3_POSITION = 0.617;
+    public static final double L2_POSITION = 0.245;
+    public static final double L1_POSITION = 0.701;
+    
+    public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
     public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;           // This value is in meters
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
@@ -201,6 +237,7 @@ public final class Constants {
     public static final InvertedValue RIGHT_MOTOR_INVERTED = InvertedValue.Clockwise_Positive;
 
     public static final Angle MOTOR_OFFSET = Rotation.of(0.0835);   // This is a measured value - might need to measure and validate it once in a while
+
   }
 
   public static class PoseEstimatorConstants {

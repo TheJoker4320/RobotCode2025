@@ -27,15 +27,14 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.units.AngularAccelerationUnit;
-import edu.wpi.first.units.AngularMomentumUnit;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.units.measure.AngularVelocity;
 import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Arm;
+
 
 
   
@@ -55,6 +54,19 @@ public class Configs {
             ARM_CONFIGS.closedLoop.outputRange(-1, 1);                  
             COLLECTOR_CONFIGS.idleMode(IdleMode.kBrake);
             COLLECTOR_CONFIGS.smartCurrentLimit(BallCollectorConstants.COLLECTOR_SMART_CURRENT_LIMIT);
+
+public final class Configs {
+    public static class ClimberConfig {
+        public static TalonFXConfiguration CLIMBER_TALONFX_CONFIG = new TalonFXConfiguration();
+        static {
+            MotorOutputConfigs motorOutputConfigs = CLIMBER_TALONFX_CONFIG.MotorOutput;
+            motorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
+            motorOutputConfigs.Inverted = ClimberConstants.MOTOR_INVERTED;
+
+            CurrentLimitsConfigs currentLimitsConfigs = CLIMBER_TALONFX_CONFIG.CurrentLimits;
+            currentLimitsConfigs.withStatorCurrentLimitEnable(ClimberConstants.CURRENT_LIMIT_ENABLED);
+            currentLimitsConfigs.withStatorCurrentLimit(ClimberConstants.CURRENT_LIMIT);
+
         }
     }
 
@@ -132,6 +144,7 @@ public class Configs {
         static {
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            BALL_COLLECTOR_CONFIG.inverted(ManipulatorConstants.BALL_COLLECTOR_INVERTED);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
