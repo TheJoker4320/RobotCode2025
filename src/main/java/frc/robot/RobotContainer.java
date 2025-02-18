@@ -29,7 +29,9 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -73,6 +75,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    mSwerveSubsystem.resetHeading(180);
     RobotConfig config = null;
     try{
       config = RobotConfig.fromGUISettings();
@@ -81,6 +84,10 @@ public class RobotContainer {
       e.printStackTrace();
     }
 
+    NamedCommands.registerCommand("RaiseArmL4", new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4)));
+    NamedCommands.registerCommand("ReleaseCoral", new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator)));
+
+    
     AutoBuilder.configure(
       mSwerveSubsystem::getPose, 
       mSwerveSubsystem::resetOdometry, 
@@ -94,6 +101,8 @@ public class RobotContainer {
       () -> { return false; }, 
       mSwerveSubsystem
     );
+
+    
 
     // Configure the trigger bindings
     configureBindings();
@@ -194,25 +203,24 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
-    // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
-    // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
+    // mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
+    // // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
+    // // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
 
-    JoystickButton rightAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightAlignButton.whileTrue(mPoseEstimatorSubsystem.getAlignRightReef());
+    // JoystickButton rightAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+    // rightAlignButton.whileTrue(mPoseEstimatorSubsystem.getAlignRightReef());
 
-    /*
-    PathPlannerPath path;
-    try {
-      path = PathPlannerPath.fromPathFile("WWWDotZoharDotYemeniteJews");
-      mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
-      mSwerveSubsystem.resetHeading(path.getStartingHolonomicPose().get().getRotation().getDegrees());
-      return AutoBuilder.followPath(path);
-    } catch (Exception e) {
-      return null;
-    }
-    */
+    
+    // PathPlannerPath path;
+    // try {
+    //   path = PathPlannerPath.fromPathFile("1MeterPath");
+    //   mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
+    //   mSwerveSubsystem.resetHeading(path.getStartingHolonomicPose().get().getRotation().getDegrees());
+    //   return AutoBuilder.followPath(path);
+    // } catch (Exception e) {
+    //   return null;
+    // }
+    return AutoBuilder.buildAuto("ItayAuto");
 
-    return null;
   }
 }
