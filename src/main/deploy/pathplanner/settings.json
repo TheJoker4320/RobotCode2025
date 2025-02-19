@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.762,
-  "robotLength": 0.762,
+  "robotWidth": 0.94,
+  "robotLength": 0.94,
   "holonomicMode": true,
   "pathFolders": [],
   "autoFolders": [],
@@ -31,6 +31,6 @@
   "robotFeatures": [
     "{\"name\":\"Feed\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":-0.175,\"y\":0.0},\"size\":{\"width\":0.5,\"length\":0.33},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}",
     "{\"name\":\"Elv\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.055,\"y\":0.0},\"size\":{\"width\":0.6,\"length\":0.08},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}",
-    "{\"name\":\"Arm\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.24,\"y\":0.0},\"size\":{\"width\":0.15,\"length\":0.22},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}"
+    "{\"name\":\"Arm\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.3,\"y\":0.0224},\"size\":{\"width\":0.02,\"length\":0.32},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}"
   ]
 }

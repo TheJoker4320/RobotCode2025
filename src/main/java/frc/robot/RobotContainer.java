@@ -203,13 +203,19 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    // mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
+    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
     // // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
     // // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
 
-    // JoystickButton rightAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    // rightAlignButton.whileTrue(mPoseEstimatorSubsystem.getAlignRightReef());
+    Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
 
+    JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
     
     // PathPlannerPath path;
     // try {
@@ -220,7 +226,7 @@ public class RobotContainer {
     // } catch (Exception e) {
     //   return null;
     // }
-    return AutoBuilder.buildAuto("ItayAuto");
-
+   // return AutoBuilder.buildAuto("ItayAuto");
+    return null;
   }
 }
