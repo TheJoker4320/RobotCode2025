@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 13.889,
+        "x": 13.953990826719043,
         "y": 2.8557219956158026
       },
       "prevControl": {
-        "x": 14.474999999999998,
+        "x": 14.539990826719041,
         "y": 1.8407402223804403
       },
       "nextControl": null,
@@ -59,7 +59,7 @@
     "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "RedFromFeeder",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 126.0

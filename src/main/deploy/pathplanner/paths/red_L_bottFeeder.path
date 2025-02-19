@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.888990826719043,
-        "y": 2.9683052981077798
+        "x": 13.953990826719043,
+        "y": 2.856
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.388990826719043,
-        "y": 2.1022798943233414
+        "x": 14.453990826719043,
+        "y": 1.9899745962155615
       },
       "isLocked": false,
       "linkedName": null
@@ -59,7 +59,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "RedToFeeder",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0.0,
     "rotation": 119.99999999999999
