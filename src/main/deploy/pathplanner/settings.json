@@ -4,6 +4,8 @@
   "holonomicMode": true,
   "pathFolders": [
     "BlueStart",
+    "BlueToFeeder",
+    "BlueFromFeeder",
     "RedAlgeaPaths",
     "RedFromFeeder",
     "RedStart",
