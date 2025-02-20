@@ -99,8 +99,6 @@ public class Arm extends SubsystemBase {
     //TODO: check if arm stays in place
     mSetpointInitiallied = false;
     mMotor.setVoltage(ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
-    //mMotor.set(0);
-    //mMotor.setNeutralMode(NeutralModeValue.Brake);
   }
 
 

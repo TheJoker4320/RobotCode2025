@@ -34,6 +34,8 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
+    public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
+    public static final int CLIMBER_BUTTON = 8; //The Plus button
 
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
@@ -43,6 +45,8 @@ public final class Constants {
 
     public static final double DRIVE_DEADBAND = 0.05;
     
+    
+
     // Elevator operator constants
     public static final int L1_STATE_BUTTON = PS4Controller.Button.kL1.value;
     public static final int L2_STATE_BUTTON = PS4Controller.Button.kL2.value;
@@ -54,6 +58,14 @@ public final class Constants {
     public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
+  }
+  public static class ClimberConstants {
+    public static final int CLIMBER_MOTOR_PORT = 15;
+    public static final double CLIMB_SPEED = 0.2; //TODO: Need to validate values
+    public static final double CLOSE_CLIMBER_SPEED = -0.2; //TODO: Need to validate values
+    public static final InvertedValue MOTOR_INVERTED = InvertedValue.Clockwise_Positive; 
+    public static final boolean CURRENT_LIMIT_ENABLED = true; 
+    public static final double CURRENT_LIMIT = 50; //TODO: Need to validate values
   }
   
   public static class ArmConstants {
@@ -83,13 +95,14 @@ public final class Constants {
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
-    public static final double MIN_ANGLE_L2_HEIGHT = -30;
+    public static final double MIN_ANGLE_L2_HEIGHT = -0;
     public static final double INTAKE_ANGLE = -85;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
     public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
-    public static final double L32_BALL_ANGLE = 10; //TODO: validate angle
+    public static final double L32_BALL_PRE_COLLECT_ANGLE = -20; //TODO: validate angle
+    public static final double L32_BALL_COLLECT_ANGLE = -5; //TODO: validate angle
     public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -117,11 +130,13 @@ public final class Constants {
     /*This is the ball limit switch port */
     public static int BALL_SWITCH_PORT = 2; //TODO: set port
 
+    public static final boolean BALL_COLLECTOR_INVERTED = true;
+
     public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
 
     //TODO: set correct speed for manipulator
-    public static final double BALL_COLLECT_SPEED = 0.5; 
+    public static final double BALL_COLLECT_SPEED = 1.0; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;
@@ -147,8 +162,8 @@ public final class Constants {
     public static final double PRE_INTAKE_POSITION = 0.55;
     public static final double INTAKE_POSITION = 0.4525; //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
-    public static final double L2_BALL_POSITION = 0.5; //TODO: validate value
-    public static final double L3_BALL_POSITION = 0.8; //TODO: validate value
+    public static final double L2_BALL_POSITION = 0.475; //TODO: validate value
+    public static final double L3_BALL_POSITION = 0.84; //TODO: validate value
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.245;

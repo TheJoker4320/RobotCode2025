@@ -24,19 +24,18 @@ public class ElevatorReachL2 extends Command {
 
   public ElevatorReachL2(Elevator elevator, Arm arm) {
     mElevator = elevator;
-    //mDesiredState = ElevatorState.L2;
-    mDesiredState = ElevatorState.L3; // This value is incorrect - we use it for tests to prevent further accidents
+    mDesiredState = ElevatorState.L2;
     mArm = arm;
 
     mTimer = new Timer();
-    mSetpointInitiallied = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mElevator);
   }
-
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mSetpointInitiallied = false;
     mTimer.start();
     mTimer.reset();
   }
@@ -56,6 +55,7 @@ public class ElevatorReachL2 extends Command {
   @Override
   public void end(boolean interrupted) {
     mElevator.stopMotorInPlace();
+    mTimer.stop();
   }
 
   // Returns true when the command should end.
