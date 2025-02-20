@@ -3,13 +3,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Climb;
+import frc.robot.subsystems.Climber;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.commands.CloseClimber;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.commands.ElevatorReachL2;
@@ -55,6 +58,7 @@ public class RobotContainer {
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final Climber mClimber = Climber.getInstance();
   private final XboxController m_driverController = new XboxController(OperatorConstants.DRIVING_CONTROLLER_PORT);
   private final PS4Controller m_operatorController = new PS4Controller(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
@@ -75,11 +79,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    
+
     // -------------- OPERATOR BUTTONS --------------
 
-    //temporary button of collecting
-    Command tempCollect = new ManipulatorCollectCoral(mManipulator);
+    //Climber buttons
+    JoystickButton ClimbButton = new JoystickButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
+    ClimbButton.whileTrue(new Climb(mClimber));
+
+    JoystickButton CloseClimbButton = new JoystickButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
+    CloseClimbButton.whileTrue(new CloseClimber(mClimber));
+
 
     // command for preparing to collect a coral
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
@@ -101,6 +110,8 @@ public class RobotContainer {
     Command reachL3BallCommand = new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
     // command for collecting a ball
     Command collectBallCommand = new ParallelCommandGroup(new ManipulatorCollectBall(mManipulator), new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE));
+    // command for collecting a coral
+    Command scoreCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -112,6 +123,7 @@ public class RobotContainer {
     JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
     JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON); //TODO: check constants before running
     JoystickButton collectCoralButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
+    JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
 
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
@@ -123,7 +135,8 @@ public class RobotContainer {
     placeCoralButton.toggleOnTrue(placeCoralCommand);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
-    collectCoralButton.toggleOnTrue(collectBallCommand);
+    collectCoralButton.toggleOnTrue(scoreCoralCommand);
+    collectBallButton.toggleOnTrue(collectBallCommand);
 
     // -------------- DRIVER BUTTONS -------------
 
