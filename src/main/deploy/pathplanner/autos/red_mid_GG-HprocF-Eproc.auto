@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_midStart_G"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_G_G-H"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_G-H_proc"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_proc_F-E"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_F-E_proc"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "red_mid",
+  "choreoAuto": false
+}

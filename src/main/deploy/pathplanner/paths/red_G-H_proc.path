@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.520498,
-        "y": 4.2159
+        "x": 11.675,
+        "y": 4.006
       },
       "prevControl": null,
       "nextControl": {
-        "x": 16.020498,
-        "y": 4.2159
+        "x": 10.575000000000001,
+        "y": 4.006
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 16.08301767676768,
-        "y": 0.8334595959595947
+        "x": 11.53588055835436,
+        "y": 7.47
       },
       "prevControl": {
-        "x": 14.822664141414144,
-        "y": 1.5754419191919191
+        "x": 11.53588055835436,
+        "y": 6.97
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,21 +29,7 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.15370370370370356,
-      "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
-        "maxAngularVelocity": 480.0,
-        "maxAngularAcceleration": 540.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -56,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": "RedToFeeder",
+  "folder": "RedAlgeaPaths",
   "idealStartingState": {
-    "velocity": 0.0,
-    "rotation": 180.0
+    "velocity": 0,
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

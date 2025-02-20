@@ -59,7 +59,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "RedFromFeeder",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 126.0

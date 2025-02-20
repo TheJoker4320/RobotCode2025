@@ -3,11 +3,16 @@
   "robotLength": 0.94,
   "holonomicMode": true,
   "pathFolders": [
+    "RedAlgeaPaths",
     "RedFromFeeder",
     "RedStart",
     "RedToFeeder"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "red_mid",
+    "red_bott",
+    "red_top"
+  ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 5.0,
   "defaultMaxAngVel": 480.0,

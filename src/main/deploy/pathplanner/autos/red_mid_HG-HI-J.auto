@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_midStart_H"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_H_G-H"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_G-H_I-J"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "red_mid",
+  "choreoAuto": false
+}

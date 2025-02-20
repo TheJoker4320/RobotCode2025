@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 14.520498,
-        "y": 4.2159
+        "y": 3.8759
       },
       "prevControl": null,
       "nextControl": {
         "x": 16.020498,
-        "y": 4.2159
+        "y": 3.8759
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 16.08301767676768,
-        "y": 0.8334595959595947
+        "x": 16.083,
+        "y": 7.18
       },
       "prevControl": {
-        "x": 14.822664141414144,
-        "y": 1.5754419191919191
+        "x": 14.913651315789473,
+        "y": 6.651726973684211
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": -126.0
   },
   "reversed": false,
   "folder": "RedToFeeder",

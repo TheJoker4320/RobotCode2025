@@ -7,55 +7,55 @@
         {
           "type": "path",
           "data": {
-            "pathName": "red_bottStart_I"
+            "pathName": "red_topStart_F"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_I_bottFeeder"
+            "pathName": "red_F_topFeeder"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_bottFeeder_J"
+            "pathName": "red_topFeeder_E"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_J_bottFeeder"
+            "pathName": "red_E_topFeeder"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_bottFeeder_K"
+            "pathName": "red_topFeeder_D"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_K_bottFeeder"
+            "pathName": "red_D_topFeeder"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_bottFeeder_L"
+            "pathName": "red_topFeeder_C"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "red_L_bottFeeder"
+            "pathName": "red_C_topFeeder"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "red_bott",
+  "folder": "red_top",
   "choreoAuto": false
 }

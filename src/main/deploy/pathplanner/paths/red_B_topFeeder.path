@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 16.08301767676768,
-        "y": 0.8334595959595947
+        "y": 7.18
       },
       "prevControl": {
-        "x": 14.822664141414144,
-        "y": 1.5754419191919191
+        "x": 14.788569078947367,
+        "y": 6.622861842105262
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": -126.0
   },
   "reversed": false,
   "folder": "RedToFeeder",
