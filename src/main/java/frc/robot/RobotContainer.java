@@ -75,7 +75,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, DriverStation.getAlliance().get());
     mSwerveSubsystem.resetHeading(180);
+
     RobotConfig config = null;
     try{
       config = RobotConfig.fromGUISettings();
@@ -83,14 +85,10 @@ public class RobotContainer {
       // Handle exception as needed
       e.printStackTrace();
     }
-
-    NamedCommands.registerCommand("RaiseArmL4", new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4)));
-    NamedCommands.registerCommand("ReleaseCoral", new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator)));
-
     
     AutoBuilder.configure(
-      mSwerveSubsystem::getPose, 
-      mSwerveSubsystem::resetOdometry, 
+      mPoseEstimatorSubsystem::getPose, 
+      mPoseEstimatorSubsystem::resetPose, 
       mSwerveSubsystem::getRobotRelativeSpeeds, 
       (speeds, feedforwards) -> mSwerveSubsystem.setModuleStates(SwerveSubsystemConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds)), 
       new PPHolonomicDriveController(
@@ -101,8 +99,6 @@ public class RobotContainer {
       () -> { return false; }, 
       mSwerveSubsystem
     );
-
-    
 
     // Configure the trigger bindings
     configureBindings();
@@ -154,7 +150,7 @@ public class RobotContainer {
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
     JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
     JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON); //TODO: check constants before running
-    JoystickButton collectCoralButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
+    JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
 
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
@@ -166,7 +162,12 @@ public class RobotContainer {
     placeCoralButton.toggleOnTrue(placeCoralCommand);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
-    collectCoralButton.onTrue(collectBallCommand);
+    collectBallButton.onTrue(collectBallCommand);
+
+    NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
+    NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
+    NamedCommands.registerCommand("reachL4", l4Command);
+    NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
 
     // -------------- DRIVER BUTTONS -------------
 
@@ -202,8 +203,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
     // // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
     // // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
 
@@ -226,7 +225,11 @@ public class RobotContainer {
     // } catch (Exception e) {
     //   return null;
     // }
-   // return AutoBuilder.buildAuto("ItayAuto");
-    return null;
+    PathPlannerAuto auto = new PathPlannerAuto("testAuto");
+    mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
+
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 0 : 180;
+    mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
+    return auto;
   }
 }
