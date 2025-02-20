@@ -85,7 +85,7 @@ public final class Constants {
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
-    public static final double MIN_ANGLE_L2_HEIGHT = -30;
+    public static final double MIN_ANGLE_L2_HEIGHT = -0;
     public static final double INTAKE_ANGLE = -85;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
     public static final double L4_ANGLE = 63;
