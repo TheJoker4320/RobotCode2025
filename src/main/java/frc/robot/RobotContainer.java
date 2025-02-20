@@ -107,7 +107,7 @@ public class RobotContainer {
     // command for reaching a ball placed on l2
     Command reachL2BallCommand = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL));
     // command for reaching a ball placed on l3
-    Command reachL3BallCommand = new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
+    Command reachL3BallCommand = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
     // command for collecting a ball
     Command collectBallCommand = new ParallelCommandGroup(new ManipulatorCollectBall(mManipulator), new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE));
     // command for collecting a coral
@@ -119,7 +119,6 @@ public class RobotContainer {
     //JoystickButton l2Button = new JoystickButton(m_operatorController, OperatorConstants.L2_STATE_BUTTON);
     JoystickButton l3Button = new JoystickButton(m_operatorController, OperatorConstants.L3_STATE_BUTTON);
     JoystickButton l4Button = new JoystickButton(m_operatorController, OperatorConstants.L4_STATE_BUTTON);
-    JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
     JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
     JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON); //TODO: check constants before running
     JoystickButton collectCoralButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
@@ -132,7 +131,6 @@ public class RobotContainer {
     //l2Button.onTrue(l2Command);
     l3Button.onTrue(l3Command);
     l4Button.onTrue(l4Command);
-    placeCoralButton.toggleOnTrue(placeCoralCommand);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
     collectCoralButton.toggleOnTrue(scoreCoralCommand);

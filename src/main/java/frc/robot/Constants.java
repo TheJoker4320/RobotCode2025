@@ -103,8 +103,8 @@ public final class Constants {
     public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
-    public static final double L32_BALL_PRE_COLLECT_ANGLE = -20; //TODO: validate angle
-    public static final double L32_BALL_COLLECT_ANGLE = -5; //TODO: validate angle
+    public static final double L32_BALL_PRE_COLLECT_ANGLE = -15; //TODO: validate angle
+    public static final double L32_BALL_COLLECT_ANGLE = 0; //TODO: validate angle
     public static final double L4_PLACED_ANGLE = 45;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -138,7 +138,7 @@ public final class Constants {
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
 
     //TODO: set correct speed for manipulator
-    public static final double BALL_COLLECT_SPEED = 1.0; 
+    public static final double BALL_COLLECT_SPEED = 0.5; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;

@@ -97,6 +97,7 @@ public class Arm extends SubsystemBase {
 
   public void stopMotorInPlace() {
     //TODO: check if arm stays in place
+    mSetpointInitiallied = false;
     mMotor.setVoltage(ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
   }
 
