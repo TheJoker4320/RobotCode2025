@@ -40,8 +40,8 @@ public final class Constants {
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
-    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value;
-    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value;
+    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value; //TODO: set different value
+    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value; //TODO: set different value
 
     public static final double DRIVE_DEADBAND = 0.05;
     
@@ -136,7 +136,7 @@ public final class Constants {
     public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
 
     //TODO: set correct speed for manipulator
-    public static final double BALL_COLLECT_SPEED = 1.0; 
+    public static final double BALL_COLLECT_SPEED = 0.5; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
     public static final double BALL_EJECT_SPEED = -0.1;
     public static final double CORAL_EJECT_SPEED = -0.2;
@@ -257,14 +257,14 @@ public final class Constants {
 
     public static final double X_STATE_ANGLE = Math.PI / 4;         // Radians
 
-    public static final int PIGEON_DEVICE_ID = 14;                   // TODO: Validate device id
+    public static final int PIGEON_DEVICE_ID = 14;
   }
 
   public static final class NeoModuleConstants {
     public static final int MODULE_COUNT = 4;
     
-    public static final int[] DRIVING_CAN_ID = new int[] {8, 6, 2, 4};        // TODO: Validate device id
-    public static final int[] TURNING_CAN_ID = new int[] {7, 5, 1, 3};        // TODO: Validate device id
+    public static final int[] DRIVING_CAN_ID = new int[] {8, 6, 2, 4};
+    public static final int[] TURNING_CAN_ID = new int[] {7, 5, 1, 3};
     public static final double[] ANGULAR_OFFSETS = new double[] {
       (-Math.PI / 2.0), 0, (Math.PI), (Math.PI / 2.0)
     };                                                                        // TODO: Validate device id

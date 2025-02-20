@@ -134,6 +134,8 @@ public class RobotContainer {
     CloseClimbButton.whileTrue(new CloseClimber(mClimber));
 
 
+    //Arm Elevator Sequence Buttons
+
     // command for preparing to collect a coral
     Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
     // command for collecting a coral
@@ -154,8 +156,6 @@ public class RobotContainer {
     Command reachL3BallCommand = new ParallelRaceGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
     // command for collecting a ball
     Command collectBallCommand = new ParallelCommandGroup(new ManipulatorCollectBall(mManipulator), new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE));
-    // command for collecting a coral
-    Command scoreCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -165,21 +165,19 @@ public class RobotContainer {
     JoystickButton l4Button = new JoystickButton(m_operatorController, OperatorConstants.L4_STATE_BUTTON);
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
     JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
-    JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON); //TODO: check constants before running
-    JoystickButton collectCoralButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
-    JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
+    JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON);
+    JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON);
 
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
-    intakeButton.onTrue(intakeSequenceCommand);
+    intakeButton.toggleOnTrue(intakeSequenceCommand);
     l1Button.onTrue(l1Command);
     l2Button.onTrue(l2Command);
     l3Button.onTrue(l3Command);
     l4Button.onTrue(l4Command);
-    placeCoralButton.toggleOnTrue(placeCoralCommand);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
-    collectCoralButton.toggleOnTrue(scoreCoralCommand);
+    placeCoralButton.toggleOnTrue(placeCoralCommand);
     collectBallButton.toggleOnTrue(collectBallCommand);
 
     // -------------- DRIVER BUTTONS -------------
