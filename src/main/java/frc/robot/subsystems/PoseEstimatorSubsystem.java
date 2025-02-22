@@ -107,7 +107,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     boolean rejectVisionUpdate = false;
     LimelightHelpers.SetRobotOrientation(
       "limelight", 
-      mPoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 
+      mPoseEstimator.getEstimatedPosition().getRotation().getDegrees() + mGyroOffset, 
       0, 
       0, 
       0, 
@@ -203,8 +203,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     Pose2d goalPose = getReefToAlignLeft(xDistance);
 
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-      new Pose2d(curPose.getX(), curPose.getY(), Rotation2d.fromDegrees(0)),
-      new Pose2d(goalPose.getX(), goalPose.getY(), Rotation2d.fromDegrees(0))
+      new Pose2d(curPose.getX(), curPose.getY(),curPose.getRotation()),
+      new Pose2d(goalPose.getX(), goalPose.getY(), goalPose.getRotation())
     );
 
     PathConstraints constraints = new PathConstraints(1, 1, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
@@ -253,8 +253,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     Pose2d goalPose = getReefToAlignRight(xDistance);
 
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-      new Pose2d(curPose.getX(), curPose.getY(), Rotation2d.fromDegrees(0)),
-      new Pose2d(goalPose.getX(), goalPose.getY(), Rotation2d.fromDegrees(0))
+      new Pose2d(curPose.getX(), curPose.getY(), curPose.getRotation()),
+      new Pose2d(goalPose.getX(), goalPose.getY(), goalPose.getRotation())
     );
 
     PathConstraints constraints = new PathConstraints(1, 1, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
