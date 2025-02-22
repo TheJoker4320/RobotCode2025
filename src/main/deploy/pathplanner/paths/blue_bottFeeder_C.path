@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.644520547947283,
-        "y": 0.8771190068433942
+        "x": 2.9300085616438354,
+        "y": 1.4330693493150681
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.384284827,
-        "y": 2.855721996
+        "x": 3.629002189,
+        "y": 2.835721996
       },
       "prevControl": {
-        "x": 6.284284827,
-        "y": 1.2968762691880102
+        "x": 3.504002189,
+        "y": 2.6192156450538904
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8761904761904762,
+      "minWaypointRelativePos": 0.7785714285714285,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 2.0,
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "BlueFromFeeder",

@@ -62,7 +62,7 @@
   "folder": "BlueToFeeder",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 122.99259095473053
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

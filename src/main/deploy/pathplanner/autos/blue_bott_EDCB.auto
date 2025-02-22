@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_bottStart_E"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_E_bottFeeder"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_bottFeeder_D"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_D_bottFeeder"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_bottFeeder_C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_C_bottFeeder"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_bottFeeder_B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_B_bottFeeder"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "blue_bott",
+  "choreoAuto": false
+}
