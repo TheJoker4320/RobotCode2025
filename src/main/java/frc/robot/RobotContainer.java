@@ -166,7 +166,7 @@ public class RobotContainer {
     JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
     JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON);
     JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON);
-
+    JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
     intakeButton.toggleOnTrue(intakeSequenceCommand);
