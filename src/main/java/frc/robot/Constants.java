@@ -40,8 +40,8 @@ public final class Constants {
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
-    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftBumper.value; //TODO: set different value
-    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightBumper.value; //TODO: set different value
+    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftStick.value; //TODO: set different value
+    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightStick.value; //TODO: set different value
 
     public static final double DRIVE_DEADBAND = 0.05;
     

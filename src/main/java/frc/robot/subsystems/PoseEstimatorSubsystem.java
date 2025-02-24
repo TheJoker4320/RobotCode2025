@@ -107,7 +107,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     boolean rejectVisionUpdate = false;
     LimelightHelpers.SetRobotOrientation(
       "limelight", 
-      mPoseEstimator.getEstimatedPosition().getRotation().getDegrees() + mGyroOffset, 
+      mSwerve.getRotation().getDegrees() + mGyroOffset, 
       0, 
       0, 
       0, 
@@ -136,7 +136,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Estimated x", mPoseEstimator.getEstimatedPosition().getX());                              // Specifically for debugging, should be removed later
     SmartDashboard.putNumber("Estimated y", mPoseEstimator.getEstimatedPosition().getY());                              // Specifically for debugging, should be removed later
     SmartDashboard.putNumber("Estimated angle", mPoseEstimator.getEstimatedPosition().getRotation().getDegrees());      // Specifically for debugging, should be removed later
-  
+   
+    SmartDashboard.putNumber("ROT", mSwerve.getRotation().getDegrees());
+
+
     Pose2d alignTo = getReefToAlignRight(PoseEstimatorConstants.FAR_REEF_X_OFFSET);
     SmartDashboard.putNumber("AlignTo x", alignTo.getX());
     SmartDashboard.putNumber("AlignTo y", alignTo.getY());
