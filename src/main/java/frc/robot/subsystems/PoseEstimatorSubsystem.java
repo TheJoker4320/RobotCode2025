@@ -157,7 +157,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
     double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
 
-    return reefToAlign.plus(new Transform2d(-1 * deltaX, -1 * deltaY, Rotation2d.fromDegrees(180)));
+    return new Pose2d(reefToAlign.getX() + deltaX, reefToAlign.getY() + deltaY, reefToAlign.getRotation().plus(Rotation2d.k180deg));
   }
 
   public Pose2d getReefToAlignRight(final double xOffset) {
@@ -171,7 +171,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
     double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
 
-    return reefToAlign.plus(new Transform2d(-1 * deltaX, -1 * deltaY, Rotation2d.fromDegrees(180)));
+    return new Pose2d(reefToAlign.getX() + deltaX, reefToAlign.getY() + deltaY, reefToAlign.getRotation().plus(Rotation2d.k180deg));
+    //return reefToAlign.plus(new Transform2d(-1 * deltaX, -1 * deltaY, Rotation2d.fromDegrees(180)));
   }
 
   public Command alignToCloseRightReef() {
@@ -210,7 +211,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       new Pose2d(goalPose.getX(), goalPose.getY(), goalPose.getRotation())
     );
 
-    PathConstraints constraints = new PathConstraints(1, 1, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+    PathConstraints constraints = new PathConstraints(2, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
 
     PathPlannerPath alignmentPath = new PathPlannerPath(
       waypoints,
@@ -260,7 +261,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       new Pose2d(goalPose.getX(), goalPose.getY(), goalPose.getRotation())
     );
 
-    PathConstraints constraints = new PathConstraints(1, 1, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+    PathConstraints constraints = new PathConstraints(2, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
 
     PathPlannerPath alignmentPath = new PathPlannerPath(
       waypoints,
