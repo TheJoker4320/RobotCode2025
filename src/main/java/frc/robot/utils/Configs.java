@@ -24,8 +24,24 @@ import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.Arm;
+
 
 public final class Configs {
+    public static class ClimberConfig {
+        public static TalonFXConfiguration CLIMBER_TALONFX_CONFIG = new TalonFXConfiguration();
+        static {
+            MotorOutputConfigs motorOutputConfigs = CLIMBER_TALONFX_CONFIG.MotorOutput;
+            motorOutputConfigs.NeutralMode = NeutralModeValue.Brake;
+            motorOutputConfigs.Inverted = ClimberConstants.MOTOR_INVERTED;
+
+            CurrentLimitsConfigs currentLimitsConfigs = CLIMBER_TALONFX_CONFIG.CurrentLimits;
+            currentLimitsConfigs.withStatorCurrentLimitEnable(ClimberConstants.CURRENT_LIMIT_ENABLED);
+            currentLimitsConfigs.withStatorCurrentLimit(ClimberConstants.CURRENT_LIMIT);
+        }
+    }
+
     public static class ElevatorConfigs {
         public static final TalonFXConfiguration ELEVATOR_TALONFX_CONFIG = new TalonFXConfiguration();
 
@@ -100,6 +116,7 @@ public final class Configs {
         static {
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
+            BALL_COLLECTOR_CONFIG.inverted(ManipulatorConstants.BALL_COLLECTOR_INVERTED);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
