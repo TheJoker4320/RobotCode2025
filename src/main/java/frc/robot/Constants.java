@@ -295,7 +295,7 @@ public final class Constants {
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
 
-    public static final double TURNING_P_CONSTANT = 4.375;
+    public static final double TURNING_P_CONSTANT = 1;
     public static final double TURNING_I_CONSTANT = 0;
     public static final double TURNING_D_CONSTANT = 0;
 
