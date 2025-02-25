@@ -8,10 +8,13 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BallCollectorConstants;
+import frc.robot.utils.Configs.BallCollectorConfis;
 
 public class BallCollector extends SubsystemBase {
   /** Creates a new BallCollector. */
@@ -32,7 +35,8 @@ public class BallCollector extends SubsystemBase {
     mArmMotor = new SparkMax(BallCollectorConstants.ARM_MOTOR_PORT, MotorType.kBrushless);
     mCollectorMotor = new SparkMax(BallCollectorConstants.COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
 
-    // TODO: Add configs here
+    mArmMotor.configure(BallCollectorConfis.ARM_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mArmMotor.configure(BallCollectorConfis.ARM_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     mEncoder = mArmMotor.getAbsoluteEncoder();
     mArmClosedLoopController = mArmMotor.getClosedLoopController();

@@ -75,8 +75,8 @@ public final class Constants {
     public static final double MIN_POSITION = 307;
     public static final double MAX_POSITION = 268;
     
-    public static final double ARM_CURRENT_LIMIT = 40;
-    public static final double COLLECTOR_CURRENT_LIMIT = 20;
+    public static final int ARM_CURRENT_LIMIT = 40;
+    public static final int COLLECTOR_CURRENT_LIMIT = 20;
 
     public static final double OPEN_POSITION = 306;
     public static final double CLOSE_POSITION = 269;
