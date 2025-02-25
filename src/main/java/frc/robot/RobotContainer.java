@@ -9,6 +9,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
@@ -72,6 +73,7 @@ public class RobotContainer {
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
+  private final SendableChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -104,6 +106,8 @@ public class RobotContainer {
       () -> { return false; }, 
       mSwerveSubsystem
     );
+
+    autoChooser = AutoBuilder.buildAutoChooser();
 
     // Configure the trigger bindings
     configureBindings();
@@ -188,6 +192,17 @@ public class RobotContainer {
 
     // -------------- DRIVER BUTTONS -------------
 
+    // Alignment buttons
+    Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+
+    JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
+
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
     slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER), mSwerveSubsystem));
@@ -223,27 +238,7 @@ public class RobotContainer {
     // // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
     // // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
 
-    Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
-    Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
-
-    JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
-    JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
-    
-    // PathPlannerPath path;
-    // try {
-    //   path = PathPlannerPath.fromPathFile("1MeterPath");
-    //   mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
-    //   mSwerveSubsystem.resetHeading(path.getStartingHolonomicPose().get().getRotation().getDegrees());
-    //   return AutoBuilder.followPath(path);
-    // } catch (Exception e) {
-    //   return null;
-    // }
-
-    PathPlannerAuto auto = new PathPlannerAuto("red_bott_JK");
+    PathPlannerAuto auto = (PathPlannerAuto)autoChooser.getSelected();
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 0 : 180;
@@ -252,3 +247,4 @@ public class RobotContainer {
     return auto;
   }
 }
+              

@@ -40,8 +40,8 @@ public final class Constants {
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
-    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftStick.value; //TODO: set different value
-    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightStick.value; //TODO: set different value
+    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftStick.value;
+    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightStick.value;
 
     public static final double DRIVE_DEADBAND = 0.05;
     
@@ -102,8 +102,8 @@ public final class Constants {
     public static final double L4_ANGLE = 63;
     public static final double L32_ANGLE = 65;
     public static final double L1_ANGLE = -31;
-    public static final double L32_BALL_PRE_COLLECT_ANGLE = -15; //TODO: validate angle
-    public static final double L32_BALL_COLLECT_ANGLE = 0; //TODO: validate angle
+    public static final double L32_BALL_PRE_COLLECT_ANGLE = -15;
+    public static final double L32_BALL_COLLECT_ANGLE = 0;
     public static final double L4_PLACED_ANGLE = 32;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -161,10 +161,10 @@ public final class Constants {
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
     public static final double PRE_INTAKE_POSITION = 0.55;
-    public static final double INTAKE_POSITION = 0.4525; //TODO: add to value +- 2 centimeters
+    public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
-    public static final double L2_BALL_POSITION = 0.475; //TODO: validate value
-    public static final double L3_BALL_POSITION = 0.84; //TODO: validate value
+    public static final double L2_BALL_POSITION = 0.475;
+    public static final double L3_BALL_POSITION = 0.84;
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.245;
@@ -268,10 +268,10 @@ public final class Constants {
     public static final int[] TURNING_CAN_ID = new int[] {7, 5, 1, 3};
     public static final double[] ANGULAR_OFFSETS = new double[] {
       (-Math.PI / 2.0), 0, (Math.PI), (Math.PI / 2.0)
-    };                                                                        // TODO: Validate device id
+    };
 
-    public static final int DRIVING_MOTOR_PINION_TEETH = 16;                  // TODO: Validate value
-    public static final int SPUR_GEAR_TEETH = 19;                             // TODO: Validate value
+    public static final int DRIVING_MOTOR_PINION_TEETH = 16;
+    public static final int SPUR_GEAR_TEETH = 19;
     public static final double DRIVING_MOTOR_REDUCTION = (45.0 * SPUR_GEAR_TEETH) / (DRIVING_MOTOR_PINION_TEETH * 15.0);
 
     public static final double TURNING_ENCODER_POSITION_FACTOR = (2 * Math.PI);           // Radians
@@ -280,14 +280,14 @@ public final class Constants {
     public static final double DRIVING_FREE_SPEED_RPM = 5676;
     public static final double DRIVING_FREE_SPEED_RPS = DRIVING_FREE_SPEED_RPM / 60.0;
 
-    public static final double WHEEL_DIAMETER_METERS = 0.0762;                // TODO: Validate value
+    public static final double WHEEL_DIAMETER_METERS = 0.0762;
     public static final double WHEEL_CIRCUFERENCE_METERS = WHEEL_DIAMETER_METERS * Math.PI;
     public static final double DRIVING_WHEEL_FREE_SPEED_RPS = (DRIVING_FREE_SPEED_RPS * WHEEL_CIRCUFERENCE_METERS) / DRIVING_MOTOR_REDUCTION;
     public static final double DRIVING_ENCODER_POSITION_FACTOR = WHEEL_CIRCUFERENCE_METERS / DRIVING_MOTOR_REDUCTION;
     public static final double DRIVING_ENCODER_VELOCITY_FACTOR = DRIVING_ENCODER_POSITION_FACTOR / 60.0;
 
-    public static final int DRIVING_SMART_CURRENT_LIMIT = 50;                 // TODO: Validate value
-    public static final int TURNING_SMART_CURRENT_LIMIT = 20;                 // TODO: Validate value
+    public static final int DRIVING_SMART_CURRENT_LIMIT = 50;
+    public static final int TURNING_SMART_CURRENT_LIMIT = 20;
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
