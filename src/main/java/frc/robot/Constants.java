@@ -21,6 +21,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -44,19 +45,26 @@ public final class Constants {
     public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightStick.value;
 
     public static final double DRIVE_DEADBAND = 0.05;
-    
-    
 
-    // Elevator operator constants
+    // Operator constants
+
+    public static final int OPEN_BALL_POV_BUTTON = 0;         // This means UP on the pov button
+    public static final int CLOSE_BALL_POV_BUTTON = 180;      // This means DOWN on the pov button
+    public static final int COLLECT_POV_BUTTON = 90;          // This means RIGHT on the pov button
+    public static final int EJECT_POV_BUTTOn = 270;           // This means LEFT on the pov button
+
     public static final int L1_STATE_BUTTON = PS4Controller.Button.kL1.value;
     public static final int L2_STATE_BUTTON = PS4Controller.Button.kL2.value;
     public static final int L3_STATE_BUTTON = PS4Controller.Button.kR1.value;
     public static final int L4_STATE_BUTTON = PS4Controller.Button.kR2.value;
+
     public static final int INTAKE_PREPARE_BUTTON = PS4Controller.Button.kTriangle.value;
     public static final int PLACE_CORAL_BUTTON = PS4Controller.Button.kCircle.value;
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
+
     public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
+
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
     public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kL3.value;
   }

@@ -16,11 +16,16 @@ import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.commands.BallCollectorCommands.CloseBallCollector;
+import frc.robot.commands.BallCollectorCommands.CollectBallGround;
+import frc.robot.commands.BallCollectorCommands.EjectBallGround;
+import frc.robot.commands.BallCollectorCommands.OpenBallCollector;
 import frc.robot.commands.CloseClimber;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.commands.ElevatorReachL2;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.BallCollector;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
@@ -58,6 +63,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
@@ -75,6 +81,7 @@ public class RobotContainer {
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
   private final SendableChooser<Command> autoChooser;
+  private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -171,6 +178,11 @@ public class RobotContainer {
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
     JoystickButton ejectManipulatorBallButton = new JoystickButton(m_operatorController, OperatorConstants.EJECT_MANIPULATOR_BALL_BUTTON);
 
+    POVButton openBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.OPEN_BALL_POV_BUTTON);
+    POVButton closeBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.CLOSE_BALL_POV_BUTTON);
+    POVButton collectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.COLLECT_POV_BUTTON);
+    POVButton ejectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.EJECT_POV_BUTTOn);
+
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
     intakeButton.toggleOnTrue(intakeSequenceCommand);
     l1Button.onTrue(l1Command);
@@ -179,6 +191,11 @@ public class RobotContainer {
     l4Button.onTrue(l4Command);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
+
+    openBallCollectorButton.onTrue(new OpenBallCollector(mBallCollector));
+    closeBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector));
+    collectBallGroundButton.whileTrue(new CollectBallGround(mBallCollector));
+    ejectBallGroundButton.whileTrue(new EjectBallGround(mBallCollector));
 
     NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
     NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
