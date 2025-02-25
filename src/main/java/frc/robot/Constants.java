@@ -220,6 +220,11 @@ public final class Constants {
     public static final double RED_GYRO_OFFSET = 180;         // Values is in degrees
 
     public static final HashMap<Integer, Pose2d> REEF_APRIL_TAG_POSITIONS = new HashMap<Integer, Pose2d>();
+
+    public static final double MAX_SPEED = 2;
+    public static final double MAX_ACCELERATION = 2;
+    public static final double MAX_ANGULAR_SPEED = 2 * Math.PI;
+    public static final double MAX_ANGULAR_ACCELERATION = 4 * Math.PI;
     
     static {
       REEF_APRIL_TAG_POSITIONS.put(6, new Pose2d(13.474, 3.306, Rotation2d.fromDegrees(300)));

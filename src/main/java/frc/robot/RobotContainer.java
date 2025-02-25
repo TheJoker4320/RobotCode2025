@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
@@ -241,7 +242,7 @@ public class RobotContainer {
     PathPlannerAuto auto = (PathPlannerAuto)autoChooser.getSelected();
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
 
-    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 0 : 180;
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? PoseEstimatorConstants.BLUE_GYRO_OFFSET : PoseEstimatorConstants.RED_GYRO_OFFSET;
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     // return null;
     return auto;
