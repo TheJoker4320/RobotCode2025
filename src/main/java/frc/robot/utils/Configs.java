@@ -88,6 +88,7 @@ public final class Configs {
         public static final SparkMaxConfig COLLECTOR_CONFIG = new SparkMaxConfig();
 
         static {
+            ARM_CONFIG.idleMode(IdleMode.kBrake);
             ARM_CONFIG.absoluteEncoder.positionConversionFactor(BallCollectorConstants.POSITION_FACTOR);
             ARM_CONFIG.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.VELOCITY_FACTOR);
             ARM_CONFIG.closedLoop.pid(
@@ -96,9 +97,9 @@ public final class Configs {
                 BallCollectorConstants.D_CONSTANT
             );
             ARM_CONFIG.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-            ARM_CONFIG.softLimit.forwardSoftLimit(BallCollectorConstants.MAX_POSITION);
+            ARM_CONFIG.softLimit.forwardSoftLimit(BallCollectorConstants.MIN_POSITION);
             ARM_CONFIG.softLimit.forwardSoftLimitEnabled(true);
-            ARM_CONFIG.softLimit.reverseSoftLimit(BallCollectorConstants.MIN_POSITION);
+            ARM_CONFIG.softLimit.reverseSoftLimit(BallCollectorConstants.MAX_POSITION);
             ARM_CONFIG.softLimit.reverseSoftLimitEnabled(true);
             ARM_CONFIG.smartCurrentLimit(BallCollectorConstants.ARM_CURRENT_LIMIT);
 

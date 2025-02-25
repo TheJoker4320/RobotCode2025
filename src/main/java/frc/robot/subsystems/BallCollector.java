@@ -12,6 +12,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BallCollectorConstants;
 import frc.robot.utils.Configs.BallCollectorConfis;
@@ -35,7 +36,6 @@ public class BallCollector extends SubsystemBase {
     mArmMotor = new SparkMax(BallCollectorConstants.ARM_MOTOR_PORT, MotorType.kBrushless);
     mCollectorMotor = new SparkMax(BallCollectorConstants.COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
 
-    mArmMotor.configure(BallCollectorConfis.ARM_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     mArmMotor.configure(BallCollectorConfis.ARM_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     mEncoder = mArmMotor.getAbsoluteEncoder();
@@ -65,6 +65,7 @@ public class BallCollector extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("BallCollectorEncoder", mArmMotor.getAbsoluteEncoder().getPosition());
     // This method will be called once per scheduler run
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.BallCollectorCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.BallCollectorConstants;
 import frc.robot.subsystems.BallCollector;
@@ -22,6 +23,7 @@ public class CloseBallCollector extends Command {
   @Override
   public void initialize() {
     mBallCollector.setArmReference(BallCollectorConstants.CLOSE_POSITION);
+    SmartDashboard.putBoolean("BALLCOLLECTOR", true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,6 +34,7 @@ public class CloseBallCollector extends Command {
   @Override
   public void end(boolean interrupted) {
     mBallCollector.stopArm();
+    SmartDashboard.putBoolean("BALLCOLLECTOR", false);
   }
 
   // Returns true when the command should end.
