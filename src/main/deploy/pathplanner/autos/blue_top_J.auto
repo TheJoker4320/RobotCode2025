@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_bottStart_J"
+                  "pathName": "blue_topStart_J"
                 }
               },
               {
@@ -74,85 +74,41 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_J_bottFeeder"
+                  "pathName": "blue_J_Finish"
                 }
               },
               {
-                "type": "named",
+                "type": "deadline",
                 "data": {
-                  "name": "prepareIntake"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "release"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "intake"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.2
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "reachL4"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "red_bottFeeder_K"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "armPlaceCoral"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "release"
-                }
-              }
-            ]
+            "name": "prepareIntake"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "red_bott",
+  "folder": "blue_top",
   "choreoAuto": false
 }
