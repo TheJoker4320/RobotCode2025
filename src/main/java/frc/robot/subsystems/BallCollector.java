@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.BallCollectorConstants;
 
 public class BallCollector extends SubsystemBase {
   /** Creates a new BallCollector. */
@@ -28,8 +29,8 @@ public class BallCollector extends SubsystemBase {
   }
   
   private BallCollector() {
-    mArmMotor = new SparkMax(17, MotorType.kBrushless);
-    mCollectorMotor = new SparkMax(16, MotorType.kBrushless);
+    mArmMotor = new SparkMax(BallCollectorConstants.ARM_MOTOR_PORT, MotorType.kBrushless);
+    mCollectorMotor = new SparkMax(BallCollectorConstants.COLLECTOR_MOTOR_PORT, MotorType.kBrushless);
 
     // TODO: Add configs here
 
@@ -38,10 +39,10 @@ public class BallCollector extends SubsystemBase {
   }
 
   public void collect() {
-    mCollectorMotor.set(-0.6);
+    mCollectorMotor.set(BallCollectorConstants.COLLECT_SPEED);
   }
   public void eject() {
-    mCollectorMotor.set(0.6);
+    mCollectorMotor.set(BallCollectorConstants.EJECT_SPEED);
   }
   public void stopCollecting() {
     mCollectorMotor.set(0);
@@ -55,7 +56,7 @@ public class BallCollector extends SubsystemBase {
   }
 
   public boolean atPosition(double goal) {
-    return (Math.abs(mEncoder.getPosition() - goal) < 0.5);
+    return (Math.abs(mEncoder.getPosition() - goal) < BallCollectorConstants.POSITION_TOLERANCE);
   }
 
   @Override
