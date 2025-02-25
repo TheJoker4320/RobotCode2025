@@ -211,7 +211,12 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       new Pose2d(goalPose.getX(), goalPose.getY(), goalPose.getRotation())
     );
 
-    PathConstraints constraints = new PathConstraints(2, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+    PathConstraints constraints = new PathConstraints(
+      PoseEstimatorConstants.MAX_SPEED,
+      PoseEstimatorConstants.MAX_ACCELERATION, 
+      PoseEstimatorConstants.MAX_ANGULAR_SPEED,
+      PoseEstimatorConstants.MAX_ANGULAR_ACCELERATION
+    ); // The constraints for this path.
 
     PathPlannerPath alignmentPath = new PathPlannerPath(
       waypoints,
@@ -261,7 +266,12 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       new Pose2d(goalPose.getX(), goalPose.getY(), goalPose.getRotation())
     );
 
-    PathConstraints constraints = new PathConstraints(2, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+    PathConstraints constraints = new PathConstraints(
+      PoseEstimatorConstants.MAX_SPEED,
+      PoseEstimatorConstants.MAX_ACCELERATION, 
+      PoseEstimatorConstants.MAX_ANGULAR_SPEED,
+      PoseEstimatorConstants.MAX_ANGULAR_ACCELERATION
+    ); // The constraints for this path.
 
     PathPlannerPath alignmentPath = new PathPlannerPath(
       waypoints,

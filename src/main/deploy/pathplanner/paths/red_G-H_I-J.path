@@ -1,0 +1,82 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 11.675,
+        "y": 4.006
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 10.475000000000001,
+        "y": 4.006
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 10.631738675213144,
+        "y": 2.359532899298207
+      },
+      "prevControl": {
+        "x": 10.602869660276001,
+        "y": 2.8016081016057504
+      },
+      "nextControl": {
+        "x": 10.708963815791256,
+        "y": 1.1769736842148586
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 12.384678508075687,
+        "y": 2.8182719771109896
+      },
+      "prevControl": {
+        "x": 11.776973684212308,
+        "y": 0.7247532894780169
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1995163240628766,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "dropAlgea",
+      "waypointRelativePos": 1.2,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 480.0,
+    "maxAngularAcceleration": 540.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.03624346792648
+  },
+  "reversed": false,
+  "folder": "RedAlgeaPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}

@@ -6,9 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
@@ -72,6 +74,7 @@ public class RobotContainer {
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
+  private final SendableChooser<Command> autoChooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -80,7 +83,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, DriverStation.getAlliance().get());
     mSwerveSubsystem.resetHeading(180);
+
     RobotConfig config = null;
     try{
       config = RobotConfig.fromGUISettings();
@@ -88,14 +93,10 @@ public class RobotContainer {
       // Handle exception as needed
       e.printStackTrace();
     }
-
-    NamedCommands.registerCommand("RaiseArmL4", new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4)));
-    NamedCommands.registerCommand("ReleaseCoral", new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator)));
-
     
     AutoBuilder.configure(
-      mSwerveSubsystem::getPose, 
-      mSwerveSubsystem::resetOdometry, 
+      mPoseEstimatorSubsystem::getPose, 
+      mPoseEstimatorSubsystem::resetPose, 
       mSwerveSubsystem::getRobotRelativeSpeeds, 
       (speeds, feedforwards) -> mSwerveSubsystem.setModuleStates(SwerveSubsystemConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds)), 
       new PPHolonomicDriveController(
@@ -107,7 +108,7 @@ public class RobotContainer {
       mSwerveSubsystem
     );
 
-    
+    autoChooser = AutoBuilder.buildAutoChooser();
 
     // Configure the trigger bindings
     configureBindings();
@@ -156,6 +157,8 @@ public class RobotContainer {
     Command reachL3BallCommand = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
     // command for collecting a ball
     Command collectBallCommand = new ParallelCommandGroup(new ManipulatorCollectBall(mManipulator), new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE));
+    //command for ejecting a ball from the manipulator
+    Command ejectManipulatorBallCommand = new ManipulatorBallEject(mManipulator);
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -164,9 +167,10 @@ public class RobotContainer {
     JoystickButton l3Button = new JoystickButton(m_operatorController, OperatorConstants.L3_STATE_BUTTON);
     JoystickButton l4Button = new JoystickButton(m_operatorController, OperatorConstants.L4_STATE_BUTTON);
     JoystickButton reachL2BallButton = new JoystickButton(m_operatorController, OperatorConstants.L2_BALL_STATE_BUTTON); //TODO: check constants before running
-    JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON);
-    JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON);
+    JoystickButton reachL3BallButton = new JoystickButton(m_operatorController, OperatorConstants.L3_BALL_STATE_BUTTON); //TODO: check constants before running
+    JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
+    JoystickButton ejectManipulatorBallButton = new JoystickButton(m_operatorController, OperatorConstants.EJECT_MANIPULATOR_BALL_BUTTON);
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
     intakeButton.toggleOnTrue(intakeSequenceCommand);
@@ -176,10 +180,29 @@ public class RobotContainer {
     l4Button.onTrue(l4Command);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
+
+    NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
+    NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
+    NamedCommands.registerCommand("reachL4", l4Command);
+    NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
+    NamedCommands.registerCommand("intake", intakeSequenceCommand);
+
     placeCoralButton.toggleOnTrue(placeCoralCommand);
     collectBallButton.toggleOnTrue(collectBallCommand);
+    ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
     // -------------- DRIVER BUTTONS -------------
+
+    // Alignment buttons
+    Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+
+    JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
@@ -213,31 +236,16 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, Alliance.Red); // Make this modulor (get from driver station)
     // // For blue: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees());
     // // For red: mSwerveSubsystem.resetHeading(autonomous.getStartingHolonomicPose().getRotation().getDegrees() + 180);
 
-    Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
-    Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+    PathPlannerAuto auto = (PathPlannerAuto)autoChooser.getSelected();
+    mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
 
-    JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
-    JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
-    
-    // PathPlannerPath path;
-    // try {
-    //   path = PathPlannerPath.fromPathFile("1MeterPath");
-    //   mSwerveSubsystem.resetOdometry(path.getStartingHolonomicPose().get());
-    //   mSwerveSubsystem.resetHeading(path.getStartingHolonomicPose().get().getRotation().getDegrees());
-    //   return AutoBuilder.followPath(path);
-    // } catch (Exception e) {
-    //   return null;
-    // }
-   // return AutoBuilder.buildAuto("ItayAuto");
-    return null;
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? PoseEstimatorConstants.BLUE_GYRO_OFFSET : PoseEstimatorConstants.RED_GYRO_OFFSET;
+    mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
+    // return null;
+    return auto;
   }
 }
+              
