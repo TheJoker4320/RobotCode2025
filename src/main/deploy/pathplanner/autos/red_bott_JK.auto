@@ -9,22 +9,9 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.2
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "red_midStart_G"
-                      }
-                    }
-                  ]
+                  "pathName": "red_bottStart_J"
                 }
               },
               {
@@ -87,41 +74,85 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_G_Finish"
+                  "pathName": "red_J_bottFeeder"
                 }
               },
               {
-                "type": "race",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "release"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.5
-                      }
-                    }
-                  ]
+                  "name": "prepareIntake"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "prepareIntake"
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "intake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "reachL4"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "red_bottFeeder_K"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "armPlaceCoral"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "release"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "red_bott",
   "choreoAuto": false
 }

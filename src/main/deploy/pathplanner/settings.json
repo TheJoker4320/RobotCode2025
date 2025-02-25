@@ -3,11 +3,13 @@
   "robotLength": 0.94,
   "holonomicMode": true,
   "pathFolders": [
+    "BlueAlgeaPaths",
     "BlueFromFeeder",
     "BlueStart",
     "BlueToFeeder",
-    "BlueAlgeaPaths",
+    "BlueFinish",
     "RedAlgeaPaths",
+    "RedFinish",
     "RedFromFeeder",
     "RedStart",
     "RedToFeeder"

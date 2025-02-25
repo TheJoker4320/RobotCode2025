@@ -21,7 +21,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "red_midStart_G"
+                        "pathName": "blue_midStart_G"
                       }
                     }
                   ]
@@ -87,7 +87,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_G_Finish"
+                  "pathName": "blue_G_Finish"
                 }
               },
               {
@@ -122,6 +122,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "blue_mid",
   "choreoAuto": false
 }
