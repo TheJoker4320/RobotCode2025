@@ -11,11 +11,16 @@ import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArmPlaceCoral;
 import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.commands.BallCollectorCommands.CloseBallCollector;
+import frc.robot.commands.BallCollectorCommands.CollectBallGround;
+import frc.robot.commands.BallCollectorCommands.EjectBallGround;
+import frc.robot.commands.BallCollectorCommands.OpenBallCollector;
 import frc.robot.commands.CloseClimber;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
@@ -59,6 +64,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
@@ -75,7 +81,7 @@ public class RobotContainer {
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
-  private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
     private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -109,7 +115,13 @@ public class RobotContainer {
       mSwerveSubsystem
     );
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
+    mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
+    mAutoChooser.addOption("redBott", AutoBuilder.buildAuto("red_bott_J"));
+    mAutoChooser.addOption("bluetop", AutoBuilder.buildAuto("blue_top_J"));
+    mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
+    mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
+    mAutoChooser.addOption("Wait", new WaitCommand(0.1));
 
     // Configure the trigger bindings
     configureBindings();
@@ -129,11 +141,11 @@ public class RobotContainer {
     // -------------- OPERATOR BUTTONS --------------
 
     //Climber buttons
-    // JoystickButton ClimbButton = new JoystickButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
-    // ClimbButton.whileTrue(new Climb(mClimber));
+    POVButton ClimbButton = new POVButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
+     ClimbButton.whileTrue(new Climb(mClimber));
 
-    // JoystickButton CloseClimbButton = new JoystickButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
-    // CloseClimbButton.whileTrue(new CloseClimber(mClimber));
+     POVButton CloseClimbButton = new POVButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
+     CloseClimbButton.whileTrue(new CloseClimber(mClimber));
 
 
     //Arm Elevator Sequence Buttons
@@ -188,9 +200,21 @@ public class RobotContainer {
     NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
     NamedCommands.registerCommand("intake", intakeSequenceCommand);
 
+    POVButton openBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.OPEN_BALL_POV_BUTTON);
+    POVButton closeBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.CLOSE_BALL_POV_BUTTON);
+    POVButton collectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.COLLECT_POV_BUTTON);
+    POVButton ejectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.EJECT_POV_BUTTOn);
+
+    openBallCollectorButton.onTrue(new OpenBallCollector(mBallCollector));
+    closeBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector));
+    collectBallGroundButton.whileTrue(new CollectBallGround(mBallCollector));
+    ejectBallGroundButton.whileTrue(new EjectBallGround(mBallCollector));
+
     placeCoralButton.toggleOnTrue(placeCoralCommand);
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
+
+
 
     // -------------- DRIVER BUTTONS -------------
 
@@ -237,12 +261,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)autoChooser.getSelected();
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_J");
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
-
+    
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? PoseEstimatorConstants.BLUE_GYRO_OFFSET : PoseEstimatorConstants.RED_GYRO_OFFSET;
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     return auto;
+    // return null;
   }
 }
               

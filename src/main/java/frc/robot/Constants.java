@@ -45,7 +45,10 @@ public final class Constants {
 
     public static final double DRIVE_DEADBAND = 0.05;
     
-    
+    public static final int OPEN_BALL_POV_BUTTON = 0;         // This means UP on the pov button
+    public static final int CLOSE_BALL_POV_BUTTON = 180;      // This means DOWN on the pov button
+    public static final int COLLECT_POV_BUTTON = 90;          // This means RIGHT on the pov button
+    public static final int EJECT_POV_BUTTOn = 270;           // This means LEFT on the pov button
 
     // Elevator operator constants
     public static final int L1_STATE_BUTTON = PS4Controller.Button.kL1.value;
@@ -59,6 +62,9 @@ public final class Constants {
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
     public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kL3.value;
+    
+    public static final int CLIMBER_BUTTON = 0;
+    public static final int CLOSE_CLIMBER_BUTTON = 180;
   }
   public static class BallCollectorConstants {
     public static final int ARM_MOTOR_PORT = 17;
@@ -82,7 +88,7 @@ public final class Constants {
     public static final double RELEASE_COLLECTION_SPEED = 290;
     public static final double POSITION_TOLERANCE = 0.5;
 
-    public static final double COLLECT_SPEED = -0.6;
+    public static final double COLLECT_SPEED = -0.8;
     public static final double EJECT_SPEED = -1 * COLLECT_SPEED;
   }
 
@@ -125,8 +131,8 @@ public final class Constants {
     public static final double MIN_ANGLE_L2_HEIGHT = -0;
     public static final double INTAKE_ANGLE = -85;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
-    public static final double L4_ANGLE = 63;
-    public static final double L32_ANGLE = 65;
+    public static final double L4_ANGLE = 67;
+    public static final double L32_ANGLE = 69;
     public static final double L1_ANGLE = -31;
     public static final double L32_BALL_PRE_COLLECT_ANGLE = -15;
     public static final double L32_BALL_COLLECT_ANGLE = 0;
@@ -234,7 +240,7 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double FAR_REEF_X_OFFSET = -0.63;
+    public static final double FAR_REEF_X_OFFSET = -0.67;
     public static final double CLOSE_REEF_X_OFFSET = -0.5;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
     public static final double REEF_Y_RIGHT_OFFSET = -0.19;   // The distance between the center of the april tag and reef branch
     public static final double REEF_Y_LEFT_OFFSET = 0.15;     // The distance between the center of the april tag and reef branch
