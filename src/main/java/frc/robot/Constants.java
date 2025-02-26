@@ -34,14 +34,14 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVING_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
-    public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
-    public static final int CLIMBER_BUTTON = 8; //The Plus button
+    // public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
+    // public static final int CLIMBER_BUTTON = 8; //The Plus button
 
     public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
     public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
     public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
-    public static final int RESET_HEADING_SWERVE_BUTTON = XboxController.Button.kLeftStick.value;
-    public static final int REFERENCE_FRAME_SWERVE_BUTTON = XboxController.Button.kRightStick.value;
+    public static final int RESET_HEADING_SWERVE_BUTTON = 7; //minus #TODO: Check if actually this button
+    public static final int REFERENCE_FRAME_SWERVE_BUTTON = 8; //plus
 
     public static final double DRIVE_DEADBAND = 0.05;
     

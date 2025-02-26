@@ -127,11 +127,11 @@ public class RobotContainer {
     // -------------- OPERATOR BUTTONS --------------
 
     //Climber buttons
-    JoystickButton ClimbButton = new JoystickButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
-    ClimbButton.whileTrue(new Climb(mClimber));
+    // JoystickButton ClimbButton = new JoystickButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
+    // ClimbButton.whileTrue(new Climb(mClimber));
 
-    JoystickButton CloseClimbButton = new JoystickButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
-    CloseClimbButton.whileTrue(new CloseClimber(mClimber));
+    // JoystickButton CloseClimbButton = new JoystickButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
+    // CloseClimbButton.whileTrue(new CloseClimber(mClimber));
 
 
     //Arm Elevator Sequence Buttons
