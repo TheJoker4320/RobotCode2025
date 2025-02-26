@@ -21,6 +21,7 @@ import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.commands.ElevatorReachL2;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.BallCollector;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
@@ -75,6 +76,7 @@ public class RobotContainer {
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
   private final SendableChooser<Command> autoChooser;
+    private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
