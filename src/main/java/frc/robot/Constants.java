@@ -60,6 +60,32 @@ public final class Constants {
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
     public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kL3.value;
   }
+  public static class BallCollectorConstants {
+    public static final int ARM_MOTOR_PORT = 17;
+    public static final int COLLECTOR_MOTOR_PORT = 16;
+
+    public static final double POSITION_FACTOR = 360;
+    public static final double VELOCITY_FACTOR = POSITION_FACTOR / 60;
+
+    public static final double P_CONSTANT = 0.005;
+    public static final double I_CONSTANT = 0;
+    public static final double D_CONSTANT = 0;
+
+    public static final double MIN_POSITION = 307;
+    public static final double MAX_POSITION = 268;
+    
+    public static final int ARM_CURRENT_LIMIT = 40;
+    public static final int COLLECTOR_CURRENT_LIMIT = 20;
+
+    public static final double OPEN_POSITION = 306;
+    public static final double CLOSE_POSITION = 269;
+    public static final double RELEASE_COLLECTION_SPEED = 290;
+    public static final double POSITION_TOLERANCE = 0.5;
+
+    public static final double COLLECT_SPEED = -0.6;
+    public static final double EJECT_SPEED = -1 * COLLECT_SPEED;
+  }
+
   public static class ClimberConstants {
     public static final int CLIMBER_MOTOR_PORT = 15;
     public static final double CLIMB_SPEED = 0.2; //TODO: Need to validate values
