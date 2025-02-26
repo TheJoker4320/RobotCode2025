@@ -174,5 +174,6 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
         SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
         SmartDashboard.putNumber("ROT", mGyro.getRotation2d().getDegrees());
+        SmartDashboard.putBoolean("FIeld Relative", mFieldRelative);
     }
 }
