@@ -104,15 +104,17 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
 
     // If the angular velocity is over 720, the estimated pose is going to be very innacurate so we "reject" the vision update
-    if (Math.abs(mSwerve.getAngularVelocity())  > PoseEstimatorConstants.MAXIMUM_ANGULAR_VELOCITY) {
-      rejectVisionUpdate = true;
-    }
-    if (poseEstimate.tagCount == 0) {
-      rejectVisionUpdate = true;
-    }
+    if (poseEstimate != null) {
+      if (Math.abs(mSwerve.getAngularVelocity())  > PoseEstimatorConstants.MAXIMUM_ANGULAR_VELOCITY) {
+        rejectVisionUpdate = true;
+      }
+      if (poseEstimate.tagCount == 0) {
+        rejectVisionUpdate = true;
+      }
 
-    if (!rejectVisionUpdate) {
-      mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
+      if (!rejectVisionUpdate) {
+        mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
+      }
     }
 
     mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
