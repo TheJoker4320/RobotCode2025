@@ -17,6 +17,7 @@ import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.commands.ManipulatorCoralEjectTeleop;
 import frc.robot.commands.BallCollectorCommands.CloseBallCollector;
 import frc.robot.commands.BallCollectorCommands.CollectBallGround;
 import frc.robot.commands.BallCollectorCommands.EjectBallGround;
@@ -91,7 +92,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem, DriverStation.getAlliance().get());
+    mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem);
 
     RobotConfig config = null;
     try{
@@ -261,10 +262,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_J");
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_I");      // TODO: SET THE CORRECT AUTONOMOUS
+    SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
-    
-    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? PoseEstimatorConstants.BLUE_GYRO_OFFSET : PoseEstimatorConstants.RED_GYRO_OFFSET;
+
+    double degreeOffset = 180;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     return auto;
     // return null;

@@ -199,7 +199,7 @@ public final class Constants {
     public static final double L3_BALL_POSITION = 0.84;
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
-    public static final double L2_POSITION = 0.245;
+    public static final double L2_POSITION = 0.185;
     public static final double L1_POSITION = 0.701;
     
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters

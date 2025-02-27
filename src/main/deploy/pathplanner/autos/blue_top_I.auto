@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "blue_topStart_J"
+                  "pathName": "blue_topStart_I"
                 }
               },
               {
@@ -52,7 +52,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.42
                       }
                     },
                     {
@@ -74,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "blue_J_Finish"
+                  "pathName": "blue_I_Finish"
                 }
               },
               {

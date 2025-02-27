@@ -20,6 +20,7 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,24 +40,21 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   private final SwerveDrivePoseEstimator mPoseEstimator;
   private final Swerve mSwerve;
 
-  private final double mGyroOffset;   // In degrees
+  private double mGyroOffset;   // In degrees
 
   private static PoseEstimatorSubsystem mInstance = null;
-  public static PoseEstimatorSubsystem getInstance(Swerve swerve, Alliance alliance) {
+  public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
     if (mInstance == null)
-      mInstance = new PoseEstimatorSubsystem(swerve, alliance);
+      mInstance = new PoseEstimatorSubsystem(swerve);
     return mInstance;
   }
 
   /** Creates a new PoseEstimator. */
-  private PoseEstimatorSubsystem(Swerve swerve, Alliance alliance) {
+  private PoseEstimatorSubsystem(Swerve swerve) {
     mField = new Field2d();
     SmartDashboard.putData(mField);
 
-    if (alliance == Alliance.Red)
-      mGyroOffset = PoseEstimatorConstants.RED_GYRO_OFFSET;
-    else
-      mGyroOffset = PoseEstimatorConstants.BLUE_GYRO_OFFSET;
+    mGyroOffset = 180;    // TODO: Set this value as correct one (180 for red, 0 for blue!!)
 
     mSwerve = swerve;
     mPoseEstimator = new SwerveDrivePoseEstimator(
