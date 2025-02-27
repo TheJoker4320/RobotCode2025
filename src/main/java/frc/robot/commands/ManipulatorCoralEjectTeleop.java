@@ -4,63 +4,53 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Manipulator;
+import frc.robot.utils.ArmState;
 import frc.robot.utils.ElevatorState;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ElevatorReachL2 extends Command {
-  
-  private final Timer mTimer;
-  private final Elevator mElevator;
-  private final Arm mArm;
-
-  private boolean mSetpointInitiallied;
-  private final ElevatorState mDesiredState;
-
-  public ElevatorReachL2(Elevator elevator, Arm arm) {
+public class ManipulatorCoralEjectTeleop extends Command {
+  /** Creates a new ManipulatorCoralEjectTeleop. */
+  private Elevator mElevator;
+  private Arm mArm;
+  private Manipulator mManipulator;
+  public ManipulatorCoralEjectTeleop(Elevator elevator, Arm arm, Manipulator manipulator) {
     mElevator = elevator;
-    mDesiredState = ElevatorState.L2;
+    mManipulator = manipulator;
     mArm = arm;
-
-    mTimer = new Timer();
+    
+    addRequirements(mManipulator);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(mElevator);
   }
-  
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mSetpointInitiallied = false;
-    mTimer.start();
-    mTimer.reset();
+    if (!mElevator.isAtState(ElevatorState.L4)) {
+      mManipulator.ejectCoral();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!mSetpointInitiallied) {
-      if (mArm.getCurrentAngle() >= ArmConstants.MIN_ANGLE_L2_HEIGHT) {
-        mSetpointInitiallied = true;
-        mElevator.setSetpoint(mDesiredState);
-      }
+    if (mArm.isAtState(ArmState.L4_PLACED)){
+      mManipulator.ejectCoral();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mElevator.stopMotorInPlace();
-    mTimer.stop();
+    mManipulator.stopCoralCollector();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (mElevator.isAtState(mDesiredState) || (mTimer.get() > ElevatorConstants.REACHSTATE_TIMEOUT));
+    return false;
   }
 }

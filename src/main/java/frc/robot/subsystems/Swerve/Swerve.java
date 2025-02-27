@@ -45,7 +45,6 @@ public class Swerve extends SubsystemBase {
 
         mGyro = new Pigeon2(SwerveSubsystemConstants.PIGEON_DEVICE_ID);                             
         mGyro.getConfigurator().apply(new Pigeon2Configuration());
-        mGyro.setYaw(0);
 
         mOdometry = new SwerveDriveOdometry(
             SwerveSubsystemConstants.DRIVE_KINEMATICS,                                                                        
@@ -156,13 +155,25 @@ public class Swerve extends SubsystemBase {
         mRearRight.displayData();
     }
 
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return SwerveSubsystemConstants.DRIVE_KINEMATICS.toChassisSpeeds(
+            mFrontLeft.getState(),
+            mFrontRight.getState(),
+            mRearLeft.getState(),
+            mRearRight.getState()
+        );
+    }
+
     @Override
     public void periodic() {
         mOdometry.update(
             getRotation(), 
             getModulePositions()
         );
-        SmartDashboard.putBoolean("Field Relative", mFieldRelative);
-        SmartDashboard.putNumber("ROBOT HEADING", mGyro.getRotation2d().getDegrees()); // Displays angle in degrees ( not radians as it is less intuitive with radians )
+
+        SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
+        SmartDashboard.putNumber("ROT", mGyro.getRotation2d().getDegrees());
+        SmartDashboard.putBoolean("FIeld Relative", mFieldRelative);
     }
 }

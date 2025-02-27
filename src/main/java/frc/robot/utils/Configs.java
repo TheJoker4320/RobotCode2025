@@ -24,6 +24,7 @@ import frc.robot.Constants.NeoModuleConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.BallCollectorConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Arm;
 
@@ -39,6 +40,30 @@ public final class Configs {
             CurrentLimitsConfigs currentLimitsConfigs = CLIMBER_TALONFX_CONFIG.CurrentLimits;
             currentLimitsConfigs.withStatorCurrentLimitEnable(ClimberConstants.CURRENT_LIMIT_ENABLED);
             currentLimitsConfigs.withStatorCurrentLimit(ClimberConstants.CURRENT_LIMIT);
+        }
+    }
+
+        public static class BallCollectorConfis {
+        public static final SparkMaxConfig ARM_CONFIG = new SparkMaxConfig();
+        public static final SparkMaxConfig COLLECTOR_CONFIG = new SparkMaxConfig();
+
+        static {
+            ARM_CONFIG.idleMode(IdleMode.kBrake);
+            ARM_CONFIG.absoluteEncoder.positionConversionFactor(BallCollectorConstants.POSITION_FACTOR);
+            ARM_CONFIG.absoluteEncoder.velocityConversionFactor(BallCollectorConstants.VELOCITY_FACTOR);
+            ARM_CONFIG.closedLoop.pid(
+                BallCollectorConstants.P_CONSTANT, 
+                BallCollectorConstants.I_CONSTANT, 
+                BallCollectorConstants.D_CONSTANT
+            );
+            ARM_CONFIG.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+            ARM_CONFIG.softLimit.forwardSoftLimit(BallCollectorConstants.MIN_POSITION);
+            ARM_CONFIG.softLimit.forwardSoftLimitEnabled(true);
+            ARM_CONFIG.softLimit.reverseSoftLimit(BallCollectorConstants.MAX_POSITION);
+            ARM_CONFIG.softLimit.reverseSoftLimitEnabled(true);
+            ARM_CONFIG.smartCurrentLimit(BallCollectorConstants.ARM_CURRENT_LIMIT);
+
+            COLLECTOR_CONFIG.smartCurrentLimit(BallCollectorConstants.COLLECTOR_CURRENT_LIMIT);
         }
     }
 
