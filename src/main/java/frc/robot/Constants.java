@@ -255,8 +255,8 @@ public final class Constants {
 
     public static final double MAX_SPEED = 2;
     public static final double MAX_ACCELERATION = 2;
-    public static final double MAX_ANGULAR_SPEED = 2 * Math.PI;
-    public static final double MAX_ANGULAR_ACCELERATION = 4 * Math.PI;
+    public static final double MAX_ANGULAR_SPEED = 1.5 * Math.PI;
+    public static final double MAX_ANGULAR_ACCELERATION = 3 * Math.PI;
     
     static {
       REEF_APRIL_TAG_POSITIONS.put(6, new Pose2d(13.474, 3.306, Rotation2d.fromDegrees(300)));
