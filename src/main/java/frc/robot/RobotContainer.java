@@ -221,14 +221,14 @@ public class RobotContainer {
 
     // Alignment buttons
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
     Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
 
     JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
     JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)

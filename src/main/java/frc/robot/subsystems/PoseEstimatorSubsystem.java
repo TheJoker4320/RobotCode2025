@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -33,6 +34,7 @@ import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
+import frc.robot.commands.AlignToReef;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
   private final Field2d mField;
@@ -146,6 +148,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   public Command getReefAlignmentCommand(final double xOffset, final double yOffset) {
-    return null;
+    return new DeferredCommand(
+      () -> {
+        return new AlignToReef(mSwerve, getReefToAlign(xOffset, yOffset));
+      },
+      Set.of(mSwerve)
+    );
   }
 }
