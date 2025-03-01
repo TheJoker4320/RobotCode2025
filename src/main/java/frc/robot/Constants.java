@@ -307,8 +307,8 @@ public final class Constants {
       (-Math.PI / 2.0), 0, (Math.PI), (Math.PI / 2.0)
     };
 
-    public static final int DRIVING_MOTOR_PINION_TEETH = 16;
-    public static final int SPUR_GEAR_TEETH = 19;
+    public static final int DRIVING_MOTOR_PINION_TEETH = 14;
+    public static final int SPUR_GEAR_TEETH = 22;
     public static final double DRIVING_MOTOR_REDUCTION = (45.0 * SPUR_GEAR_TEETH) / (DRIVING_MOTOR_PINION_TEETH * 15.0);
 
     public static final double TURNING_ENCODER_POSITION_FACTOR = (2 * Math.PI);           // Radians
