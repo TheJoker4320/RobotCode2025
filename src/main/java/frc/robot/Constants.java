@@ -116,13 +116,13 @@ public final class Constants {
     public static final double ARM_ENCODER_OFFSET = -250.7;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
-    public static final double ARM_KP = 33.1816;
+    public static final double ARM_KP = 41.2604;
     public static final double ARM_KI = 0;
-    public static final double ARM_KD = 5.280688;
-    public static final double ARM_KG = 0.414284;  
-    public static final double ARM_KV = 10.32784;  
-    public static final double ARM_KA = 0.689612;  
-    public static final double ARM_KS = 0.52706;
+    public static final double ARM_KD = 11.88016;
+    public static final double ARM_KG = 0.29506;  
+    public static final double ARM_KV = 16.5144;  
+    public static final double ARM_KA = 1.63256;  
+    public static final double ARM_KS = 0.3766;
 
     public static final double ARM_KG_STAY = 0.1;
 
