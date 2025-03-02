@@ -328,7 +328,7 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.0487;
+    public static final double DRIVING_P_CONSTANT = 0.02617;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
@@ -351,11 +351,11 @@ public final class Constants {
 
     // These constants are for calculating MOI - there is no use in
     // the code for them
-    public static final double TRANSLATION_KA = 0.363768;
-    public static final double ANGULAR_KA = 0.46058;
+    public static final double TRANSLATION_KA = 0.26435;
+    public static final double ANGULAR_KA = 0.20065;
     public static final double MOI_TRACK_WIDTH = Math.max(SwerveSubsystemConstants.TRACK_WIDTH, SwerveSubsystemConstants.WHEEL_BASE);
-    public static final double ROBOT_WEIGHT = 36;   // This value may not be correct - this is a rough estimate
+    public static final double ROBOT_WEIGHT = 56;   // This value may not be correct - this is a rough estimate
   
-    public static final double ESTIMATED_MOI = ROBOT_WEIGHT * (MOI_TRACK_WIDTH / 2) * (ANGULAR_KA / TRANSLATION_KA);    // Its 15.38356
+    public static final double ESTIMATED_MOI = ROBOT_WEIGHT * (MOI_TRACK_WIDTH / 2) * (ANGULAR_KA / TRANSLATION_KA);    // Its 14.34569699
   }
 }
