@@ -113,7 +113,7 @@ public final class Constants {
 
     public static final double ARM_POSITION_TOLERANCE = 1;  // in degrees
     public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
-    public static final double ARM_ENCODER_OFFSET = -250.7;   // in degrees
+    public static final double ARM_ENCODER_OFFSET = -69;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
     public static final double ARM_KP = 33.1816;
