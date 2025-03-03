@@ -31,6 +31,7 @@ import frc.robot.subsystems.BallCollector;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LedSubsystem;
 import frc.robot.utils.ElevatorState;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
@@ -84,6 +85,7 @@ public class RobotContainer {
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
   private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
     private final BallCollector mBallCollector = BallCollector.getInstance();
+  private final LedSubsystem mLedSubsystem = new LedSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -165,6 +167,12 @@ public class RobotContainer {
     Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
     // command for ejecting a coral
     Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
+    placeCoralCommand = placeCoralCommand.alongWith(
+      new RunCommand(
+        () -> mLedSubsystem.setLavaPalette(), 
+        mLedSubsystem
+      )
+    );
     // command for reaching a ball placed on l2
     Command reachL2BallCommand = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL));
     // command for reaching a ball placed on l3
@@ -252,6 +260,21 @@ public class RobotContainer {
           -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVE_DEADBAND)
         ), 
         mSwerveSubsystem
+      )
+    );
+
+    mLedSubsystem.setDefaultCommand(
+      new RunCommand(
+        () -> mLedSubsystem.setBlue(), 
+        mLedSubsystem
+      )
+    );
+
+    Trigger collectedTrigger = new Trigger(mManipulator::getCoralSwitchState);
+    collectedTrigger.whileTrue(
+      new RunCommand(
+        () -> mLedSubsystem.setGreen(), 
+        mLedSubsystem
       )
     );
   }
