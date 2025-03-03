@@ -51,7 +51,7 @@ public class Arm extends SubsystemBase {
     mSetpointInitiallied = false;
   }
   public double getAbsoluteEncoderValue(){
-    return mEncoder.get() * 360 < 200 ? mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET : mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET - 360;
+    return mEncoder.get() * 360 < 250 ? mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET : mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET - 360;
   }
 
   public void setSetpoint(ArmState setpoint) {

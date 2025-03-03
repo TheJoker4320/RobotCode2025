@@ -113,7 +113,7 @@ public final class Constants {
 
     public static final double ARM_POSITION_TOLERANCE = 1;  // in degrees
     public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
-    public static final double ARM_ENCODER_OFFSET = -250.7;   // in degrees
+    public static final double ARM_ENCODER_OFFSET = -69;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
     public static final double ARM_KP = 41.2604;
@@ -240,10 +240,10 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double FAR_REEF_X_OFFSET = -0.67;
-    public static final double CLOSE_REEF_X_OFFSET = -0.5;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
-    public static final double REEF_Y_RIGHT_OFFSET = -0.19;   // The distance between the center of the april tag and reef branch
-    public static final double REEF_Y_LEFT_OFFSET = 0.15;     // The distance between the center of the april tag and reef branch
+    public static final double FAR_REEF_X_OFFSET = -0.48;
+    public static final double CLOSE_REEF_X_OFFSET = -0.32;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_Y_RIGHT_OFFSET = -0.24;   // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_LEFT_OFFSET = 0.14;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
 
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
@@ -343,7 +343,7 @@ public final class Constants {
   public static class AutonomousConstants {
     public static final double TRANSLATION_P_CONSTANT = 2.843395833;
     public static final double TRANSLATION_I_CONSTANT = 0;
-    public static final double TRANSLATION_D_CONSTANT = 2.843395833;
+    public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 
     public static final double ROTATION_P_CONSTANT = 2.155166667;
     public static final double ROTATION_I_CONSTANT = 0;

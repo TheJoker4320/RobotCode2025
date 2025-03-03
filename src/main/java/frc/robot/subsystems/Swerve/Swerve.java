@@ -45,6 +45,7 @@ public class Swerve extends SubsystemBase {
 
         mGyro = new Pigeon2(SwerveSubsystemConstants.PIGEON_DEVICE_ID);                             
         mGyro.getConfigurator().apply(new Pigeon2Configuration());
+        mGyro.setYaw(180);
 
         mOdometry = new SwerveDriveOdometry(
             SwerveSubsystemConstants.DRIVE_KINEMATICS,                                                                        
