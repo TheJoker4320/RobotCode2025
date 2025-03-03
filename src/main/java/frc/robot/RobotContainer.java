@@ -82,7 +82,7 @@ public class RobotContainer {
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
-  private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
+  private SendableChooser<Command> mAutoChooser = new SendableChooser<>();
     private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -115,15 +115,16 @@ public class RobotContainer {
       () -> { return false; }, 
       mSwerveSubsystem
     );
-
-    mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
-    mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
-    mAutoChooser.addOption("redBott", AutoBuilder.buildAuto("red_bott_J"));
-    mAutoChooser.addOption("bluetop", AutoBuilder.buildAuto("blue_top_J"));
-    mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
-    mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
+    mAutoChooser = AutoBuilder.buildAutoChooser();
+    // mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
+    // mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
+    // mAutoChooser.addOption("redBott", AutoBuilder.buildAuto("red_bott_J"));
+    // mAutoChooser.addOption("bluetop", AutoBuilder.buildAuto("blue_top_J"));
+    // mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
+    // mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
 
+    SmartDashboard.putData(mAutoChooser);
     // Configure the trigger bindings
     configureBindings();
   }
