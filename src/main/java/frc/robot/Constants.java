@@ -341,13 +341,13 @@ public final class Constants {
   }
 
   public static class AutonomousConstants {
-    public static final double TRANSLATION_P_CONSTANT = 3.141958;
+    public static final double TRANSLATION_P_CONSTANT = 2.843395833;
     public static final double TRANSLATION_I_CONSTANT = 0;
-    public static final double TRANSLATION_D_CONSTANT = 0.36194;
+    public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 
-    public static final double ROTATION_P_CONSTANT = 3.33333;
+    public static final double ROTATION_P_CONSTANT = 2.155166667;
     public static final double ROTATION_I_CONSTANT = 0;
-    public static final double ROTATION_D_CONSTANT = 0.436342;
+    public static final double ROTATION_D_CONSTANT = 0.087583333;
 
     // These constants are for calculating MOI - there is no use in
     // the code for them
