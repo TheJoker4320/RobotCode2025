@@ -37,9 +37,9 @@ public final class Constants {
     // public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
     // public static final int CLIMBER_BUTTON = 8; //The Plus button
 
-    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
-    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
-    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
+    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
+    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
+    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kX.value;
     public static final int RESET_HEADING_SWERVE_BUTTON = 7; //minus #TODO: Check if actually this button
     public static final int REFERENCE_FRAME_SWERVE_BUTTON = 8; //plus
 
@@ -142,8 +142,8 @@ public final class Constants {
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MINIMUM_ARM_ANGLE = -87;       // min - in degrees
-    public static final double MAXIMUM_ARM_ANGLE = 70;        // max - in degrees
+    public static final double MINIMUM_ARM_ANGLE = -88;       // min - in degrees
+    public static final double MAXIMUM_ARM_ANGLE = 73;        // max - in degrees
 
     public static final double MM_CRUISE_VELOCITY = 250;  // degrees per second
     public static final double MM_ACCELERATION = 500;     // degrees per second^2
@@ -171,7 +171,7 @@ public final class Constants {
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.75; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = -0.1;
+    public static final double BALL_EJECT_SPEED = -0.5;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
   
@@ -192,7 +192,7 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double PRE_INTAKE_POSITION = 0.55;
+    public static final double PRE_INTAKE_POSITION = 0.59;
     public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
     public static final double L2_BALL_POSITION = 0.475;
@@ -243,7 +243,7 @@ public final class Constants {
     public static final double FAR_REEF_X_OFFSET = -0.48;
     public static final double CLOSE_REEF_X_OFFSET = -0.32;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
     public static final double REEF_Y_RIGHT_OFFSET = -0.24;   // The distance between the center of the april tag and reef branch
-    public static final double REEF_Y_LEFT_OFFSET = 0.14;     // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
 
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent

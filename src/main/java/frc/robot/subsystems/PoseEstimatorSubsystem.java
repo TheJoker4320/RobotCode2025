@@ -56,7 +56,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     mField = new Field2d();
     SmartDashboard.putData(mField);
 
-    mGyroOffset = 180;    // TODO: Set this value as correct one (180 for red, 0 for blue!!)
+    mGyroOffset = 0;    // TODO: Set this value as correct one (180 for red, 0 for blue!!)
 
     mSwerve = swerve;
     mPoseEstimator = new SwerveDrivePoseEstimator(
@@ -121,17 +121,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     mField.setRobotPose(mPoseEstimator.getEstimatedPosition());
 
-    SmartDashboard.putNumber("Estimated x", mPoseEstimator.getEstimatedPosition().getX());                              // Specifically for debugging, should be removed later
-    SmartDashboard.putNumber("Estimated y", mPoseEstimator.getEstimatedPosition().getY());                              // Specifically for debugging, should be removed later
-    SmartDashboard.putNumber("Estimated angle", mPoseEstimator.getEstimatedPosition().getRotation().getDegrees());      // Specifically for debugging, should be removed later
+    //SmartDashboard.putNumber("Estimated x", mPoseEstimator.getEstimatedPosition().getX());                              // Specifically for debugging, should be removed later
+    //SmartDashboard.putNumber("Estimated y", mPoseEstimator.getEstimatedPosition().getY());                              // Specifically for debugging, should be removed later
+    //SmartDashboard.putNumber("Estimated angle", mPoseEstimator.getEstimatedPosition().getRotation().getDegrees());      // Specifically for debugging, should be removed later
    
-    SmartDashboard.putNumber("ROT", mSwerve.getRotation().getDegrees());
-
-
-    Pose2d alignTo = getReefToAlign(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET);
-    SmartDashboard.putNumber("AlignTo x", alignTo.getX());
-    SmartDashboard.putNumber("AlignTo y", alignTo.getY());
-    SmartDashboard.putNumber("AlignTo angle", alignTo.getRotation().getDegrees());
+    //SmartDashboard.putNumber("ROT", mSwerve.getRotation().getDegrees());
   }
 
   public Pose2d getReefToAlign(final double xOffset, final double yOffset) {

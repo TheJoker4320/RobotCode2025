@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -41,7 +42,6 @@ public class Arm extends SubsystemBase {
   }
 
   private Arm() {
-    SmartDashboard.putBoolean("Reached state", false);
     mMotor = new TalonFX(ArmConstants.MOTOR_ID);
     mEncoder = new DutyCycleEncoder(ArmConstants.ENCODER_CHANNEL);
     mMotor.getConfigurator().apply(ArmConfigs.ARM_TALONFX_CONFIG);
@@ -51,7 +51,7 @@ public class Arm extends SubsystemBase {
     mSetpointInitiallied = false;
   }
   public double getAbsoluteEncoderValue(){
-    return mEncoder.get() * 360 < 250 ? mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET : mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET - 360;
+    return mEncoder.get() * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO * 360 < 250 ? mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET : mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET - 360;
   }
 
   public void setSetpoint(ArmState setpoint) {
@@ -87,11 +87,9 @@ public class Arm extends SubsystemBase {
 
   public boolean isAtState(ArmState state) {
     if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE) {
-      SmartDashboard.putBoolean("Reached state", true);
       mSetpointInitiallied = false;
       return true;
     }
-    SmartDashboard.putBoolean("Reached state", false);
     return false;
   }
 
@@ -124,6 +122,14 @@ public class Arm extends SubsystemBase {
     
     //if (mSetpointInitiallied && isAtState(mSetpointState))
     //  mSetpointInitiallied = false;
+    SmartDashboard.putNumber("ARM", getCurrentAngle());
+    SmartDashboard.putNumber("ARM_O", mMotor.get());
+    SmartDashboard.putNumber("ARM_S", mSetpoint);
+    SmartDashboard.putNumber("CL_O", mMotor.getClosedLoopOutput().getValueAsDouble());
+    SmartDashboard.putNumber("CURR", mMotor.getSupplyCurrent().getValueAsDouble());
+    SmartDashboard.putNumber("VOLTAGE", mMotor.getMotorVoltage().getValueAsDouble());
+    SmartDashboard.putBoolean("INIT", mSetpointInitiallied);
+    SmartDashboard.putNumber("CL_S", mMotor.getClosedLoopReference().getValueAsDouble());
     verifyEncoderSync();
   }
 }
