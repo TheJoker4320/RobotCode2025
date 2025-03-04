@@ -121,7 +121,7 @@
         {
           "type": "named",
           "data": {
-            "name": "intakeCoral"
+            "name": "intake"
           }
         },
         {
@@ -217,6 +217,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "prepareIntake"
           }
         }
       ]

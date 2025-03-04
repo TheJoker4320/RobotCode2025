@@ -265,10 +265,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_I");      // TODO: SET THE CORRECT AUTONOMOUS
     SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
-    mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
 
-    double degreeOffset = 180;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 0 : 180;
+    mPoseEstimatorSubsystem.resetGyroOffset(degreeOffset);
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
+    mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
     return auto;
     // return null;
   }

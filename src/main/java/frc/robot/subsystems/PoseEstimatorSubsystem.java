@@ -67,6 +67,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
+  public void resetGyroOffset(double newOffset) {
+    mGyroOffset = newOffset;
+  }
+
   private Rotation2d getRobotRotation() {
     Rotation2d robotRotation = mSwerve.getRotation();
     robotRotation.rotateBy(Rotation2d.fromDegrees(mGyroOffset));
