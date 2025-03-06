@@ -125,11 +125,6 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("ARM", getCurrentAngle());
     SmartDashboard.putNumber("ARM_O", mMotor.get());
     SmartDashboard.putNumber("ARM_S", mSetpoint);
-    SmartDashboard.putNumber("CL_O", mMotor.getClosedLoopOutput().getValueAsDouble());
-    SmartDashboard.putNumber("CURR", mMotor.getSupplyCurrent().getValueAsDouble());
-    SmartDashboard.putNumber("VOLTAGE", mMotor.getMotorVoltage().getValueAsDouble());
-    SmartDashboard.putBoolean("INIT", mSetpointInitiallied);
-    SmartDashboard.putNumber("CL_S", mMotor.getClosedLoopReference().getValueAsDouble());
     verifyEncoderSync();
   }
 }
