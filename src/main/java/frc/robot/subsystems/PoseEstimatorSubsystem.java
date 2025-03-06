@@ -21,6 +21,12 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -44,6 +50,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private double mGyroOffset;   // In degrees
 
+  private final StructPublisher<Pose2d> mPosePublisher;
+
   private static PoseEstimatorSubsystem mInstance = null;
   public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
     if (mInstance == null)
@@ -56,7 +64,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     mField = new Field2d();
     SmartDashboard.putData(mField);
 
-    mGyroOffset = 0;    // TODO: Set this value as correct one (180 for red, 0 for blue!!)
+    mGyroOffset = 180;    // TODO: Set this value as correct one (180 for red, 0 for blue!!)
 
     mSwerve = swerve;
     mPoseEstimator = new SwerveDrivePoseEstimator(
@@ -67,6 +75,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       PoseEstimatorConstants.STATE_STANDARD_DEVIATIONS,
       PoseEstimatorConstants.VISION_STANDARD_DEVIATIONS
     );
+
+    mPosePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
   }
 
   private Rotation2d getRobotRotation() {
@@ -121,11 +131,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     mField.setRobotPose(mPoseEstimator.getEstimatedPosition());
 
-    //SmartDashboard.putNumber("Estimated x", mPoseEstimator.getEstimatedPosition().getX());                              // Specifically for debugging, should be removed later
-    //SmartDashboard.putNumber("Estimated y", mPoseEstimator.getEstimatedPosition().getY());                              // Specifically for debugging, should be removed later
-    //SmartDashboard.putNumber("Estimated angle", mPoseEstimator.getEstimatedPosition().getRotation().getDegrees());      // Specifically for debugging, should be removed later
-   
-    //SmartDashboard.putNumber("ROT", mSwerve.getRotation().getDegrees());
+    mPosePublisher.set(mPoseEstimator.getEstimatedPosition());
   }
 
   public Pose2d getReefToAlign(final double xOffset, final double yOffset) {

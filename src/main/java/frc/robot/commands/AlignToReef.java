@@ -19,6 +19,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -29,6 +33,8 @@ public class AlignToReef extends Command {
   private final PoseEstimatorSubsystem mPoseEstimator;
   private final Pose2d mGoal;
   private final HolonomicDriveController mDriveController;
+
+  private final StructPublisher<Pose2d> mGoalPublisher;
 
   /** Creates a new AlignToReef. */
   public AlignToReef(Swerve swerve, Pose2d goal) {
@@ -55,6 +61,12 @@ public class AlignToReef extends Command {
         )
     );
 
+    mGoalPublisher = NetworkTableInstance.getDefault().getStructTopic("GoalPose", Pose2d.struct).publish();
+
+    SmartDashboard.putNumber("goal x", goal.getX());
+    SmartDashboard.putNumber("goal y", goal.getY());
+    SmartDashboard.putNumber("goal rotation", goal.getRotation().getDegrees());
+
     addRequirements(mSwerve);
   }
 
@@ -62,6 +74,7 @@ public class AlignToReef extends Command {
   @Override
   public void initialize() {
     mDriveController.setTolerance(new Pose2d(0.01, 0.01, Rotation2d.fromDegrees(1)));
+    mGoalPublisher.set(mGoal);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
