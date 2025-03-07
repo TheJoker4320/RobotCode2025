@@ -23,7 +23,8 @@ public class Manipulator extends SubsystemBase {
   
   private final DigitalInput mBallSwitch;
   private final DigitalInput mCoralSwitch;
-  private boolean mCollected;               // Holds true if collected coral, holds false if placed coral - holds the value we should expect from the limit switch
+  private boolean mCollectedCoral;               // Holds true if collected coral, holds false if placed coral - holds the value we should expect from the limit switch
+  private boolean mCollectedBall;
 
   private static Manipulator mInstance;
 
@@ -35,8 +36,9 @@ public class Manipulator extends SubsystemBase {
   }
 
   private Manipulator() {
-    mCollected = false;
-      
+    mCollectedCoral = false;
+    mCollectedBall = false;  
+
     mCoralMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
     mBallMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
 
@@ -55,14 +57,23 @@ public class Manipulator extends SubsystemBase {
     return !mCoralSwitch.get();
   }
 
-  public void setCollected() {
-    mCollected = true;
+  public void setCollectedCoral() {
+    mCollectedCoral = true;
   }
-  public void setPlaced() {
-    mCollected = false;
+  public void setPlacedCoral() {
+    mCollectedCoral = false;
   }
-  public boolean getCollected() {
-    return mCollected;
+  public boolean getCollectedCoral() {
+    return mCollectedCoral;
+  }
+  public void setCollectedBall() {
+    mCollectedBall = true;
+  }
+  public void setPlacedBall() {
+    mCollectedBall = false;
+  }
+  public boolean getCollectedBall() {
+    return mCollectedBall;
   }
 
   public void collectBall(){

@@ -139,21 +139,34 @@ public class RobotContainer {
 
     // -------------- AUTOMATED CONTROL --------------
 
-    Command adjustGripCommand = new ParallelRaceGroup(
+    Command adjustCoralGripCommand = new ParallelRaceGroup(
       new ManipulatorCollectCoral(mManipulator),
       new WaitCommand(1.25)
     );
     Trigger adjustCoralGripTrigger = new Trigger(
       () -> {
         boolean limitSwitch = mManipulator.getCoralSwitchState();
-        boolean collected = mManipulator.getCollected();
+        boolean collected = mManipulator.getCollectedCoral();
 
         // When the limit switch is not pressed but we have collected - meaning we collected a coral and havent removed it yet than we return true
         return ((!limitSwitch) && collected);   
       }
     );
-    adjustCoralGripTrigger.onTrue(adjustGripCommand);
+    adjustCoralGripTrigger.onTrue(adjustCoralGripCommand);
 
+    Command adjustBallGripCommand = new ParallelRaceGroup(
+      new ManipulatorCollectBall(mManipulator),
+      new WaitCommand(1.25)
+    );
+    Trigger adjustBallGripTrigger = new Trigger(
+      () -> {
+        boolean limitSwitch = mManipulator.getBallSwitchState();
+        boolean collected = mManipulator.getCollectedBall();
+
+        return ((!limitSwitch) && collected);
+      }
+    );
+    adjustBallGripTrigger.onTrue(adjustBallGripCommand);
     // -------------- OPERATOR BUTTONS --------------
 
     // command for preparing to collect a coral
@@ -167,7 +180,7 @@ public class RobotContainer {
         new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), 
         new ManipulatorCollectCoral(mManipulator)
       ), 
-      new InstantCommand(() -> mManipulator.setCollected()), 
+      new InstantCommand(() -> mManipulator.setCollectedCoral()), 
       new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
       new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE)
     );
@@ -193,7 +206,7 @@ public class RobotContainer {
     );
     // command for ejecting a coral
     Command placeCoralCommand = new SequentialCommandGroup(
-      new InstantCommand(() -> mManipulator.setPlaced()), 
+      new InstantCommand(() -> mManipulator.setPlacedCoral()), 
       new ParallelCommandGroup(
         new ArmPlaceCoral(mArm), 
         new ManipulatorCoralEject(mManipulator)
@@ -210,12 +223,18 @@ public class RobotContainer {
       new ArmReachAngle(mArm, ArmState.L32_PRE_BALL)
     );
     // command for collecting a ball
-    Command collectBallCommand = new ParallelCommandGroup(
+    Command collectBallCommand = new SequentialCommandGroup(
+    new ParallelCommandGroup(
       new ManipulatorCollectBall(mManipulator), 
       new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE)
+    ),
+    new InstantCommand(() -> mManipulator.setCollectedBall()) 
     );
     // command for ejecting a ball from the manipulator
-    Command ejectManipulatorBallCommand = new ManipulatorBallEject(mManipulator);
+    Command ejectManipulatorBallCommand = new SequentialCommandGroup(
+      new ManipulatorBallEject(mManipulator),
+      new InstantCommand(() -> mManipulator.setPlacedBall())
+    );
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
