@@ -38,6 +38,7 @@ import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.json.simple.parser.ParseException;
 
@@ -57,6 +58,7 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -220,6 +222,12 @@ public class RobotContainer {
     placeCoralButton.toggleOnTrue(placeCoralCommand);
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
+
+    Trigger trigger = new Trigger( () ->
+    {
+      return ((!mArm.isSetpointInitialled()) && (mArm.getSetpointState() != null) && (!mArm.isAtState(mArm.getSetpointState())) && !(mElevatorSubsystem.isSetpointInitialled()));
+    });
+    trigger.onTrue(new DeferredCommand(() -> new ArmReachAngle(mArm, mArm.getSetpointState()), Set.of(mArm)));
 
 
 

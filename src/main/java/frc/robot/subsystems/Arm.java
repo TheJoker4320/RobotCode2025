@@ -20,8 +20,10 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.ArmReachAngle;
 import frc.robot.utils.ArmState;
 import frc.robot.utils.Configs.ArmConfigs;
 
@@ -49,6 +51,7 @@ public class Arm extends SubsystemBase {
     syncEncoders();
 
     mSetpointInitiallied = false;
+    mSetpointState = null;
   }
   public double getAbsoluteEncoderValue(){
     return mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET;
@@ -96,9 +99,21 @@ public class Arm extends SubsystemBase {
   public void stopMotorInPlace() {
     //TODO: check if arm stays in place
     mSetpointInitiallied = false;
-    mMotor.setVoltage(ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
+    double vol = ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians));
+    SmartDashboard.putNumber("stop voltage", vol);
+    if (vol >= 0 || vol <= ArmConstants.ARM_KG_STAY)
+      mMotor.setVoltage(vol);
+    else
+      mMotor.set(0);
   }
 
+  public ArmState getSetpointState(){
+    return mSetpointState;
+  }
+
+  public boolean isSetpointInitialled(){
+    return mSetpointInitiallied;
+  }
 
   @Override
   public void periodic() {
@@ -125,6 +140,8 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putNumber("ARM", getCurrentAngle());
     SmartDashboard.putNumber("ARM_O", mMotor.get());
     SmartDashboard.putNumber("ARM_S", mSetpoint);
+    SmartDashboard.putNumber("ARM_AE", getAbsoluteEncoderValue());
+    SmartDashboard.putBoolean("Arm setpointInitialled", mSetpointInitiallied);
     verifyEncoderSync();
   }
 }
