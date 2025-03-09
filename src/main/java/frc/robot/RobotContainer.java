@@ -95,6 +95,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem);
+    SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
 
     RobotConfig config = null;
     try{
@@ -125,7 +126,6 @@ public class RobotContainer {
     // mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
     // mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
-
     SmartDashboard.putData(mAutoChooser);
     // Configure the trigger bindings
     configureBindings();
@@ -263,10 +263,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("red_bott_JK");      // TODO: SET THE CORRECT AUTONOMOUS
-    SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
+    PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();     // TODO: SET THE CORRECT AUTONOMOUS
 
-    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 180 : 0;
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;
     mPoseEstimatorSubsystem.resetGyroOffset(degreeOffset);
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
@@ -274,4 +273,3 @@ public class RobotContainer {
     // return null;
   }
 }
-              
