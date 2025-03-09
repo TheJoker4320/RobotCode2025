@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
+import frc.robot.Constants.LedSubsystemConstants;
 import frc.robot.commands.Climb;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
@@ -84,8 +85,8 @@ public class RobotContainer {
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
   private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
-    private final BallCollector mBallCollector = BallCollector.getInstance();
-  private final LedSubsystem mLedSubsystem = new LedSubsystem();
+  private final BallCollector mBallCollector = BallCollector.getInstance();
+  private final LedSubsystem mLedSubsystem = LedSubsystem.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -141,6 +142,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+    initializeLeds();
+
     // -------------- OPERATOR BUTTONS --------------
 
     //Climber buttons
@@ -167,12 +170,7 @@ public class RobotContainer {
     Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
     // command for ejecting a coral
     Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
-    placeCoralCommand = placeCoralCommand.alongWith(
-      new RunCommand(
-        () -> mLedSubsystem.setLavaPalette(), 
-        mLedSubsystem
-      )
-    );
+
     // command for reaching a ball placed on l2
     Command reachL2BallCommand = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL));
     // command for reaching a ball placed on l3
@@ -227,16 +225,26 @@ public class RobotContainer {
 
     // -------------- DRIVER BUTTONS -------------
 
+    Command ledFinishedAlignment = new ParallelRaceGroup(
+      new WaitCommand(LedSubsystemConstants.FINISHED_ALIGNMENT_LED_TIME),
+      new RunCommand(
+        () -> {
+          mLedSubsystem.setColor(LedSubsystemConstants.GREEN_LED_COLOR);
+        }, 
+        mLedSubsystem
+      )
+    );
+
     // Alignment buttons
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef().andThen(ledFinishedAlignment));
     Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef().andThen(ledFinishedAlignment));
 
     JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef().andThen(ledFinishedAlignment));
     JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef().andThen(ledFinishedAlignment));
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
@@ -262,21 +270,32 @@ public class RobotContainer {
         mSwerveSubsystem
       )
     );
+  }
 
+  private void initializeLeds() {
     mLedSubsystem.setDefaultCommand(
       new RunCommand(
-        () -> mLedSubsystem.setBlue(), 
+        () -> {
+          if (DriverStation.getAlliance().get().equals(Alliance.Red))
+            mLedSubsystem.setColor(LedSubsystemConstants.RED_LED_COLOR);
+          else
+            mLedSubsystem.setColor(LedSubsystemConstants.BLUE_LED_COLOR);  
+        }, 
         mLedSubsystem
       )
     );
 
-    Trigger collectedTrigger = new Trigger(mManipulator::getCoralSwitchState);
-    collectedTrigger.whileTrue(
+    Command collectedCoralLed = new ParallelRaceGroup(
+      new WaitCommand(LedSubsystemConstants.COLLECTED_CORAL_LED_TIME),
       new RunCommand(
-        () -> mLedSubsystem.setGreen(), 
+        () -> {
+          mLedSubsystem.setColor(LedSubsystemConstants.YELLOW_LED_COLOR);
+        }, 
         mLedSubsystem
       )
     );
+    Trigger collectedCoral = new Trigger(mManipulator::getCoralSwitchState);
+    collectedCoral.onTrue(collectedCoralLed);
   }
 
   /**

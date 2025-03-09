@@ -232,6 +232,20 @@ public final class Constants {
 
   }
 
+  public static class LedSubsystemConstants {
+    public static final int RIGHT_LED_STRIP_PORT = 0;
+    public static final int LEFT_LED_STRIP_PORT = 1;
+
+    public static final double RED_LED_COLOR = 0.61;
+    public static final double BLUE_LED_COLOR = 0.87;
+    public static final double GREEN_LED_COLOR = 0.77;
+    public static final double YELLOW_LED_COLOR = 0.69;
+    public static final double OFF_LED_COLOR = 0.99;
+
+    public static final double COLLECTED_CORAL_LED_TIME = 2;
+    public static final double FINISHED_ALIGNMENT_LED_TIME = 2;
+  }
+
   public static class PoseEstimatorConstants {
     // The larger the following values are the less the pose estimator trusts the measurements - if we see 
     // large ambiguity increase the values, if we see high precision than decrease the values
