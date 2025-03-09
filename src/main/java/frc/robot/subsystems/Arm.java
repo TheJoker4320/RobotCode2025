@@ -49,9 +49,10 @@ public class Arm extends SubsystemBase {
     syncEncoders();
 
     mSetpointInitiallied = false;
+    mSetpointState = null;
   }
   public double getAbsoluteEncoderValue(){
-    return mEncoder.get() * 360 < 200 ? mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET : mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET - 360;
+    return mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET;
   }
 
   public void setSetpoint(ArmState setpoint) {
@@ -98,7 +99,12 @@ public class Arm extends SubsystemBase {
   public void stopMotorInPlace() {
     //TODO: check if arm stays in place
     mSetpointInitiallied = false;
-    mMotor.setVoltage(ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians)));
+    double vol = ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Degrees));
+    SmartDashboard.putNumber("stop voltage", vol);
+    if (vol >= 0 || vol <= ArmConstants.ARM_KG_STAY)
+      mMotor.setVoltage(vol);
+    else
+      mMotor.set(0);
   }
 
 
