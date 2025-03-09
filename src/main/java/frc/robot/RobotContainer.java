@@ -223,11 +223,6 @@ public class RobotContainer {
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
-    Trigger trigger = new Trigger( () ->
-    {
-      return ((!mArm.isSetpointInitialled()) && (mArm.getSetpointState() != null) && (!mArm.isAtState(mArm.getSetpointState())) && !(mElevatorSubsystem.isSetpointInitialled()));
-    });
-    trigger.onTrue(new DeferredCommand(() -> new ArmReachAngle(mArm, mArm.getSetpointState()), Set.of(mArm)));
 
 
 
@@ -280,7 +275,7 @@ public class RobotContainer {
     SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
 
-    double degreeOffset = 180;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
+    double degreeOffset = 0;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     return auto;
     // return null;

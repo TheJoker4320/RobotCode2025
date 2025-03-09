@@ -124,7 +124,7 @@ public final class Constants {
     public static final double ARM_KA = 1.63256;  
     public static final double ARM_KS = 0.3766;
 
-    public static final double ARM_KG_STAY = 0.1;
+    public static final double ARM_KG_STAY = 0.2;
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
