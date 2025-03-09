@@ -38,6 +38,7 @@ import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.json.simple.parser.ParseException;
 
@@ -57,6 +58,7 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -216,8 +218,6 @@ public class RobotContainer {
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
-
-
     // -------------- DRIVER BUTTONS -------------
 
     // Alignment buttons
@@ -263,10 +263,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_I");      // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("red_bott_JK");      // TODO: SET THE CORRECT AUTONOMOUS
     SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
 
-    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 0 : 180;
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Blue) ? 180 : 0;
     mPoseEstimatorSubsystem.resetGyroOffset(degreeOffset);
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
