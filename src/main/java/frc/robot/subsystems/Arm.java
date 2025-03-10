@@ -99,7 +99,7 @@ public class Arm extends SubsystemBase {
   public void stopMotorInPlace() {
     //TODO: check if arm stays in place
     mSetpointInitiallied = false;
-    double vol = ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Radians));
+    double vol = ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Degrees));
     SmartDashboard.putNumber("stop voltage", vol);
     if (vol >= 0 || vol <= ArmConstants.ARM_KG_STAY)
       mMotor.setVoltage(vol);

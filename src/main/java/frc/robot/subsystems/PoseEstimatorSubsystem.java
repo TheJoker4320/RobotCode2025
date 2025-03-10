@@ -7,36 +7,17 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Supplier;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.Waypoint;
-
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
-import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.LimelightHelpers;
-import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
@@ -64,8 +45,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     mField = new Field2d();
     SmartDashboard.putData(mField);
 
-    mGyroOffset = 180;    // TODO: Set this value as correct one (180 for red, 0 for blue!!)
-
     mSwerve = swerve;
     mPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveSubsystemConstants.DRIVE_KINEMATICS, 
@@ -75,8 +54,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       PoseEstimatorConstants.STATE_STANDARD_DEVIATIONS,
       PoseEstimatorConstants.VISION_STANDARD_DEVIATIONS
     );
-
     mPosePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
+  }
+
+  public void resetGyroOffset(double newOffset) {
+    mGyroOffset = newOffset;
   }
 
   private Rotation2d getRobotRotation() {

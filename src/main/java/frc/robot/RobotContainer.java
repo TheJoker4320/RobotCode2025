@@ -85,7 +85,7 @@ public class RobotContainer {
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
   private SendableChooser<Command> mAutoChooser = new SendableChooser<>();
-  private final BallCollector mBallCollector = BallCollector.getInstance();
+    private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -95,6 +95,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem);
+    SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
 
     RobotConfig config = null;
     try{
@@ -117,7 +118,6 @@ public class RobotContainer {
       () -> { return false; }, 
       mSwerveSubsystem
     );
-
     
     mAutoChooser = AutoBuilder.buildAutoChooser();
     // mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
@@ -127,7 +127,6 @@ public class RobotContainer {
     // mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
     // mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
-
 
     SmartDashboard.putData(mAutoChooser);
 
@@ -287,8 +286,6 @@ public class RobotContainer {
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
-
-
     // -------------- DRIVER BUTTONS -------------
 
     // Climber buttons
@@ -341,14 +338,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_I");      // TODO: SET THE CORRECT AUTONOMOUS
-    SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
-    mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
+    PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();     // TODO: SET THE CORRECT AUTONOMOUS
 
-    double degreeOffset = 0;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
+    double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;
+    mPoseEstimatorSubsystem.resetGyroOffset(degreeOffset);
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
+    mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
     return auto;
     // return null;
   }
 }
-              
