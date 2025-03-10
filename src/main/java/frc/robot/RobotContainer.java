@@ -118,6 +118,7 @@ public class RobotContainer {
       () -> { return false; }, 
       mSwerveSubsystem
     );
+    
     mAutoChooser = AutoBuilder.buildAutoChooser();
     // mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
     // mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
@@ -126,7 +127,10 @@ public class RobotContainer {
     // mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
     // mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
+
     SmartDashboard.putData(mAutoChooser);
+
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -142,40 +146,104 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+    // -------------- AUTOMATED CONTROL --------------
+
+    Command adjustCoralGripCommand = new ParallelRaceGroup(
+      new ManipulatorCollectCoral(mManipulator),
+      new WaitCommand(1.25)
+    );
+    Trigger adjustCoralGripTrigger = new Trigger(
+      () -> {
+        boolean limitSwitch = mManipulator.getCoralSwitchState();
+        boolean collected = mManipulator.getCollectedCoral();
+
+        // When the limit switch is not pressed but we have collected - meaning we collected a coral and havent removed it yet than we return true
+        return ((!limitSwitch) && collected);   
+      }
+    );
+    adjustCoralGripTrigger.onTrue(adjustCoralGripCommand);
+
+    Command adjustBallGripCommand = new ParallelRaceGroup(
+      new ManipulatorCollectBall(mManipulator),
+      new WaitCommand(1.25)
+    );
+    Trigger adjustBallGripTrigger = new Trigger(
+      () -> {
+        boolean limitSwitch = mManipulator.getBallSwitchState();
+        boolean collected = mManipulator.getCollectedBall();
+
+        return ((!limitSwitch) && collected);
+      }
+    );
+    adjustBallGripTrigger.onTrue(adjustBallGripCommand);
     // -------------- OPERATOR BUTTONS --------------
 
-    //Climber buttons
-    POVButton ClimbButton = new POVButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
-     ClimbButton.whileTrue(new Climb(mClimber));
-
-     POVButton CloseClimbButton = new POVButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
-     CloseClimbButton.whileTrue(new CloseClimber(mClimber));
-
-
-    //Arm Elevator Sequence Buttons
-
     // command for preparing to collect a coral
-    Command prepareIntakeSequenceCommand = new SequentialCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.INTAKE));
+    Command prepareIntakeSequenceCommand = new SequentialCommandGroup(
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
+      new ArmReachAngle(mArm, ArmState.INTAKE)
+    );
     // command for collecting a coral
-    Command intakeSequenceCommand = new SequentialCommandGroup(new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), new ManipulatorCollectCoral(mManipulator)), new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE));
+    Command intakeSequenceCommand = new SequentialCommandGroup(
+      new ParallelCommandGroup(
+        new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), 
+        new ManipulatorCollectCoral(mManipulator)
+      ), 
+      new InstantCommand(() -> mManipulator.setCollectedCoral()), 
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
+      new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE)
+    );
     // command for adjusting elevator and arm for l1
-    Command l1Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), new ArmReachAngle(mArm, ArmState.L1));
+    Command l1Command = new ParallelCommandGroup(
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.L1), 
+      new ArmReachAngle(mArm, ArmState.L1)
+    );
     // command for adjusting elevator and arm for l2
-    Command l2Command = new ParallelCommandGroup(new ElevatorReachL2(mElevatorSubsystem, mArm), new ArmReachAngle(mArm, ArmState.L32));
+    Command l2Command = new ParallelCommandGroup(
+      new ElevatorReachL2(mElevatorSubsystem, mArm), 
+      new ArmReachAngle(mArm, ArmState.L32)
+    );
     // command for adjusting elevator and arm for l3
-    Command l3Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), new ArmReachAngle(mArm, ArmState.L32));
+    Command l3Command = new ParallelCommandGroup(
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3), 
+      new ArmReachAngle(mArm, ArmState.L32)
+    );
     // command for adjusting elevator and arm for l4
-    Command l4Command = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), new ArmReachAngle(mArm, ArmState.L4));
+    Command l4Command = new ParallelCommandGroup(
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), 
+      new ArmReachAngle(mArm, ArmState.L4)
+    );
     // command for ejecting a coral
-    Command placeCoralCommand = new ParallelCommandGroup(new ArmPlaceCoral(mArm), new ManipulatorCoralEject(mManipulator));
+    Command placeCoralCommand = new SequentialCommandGroup(
+      new InstantCommand(() -> mManipulator.setPlacedCoral()), 
+      new ParallelCommandGroup(
+        new ArmPlaceCoral(mArm), 
+        new ManipulatorCoralEject(mManipulator)
+      )
+    );
     // command for reaching a ball placed on l2
-    Command reachL2BallCommand = new SequentialCommandGroup(new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL));
+    Command reachL2BallCommand = new SequentialCommandGroup(
+      new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), 
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL)
+    );
     // command for reaching a ball placed on l3
-    Command reachL3BallCommand = new ParallelCommandGroup(new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), new ArmReachAngle(mArm, ArmState.L32_PRE_BALL));
+    Command reachL3BallCommand = new ParallelCommandGroup(
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), 
+      new ArmReachAngle(mArm, ArmState.L32_PRE_BALL)
+    );
     // command for collecting a ball
-    Command collectBallCommand = new ParallelCommandGroup(new ManipulatorCollectBall(mManipulator), new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE));
-    //command for ejecting a ball from the manipulator
-    Command ejectManipulatorBallCommand = new ManipulatorBallEject(mManipulator);
+    Command collectBallCommand = new SequentialCommandGroup(
+    new ParallelCommandGroup(
+      new ManipulatorCollectBall(mManipulator), 
+      new ArmReachAngle(mArm, ArmState.L32_BALL_INTAKE)
+    ),
+    new InstantCommand(() -> mManipulator.setCollectedBall()) 
+    );
+    // command for ejecting a ball from the manipulator
+    Command ejectManipulatorBallCommand = new SequentialCommandGroup(
+      new ManipulatorBallEject(mManipulator),
+      new InstantCommand(() -> mManipulator.setPlacedBall())
+    );
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -220,24 +288,31 @@ public class RobotContainer {
 
     // -------------- DRIVER BUTTONS -------------
 
+    // Climber buttons
+    POVButton ClimbButton = new POVButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
+    ClimbButton.whileTrue(new Climb(mClimber));
+   
+    POVButton CloseClimbButton = new POVButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
+    CloseClimbButton.whileTrue(new CloseClimber(mClimber));
+
     // Alignment buttons
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
     Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
 
     JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
     JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
-    slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER), mSwerveSubsystem));
+    slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER)));
     JoystickButton mediumSwerveButton = new JoystickButton(m_driverController, OperatorConstants.MEDIUM_SPEED_SWERVE_BUTTON);   // Artifically slows down the robot (not too much) by multiplying the drivers input (*0.7)
-    mediumSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.MEDIUM_INPUT_MULTIPLIER), mSwerveSubsystem));
+    mediumSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.MEDIUM_INPUT_MULTIPLIER)));
     JoystickButton regularSwerveButton = new JoystickButton(m_driverController, OperatorConstants.REGULAR_SPEED_SWERVE_BUTTON); // Sets the robots speed to regular (i.e. resets the input multiplier)
-    regularSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER), mSwerveSubsystem));
+    regularSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER)));
 
     JoystickButton resetHeadingButton = new JoystickButton(m_driverController, OperatorConstants.RESET_HEADING_SWERVE_BUTTON); // Resets the robot heading - use when the gyro reports incorrect values
     resetHeadingButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.resetHeading(0), mSwerveSubsystem));

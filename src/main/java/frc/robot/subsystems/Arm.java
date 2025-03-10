@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -19,8 +20,10 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.ArmReachAngle;
 import frc.robot.utils.ArmState;
 import frc.robot.utils.Configs.ArmConfigs;
 
@@ -41,7 +44,6 @@ public class Arm extends SubsystemBase {
   }
 
   private Arm() {
-    SmartDashboard.putBoolean("Reached state", false);
     mMotor = new TalonFX(ArmConstants.MOTOR_ID);
     mEncoder = new DutyCycleEncoder(ArmConstants.ENCODER_CHANNEL);
     mMotor.getConfigurator().apply(ArmConfigs.ARM_TALONFX_CONFIG);
@@ -88,11 +90,9 @@ public class Arm extends SubsystemBase {
 
   public boolean isAtState(ArmState state) {
     if (Math.abs(state.angle() - getCurrentAngle()) < ArmConstants.ARM_POSITION_TOLERANCE) {
-      SmartDashboard.putBoolean("Reached state", true);
       mSetpointInitiallied = false;
       return true;
     }
-    SmartDashboard.putBoolean("Reached state", false);
     return false;
   }
 
@@ -107,6 +107,13 @@ public class Arm extends SubsystemBase {
       mMotor.set(0);
   }
 
+  public ArmState getSetpointState(){
+    return mSetpointState;
+  }
+
+  public boolean isSetpointInitialled(){
+    return mSetpointInitiallied;
+  }
 
   @Override
   public void periodic() {
@@ -130,6 +137,11 @@ public class Arm extends SubsystemBase {
     
     //if (mSetpointInitiallied && isAtState(mSetpointState))
     //  mSetpointInitiallied = false;
+    SmartDashboard.putNumber("ARM", getCurrentAngle());
+    SmartDashboard.putNumber("ARM_O", mMotor.get());
+    SmartDashboard.putNumber("ARM_S", mSetpoint);
+    SmartDashboard.putNumber("ARM_AE", getAbsoluteEncoderValue());
+    SmartDashboard.putBoolean("Arm setpointInitialled", mSetpointInitiallied);
     verifyEncoderSync();
   }
 }

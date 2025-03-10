@@ -68,7 +68,12 @@ public class Elevator extends SubsystemBase {
 
   public void stopMotorInPlace() {
     mRightMotorController.set(0);
+    mSetpointInitiallied = false;
     //mRightMotorController.setVoltage(ElevatorConstants.ELEVATOR_S_CONSTANT + ElevatorConstants.ELEVATOR_G_CONSTANT);
+  }
+
+  public boolean isSetpointInitialled(){
+    return mSetpointInitiallied;
   }
 
   @Override
@@ -78,5 +83,6 @@ public class Elevator extends SubsystemBase {
       final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
     }
+    SmartDashboard.putBoolean("Elevator setpointInitialled", mSetpointInitiallied);
   }
 }
