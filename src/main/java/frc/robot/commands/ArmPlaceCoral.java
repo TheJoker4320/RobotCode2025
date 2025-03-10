@@ -32,7 +32,8 @@ public class ArmPlaceCoral extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mArm.stopMotorInPlace();
+    if (!interrupted)
+      mArm.stopMotorInPlace();
   }
 
   // Returns true when the command should end.

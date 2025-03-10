@@ -45,6 +45,7 @@ public class Swerve extends SubsystemBase {
 
         mGyro = new Pigeon2(SwerveSubsystemConstants.PIGEON_DEVICE_ID);                             
         mGyro.getConfigurator().apply(new Pigeon2Configuration());
+        mGyro.setYaw(180);
 
         mOdometry = new SwerveDriveOdometry(
             SwerveSubsystemConstants.DRIVE_KINEMATICS,                                                                        
@@ -56,6 +57,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void drive(double xSpeed, double ySpeed, double rot) {
+        SmartDashboard.putNumber("Mult", mInputMultiplier);
         double xSpeedCommand = xSpeed * mInputMultiplier;
         double ySpeedCommand = ySpeed * mInputMultiplier;
         double rotCommand = rot * mInputMultiplier;
@@ -171,9 +173,9 @@ public class Swerve extends SubsystemBase {
             getModulePositions()
         );
 
-        SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
-        SmartDashboard.putNumber("ROT", mGyro.getRotation2d().getDegrees());
-        SmartDashboard.putBoolean("FIeld Relative", mFieldRelative);
+        //SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
+        //SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
+        //SmartDashboard.putNumber("ROT", mGyro.getRotation2d().getDegrees());
+        //SmartDashboard.putBoolean("FIeld Relative", mFieldRelative);
     }
 }
