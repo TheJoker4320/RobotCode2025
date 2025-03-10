@@ -20,8 +20,12 @@ import frc.robot.utils.Configs.ManipulatorConfigs;
 public class Manipulator extends SubsystemBase {
   private final SparkMax mCoralMotor;
   private final SparkMax mBallMotor;
+  
   private final DigitalInput mBallSwitch;
   private final DigitalInput mCoralSwitch;
+  private boolean mCollectedCoral;               // Holds true if collected coral, holds false if placed coral - holds the value we should expect from the limit switch
+  private boolean mCollectedBall;
+
   private static Manipulator mInstance;
 
   public static Manipulator getInstance() {
@@ -32,12 +36,17 @@ public class Manipulator extends SubsystemBase {
   }
 
   private Manipulator() {
-      mCoralMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
-      mBallMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
-      mBallSwitch = new DigitalInput(ManipulatorConstants.BALL_SWITCH_PORT);
-      mCoralSwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
-      mCoralMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      mBallMotor.configure(ManipulatorConfigs.BALL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mCollectedCoral = false;
+    mCollectedBall = false;  
+
+    mCoralMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
+    mBallMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
+
+    mBallSwitch = new DigitalInput(ManipulatorConstants.BALL_SWITCH_PORT);
+    mCoralSwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
+      
+    mCoralMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mBallMotor.configure(ManipulatorConfigs.BALL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public boolean getBallSwitchState() {
@@ -46,6 +55,25 @@ public class Manipulator extends SubsystemBase {
 
   public boolean getCoralSwitchState() {
     return !mCoralSwitch.get();
+  }
+
+  public void setCollectedCoral() {
+    mCollectedCoral = true;
+  }
+  public void setPlacedCoral() {
+    mCollectedCoral = false;
+  }
+  public boolean getCollectedCoral() {
+    return mCollectedCoral;
+  }
+  public void setCollectedBall() {
+    mCollectedBall = true;
+  }
+  public void setPlacedBall() {
+    mCollectedBall = false;
+  }
+  public boolean getCollectedBall() {
+    return mCollectedBall;
   }
 
   public void collectBall(){
