@@ -37,9 +37,9 @@ public final class Constants {
     // public static final int CLOSE_CLIMBER_BUTTON = 7; //The Minus Button
     // public static final int CLIMBER_BUTTON = 8; //The Plus button
 
-    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
-    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
-    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kY.value;
+    public static final int LOW_SPEED_SWERVE_BUTTON = XboxController.Button.kB.value;
+    public static final int MEDIUM_SPEED_SWERVE_BUTTON = XboxController.Button.kA.value;
+    public static final int REGULAR_SPEED_SWERVE_BUTTON = XboxController.Button.kX.value;
     public static final int RESET_HEADING_SWERVE_BUTTON = 7; //minus #TODO: Check if actually this button
     public static final int REFERENCE_FRAME_SWERVE_BUTTON = 8; //plus
 
@@ -111,12 +111,12 @@ public final class Constants {
     public static final int ENCODER_CHANNEL = 0;
     public static final int MOTOR_ID = 13;
 
-    public static final double ARM_POSITION_TOLERANCE = 1;  // in degrees
+    public static final double ARM_POSITION_TOLERANCE = 3;  // in degrees
     public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
     public static final double ARM_ENCODER_OFFSET = -129.61616;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
-    public static final double ARM_KP = 41.2604;
+    public static final double ARM_KP = 30;
     public static final double ARM_KI = 0;
     public static final double ARM_KD = 11.88016;
     public static final double ARM_KG = 0.29506;  
@@ -124,7 +124,7 @@ public final class Constants {
     public static final double ARM_KA = 1.63256;  
     public static final double ARM_KS = 0.3766;
 
-    public static final double ARM_KG_STAY = 0.1;
+    public static final double ARM_KG_STAY = 0.2;
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
@@ -142,8 +142,8 @@ public final class Constants {
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MINIMUM_ARM_ANGLE = -87;       // min - in degrees
-    public static final double MAXIMUM_ARM_ANGLE = 70;        // max - in degrees
+    public static final double MINIMUM_ARM_ANGLE = -88;       // min - in degrees
+    public static final double MAXIMUM_ARM_ANGLE = 73;        // max - in degrees
 
     public static final double MM_CRUISE_VELOCITY = 250;  // degrees per second
     public static final double MM_ACCELERATION = 500;     // degrees per second^2
@@ -171,7 +171,7 @@ public final class Constants {
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.75; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = -0.1;
+    public static final double BALL_EJECT_SPEED = -0.5;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
   
@@ -192,7 +192,7 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double PRE_INTAKE_POSITION = 0.55;
+    public static final double PRE_INTAKE_POSITION = 0.59;
     public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
     public static final double L2_BALL_POSITION = 0.475;
@@ -240,10 +240,10 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double FAR_REEF_X_OFFSET = -0.67;
-    public static final double CLOSE_REEF_X_OFFSET = -0.5;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
-    public static final double REEF_Y_RIGHT_OFFSET = -0.19;   // The distance between the center of the april tag and reef branch
-    public static final double REEF_Y_LEFT_OFFSET = 0.15;     // The distance between the center of the april tag and reef branch
+    public static final double FAR_REEF_X_OFFSET = -0.48;
+    public static final double CLOSE_REEF_X_OFFSET = -0.32;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_Y_RIGHT_OFFSET = -0.24;   // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
 
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
@@ -255,8 +255,8 @@ public final class Constants {
 
     public static final double MAX_SPEED = 2;
     public static final double MAX_ACCELERATION = 2;
-    public static final double MAX_ANGULAR_SPEED = 2 * Math.PI;
-    public static final double MAX_ANGULAR_ACCELERATION = 4 * Math.PI;
+    public static final double MAX_ANGULAR_SPEED = 1.5 * Math.PI;
+    public static final double MAX_ANGULAR_ACCELERATION = 3 * Math.PI;
     
     static {
       REEF_APRIL_TAG_POSITIONS.put(6, new Pose2d(13.474, 3.306, Rotation2d.fromDegrees(300)));
@@ -341,21 +341,21 @@ public final class Constants {
   }
 
   public static class AutonomousConstants {
-    public static final double TRANSLATION_P_CONSTANT = 3.141958;
+    public static final double TRANSLATION_P_CONSTANT = 2.843395833;
     public static final double TRANSLATION_I_CONSTANT = 0;
-    public static final double TRANSLATION_D_CONSTANT = 0.36194;
+    public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 
-    public static final double ROTATION_P_CONSTANT = 3.33333;
+    public static final double ROTATION_P_CONSTANT = 2.155166667;
     public static final double ROTATION_I_CONSTANT = 0;
-    public static final double ROTATION_D_CONSTANT = 0.436342;
+    public static final double ROTATION_D_CONSTANT = 0.087583333;
 
     // These constants are for calculating MOI - there is no use in
     // the code for them
-    public static final double TRANSLATION_KA = 0.363768;
-    public static final double ANGULAR_KA = 0.46058;
+    public static final double TRANSLATION_KA = 0.26435;
+    public static final double ANGULAR_KA = 0.20065;
     public static final double MOI_TRACK_WIDTH = Math.max(SwerveSubsystemConstants.TRACK_WIDTH, SwerveSubsystemConstants.WHEEL_BASE);
-    public static final double ROBOT_WEIGHT = 36;   // This value may not be correct - this is a rough estimate
+    public static final double ROBOT_WEIGHT = 56;   // This value may not be correct - this is a rough estimate
   
-    public static final double ESTIMATED_MOI = ROBOT_WEIGHT * (MOI_TRACK_WIDTH / 2) * (ANGULAR_KA / TRANSLATION_KA);    // Its 15.38356
+    public static final double ESTIMATED_MOI = ROBOT_WEIGHT * (MOI_TRACK_WIDTH / 2) * (ANGULAR_KA / TRANSLATION_KA);    // Its 14.34569699
   }
 }

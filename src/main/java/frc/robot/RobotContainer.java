@@ -37,6 +37,9 @@ import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType;
 
+import java.io.IOException;
+import java.util.Set;
+
 import org.json.simple.parser.ParseException;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -55,6 +58,7 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -80,8 +84,8 @@ public class RobotContainer {
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
-  private final SendableChooser<Command> mAutoChooser = new SendableChooser<>();
-    private final BallCollector mBallCollector = BallCollector.getInstance();
+  private SendableChooser<Command> mAutoChooser = new SendableChooser<>();
+  private final BallCollector mBallCollector = BallCollector.getInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Climber mClimber = Climber.getInstance();
@@ -114,13 +118,19 @@ public class RobotContainer {
       mSwerveSubsystem
     );
 
-    mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
-    mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
-    mAutoChooser.addOption("redBott", AutoBuilder.buildAuto("red_bott_J"));
-    mAutoChooser.addOption("bluetop", AutoBuilder.buildAuto("blue_top_J"));
-    mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
-    mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
+    
+    mAutoChooser = AutoBuilder.buildAutoChooser();
+    // mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
+    // mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
+    // mAutoChooser.addOption("redBott", AutoBuilder.buildAuto("red_bott_J"));
+    // mAutoChooser.addOption("bluetop", AutoBuilder.buildAuto("blue_top_J"));
+    // mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
+    // mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
+
+
+    SmartDashboard.putData(mAutoChooser);
+
 
     // Configure the trigger bindings
     configureBindings();
@@ -277,6 +287,8 @@ public class RobotContainer {
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
+
+
     // -------------- DRIVER BUTTONS -------------
 
     // Climber buttons
@@ -288,22 +300,22 @@ public class RobotContainer {
 
     // Alignment buttons
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseRightReef());
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
     Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.alignToCloseLeftReef());
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
 
     JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarRightReef());
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
     JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.alignToFarLeftReef());
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
-    slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER), mSwerveSubsystem));
+    slowSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.SLOW_INPUT_MULTIPLIER)));
     JoystickButton mediumSwerveButton = new JoystickButton(m_driverController, OperatorConstants.MEDIUM_SPEED_SWERVE_BUTTON);   // Artifically slows down the robot (not too much) by multiplying the drivers input (*0.7)
-    mediumSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.MEDIUM_INPUT_MULTIPLIER), mSwerveSubsystem));
+    mediumSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.MEDIUM_INPUT_MULTIPLIER)));
     JoystickButton regularSwerveButton = new JoystickButton(m_driverController, OperatorConstants.REGULAR_SPEED_SWERVE_BUTTON); // Sets the robots speed to regular (i.e. resets the input multiplier)
-    regularSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER), mSwerveSubsystem));
+    regularSwerveButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.setInputMultiplier(SwerveSubsystemConstants.REGULAR_INPUT_MULTIPLIER)));
 
     JoystickButton resetHeadingButton = new JoystickButton(m_driverController, OperatorConstants.RESET_HEADING_SWERVE_BUTTON); // Resets the robot heading - use when the gyro reports incorrect values
     resetHeadingButton.onTrue(new InstantCommand(() -> mSwerveSubsystem.resetHeading(0), mSwerveSubsystem));
@@ -333,7 +345,7 @@ public class RobotContainer {
     SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
 
-    double degreeOffset = 180;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
+    double degreeOffset = 0;      // TODO: Set the correct gyro offset, 180 for red and 0 for blue
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     return auto;
     // return null;

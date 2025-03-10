@@ -146,7 +146,7 @@ public final class Configs {
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
     }
-   public static class ArmConfigs {
+    public static class ArmConfigs {
         public static TalonFXConfiguration ARM_TALONFX_CONFIG = new TalonFXConfiguration();
 
         static {
