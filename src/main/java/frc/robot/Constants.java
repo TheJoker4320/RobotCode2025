@@ -58,8 +58,8 @@ public final class Constants {
     public static final int INTAKE_PREPARE_BUTTON = PS4Controller.Button.kTriangle.value;
     public static final int PLACE_CORAL_BUTTON = PS4Controller.Button.kCircle.value;
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
-    public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
-    public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
+    public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
+    public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
     public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kL3.value;
     
@@ -129,7 +129,7 @@ public final class Constants {
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
     public static final double MIN_ANGLE_L2_HEIGHT = -0;
-    public static final double INTAKE_ANGLE = -85;
+    public static final double INTAKE_ANGLE = -86;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
     public static final double L4_ANGLE = 67;
     public static final double L32_ANGLE = 69;

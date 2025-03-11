@@ -179,9 +179,12 @@ public class RobotContainer {
     // -------------- OPERATOR BUTTONS --------------
 
     // command for preparing to collect a coral
-    Command prepareIntakeSequenceCommand = new SequentialCommandGroup(
+    Command prepareIntakeSequenceCommand = new ParallelCommandGroup(
       new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
-      new ArmReachAngle(mArm, ArmState.INTAKE)
+      new SequentialCommandGroup(
+        new WaitCommand(0.05),
+        new ArmReachAngle(mArm, ArmState.INTAKE)
+      )
     );
     // command for collecting a coral
     Command intakeSequenceCommand = new SequentialCommandGroup(
