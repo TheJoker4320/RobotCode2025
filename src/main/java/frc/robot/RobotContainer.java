@@ -119,16 +119,7 @@ public class RobotContainer {
       mSwerveSubsystem
     );
     
-    mAutoChooser = AutoBuilder.buildAutoChooser();
-    // mAutoChooser.addOption("redTop", AutoBuilder.buildAuto("red_top_E"));
-    // mAutoChooser.addOption("redMid", AutoBuilder.buildAuto("red_mid_G"));
-    // mAutoChooser.addOption("redBott", AutoBuilder.buildAuto("red_bott_J"));
-    // mAutoChooser.addOption("bluetop", AutoBuilder.buildAuto("blue_top_J"));
-    // mAutoChooser.addOption("blueMid", AutoBuilder.buildAuto("blue_mid_G"));
-    // mAutoChooser.addOption("blueBott", AutoBuilder.buildAuto("blue_bott_E"));
-    mAutoChooser.addOption("Wait", new WaitCommand(0.1));
 
-    SmartDashboard.putData(mAutoChooser);
 
 
     // Configure the trigger bindings
@@ -150,7 +141,7 @@ public class RobotContainer {
 
     Command adjustCoralGripCommand = new ParallelRaceGroup(
       new ManipulatorCollectCoral(mManipulator),
-      new WaitCommand(1.25)
+      new WaitCommand(0.5)
     );
     Trigger adjustCoralGripTrigger = new Trigger(
       () -> {
@@ -188,7 +179,8 @@ public class RobotContainer {
     );
     // command for collecting a coral
     Command intakeSequenceCommand = new SequentialCommandGroup(
-      new ParallelCommandGroup(
+      new ParallelRaceGroup(
+        new WaitCommand(0.5),
         new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), 
         new ManipulatorCollectCoral(mManipulator)
       ), 
@@ -275,6 +267,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
     NamedCommands.registerCommand("intake", intakeSequenceCommand);
 
+    mAutoChooser = AutoBuilder.buildAutoChooser();
+    mAutoChooser.addOption("Wait", new WaitCommand(0.1));
+
+    SmartDashboard.putData(mAutoChooser);
     POVButton openBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.OPEN_BALL_POV_BUTTON);
     POVButton closeBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.CLOSE_BALL_POV_BUTTON);
     POVButton collectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.COLLECT_POV_BUTTON);
@@ -341,7 +337,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();     // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("red_mid_G");     // TODO: SET THE CORRECT AUTONOMOUS
+    // PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;
     mPoseEstimatorSubsystem.resetGyroOffset(degreeOffset);

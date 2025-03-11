@@ -171,7 +171,7 @@ public final class Constants {
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = 0.75; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = -0.5;
+    public static final double BALL_EJECT_SPEED = -0.8;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
   

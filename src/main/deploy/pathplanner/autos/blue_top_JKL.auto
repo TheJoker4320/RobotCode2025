@@ -24,6 +24,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "reachL4"
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
@@ -126,6 +132,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "blue_topFeeder_stopK"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -142,7 +154,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "blue_topFeeder_K"
+                        "pathName": "blue_stopK_K"
                       }
                     }
                   ]
@@ -153,9 +165,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "race",
                       "data": {
-                        "name": "intake"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -168,6 +193,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "reachL4"
           }
         },
         {
@@ -300,9 +331,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "race",
                       "data": {
-                        "name": "intake"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.4
+                            }
+                          }
+                        ]
                       }
                     },
                     {
