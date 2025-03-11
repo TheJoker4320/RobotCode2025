@@ -101,7 +101,7 @@ public class Arm extends SubsystemBase {
     mSetpointInitiallied = false;
     double vol = ArmConstants.ARM_KG_STAY * Math.cos(Degrees.of(getCurrentAngle()).in(Degrees));
     SmartDashboard.putNumber("stop voltage", vol);
-    if (vol >= 0 || vol <= ArmConstants.ARM_KG_STAY)
+    if (vol >= 0 && vol <= ArmConstants.ARM_KG_STAY)
       mMotor.setVoltage(vol);
     else
       mMotor.set(0);
