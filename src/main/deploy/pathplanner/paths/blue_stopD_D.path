@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.894,
-        "y": 1.525
+        "x": 3.012,
+        "y": 1.728
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7274265175090586,
-        "y": 1.3579663509566924
+        "x": 3.7335858585858586,
+        "y": 2.449558080808081
       },
       "isLocked": false,
       "linkedName": null
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 58.90026488893011
   },
   "reversed": false,
   "folder": "BlueFromFeeder",

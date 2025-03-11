@@ -24,12 +24,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "reachL4"
-          }
-        },
-        {
           "type": "race",
           "data": {
             "commands": [
@@ -128,7 +122,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 1.75
           }
         },
         {
@@ -165,22 +159,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.4
-                            }
-                          }
-                        ]
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake"
                       }
                     },
                     {
@@ -193,12 +180,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "reachL4"
           }
         },
         {
@@ -257,25 +238,6 @@
                 }
               },
               {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.25
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "prepareIntake"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
                 "type": "deadline",
                 "data": {
                   "commands": [
@@ -293,6 +255,25 @@
                     }
                   ]
                 }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.25
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "prepareIntake"
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -300,7 +281,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 1.75
           }
         },
         {
@@ -331,22 +312,9 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.4
-                            }
-                          }
-                        ]
+                        "name": "intake"
                       }
                     },
                     {
@@ -359,12 +327,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "reachL4"
           }
         },
         {

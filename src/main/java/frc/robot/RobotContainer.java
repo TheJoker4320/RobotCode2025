@@ -17,7 +17,6 @@ import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
-import frc.robot.commands.ManipulatorCoralEjectTeleop;
 import frc.robot.commands.BallCollectorCommands.CloseBallCollector;
 import frc.robot.commands.BallCollectorCommands.CollectBallGround;
 import frc.robot.commands.BallCollectorCommands.EjectBallGround;
@@ -36,32 +35,21 @@ import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.SwerveModuleType;
-
-import java.io.IOException;
-import java.util.Set;
-
-import org.json.simple.parser.ParseException;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.FileVersionException;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -261,11 +249,11 @@ public class RobotContainer {
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
 
-    NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
-    NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
-    NamedCommands.registerCommand("reachL4", l4Command);
-    NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
-    NamedCommands.registerCommand("intake", intakeSequenceCommand);
+    NamedCommands.registerCommand("release", (new PrintCommand("called release")).andThen(new ManipulatorCoralEject(mManipulator)));
+    NamedCommands.registerCommand("armPlaceCoral", (new PrintCommand("called armPlaceCoral")).andThen(new ArmPlaceCoral(mArm)));
+    NamedCommands.registerCommand("reachL4", (new PrintCommand("called reachL4")).andThen(l4Command));
+    NamedCommands.registerCommand("prepareIntake", (new PrintCommand("called prepareIntake")).andThen(prepareIntakeSequenceCommand));
+    NamedCommands.registerCommand("intake", (new PrintCommand("called intake")).andThen(intakeSequenceCommand));
 
     mAutoChooser = AutoBuilder.buildAutoChooser();
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
@@ -337,7 +325,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("red_mid_G");     // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_JKL");     // TODO: SET THE CORRECT AUTONOMOUS
     // PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;
