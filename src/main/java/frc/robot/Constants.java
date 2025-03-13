@@ -111,9 +111,9 @@ public final class Constants {
     public static final int ENCODER_CHANNEL = 0;
     public static final int MOTOR_ID = 13;
 
-    public static final double ARM_POSITION_TOLERANCE = 3;  // in degrees
+    public static final double ARM_POSITION_TOLERANCE = 3.5;  // in degrees
     public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
-    public static final double ARM_ENCODER_OFFSET = -129.61616;   // in degrees
+    public static final double ARM_ENCODER_OFFSET = -129.61616 - 1.3;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
     public static final double ARM_KP = 30;
@@ -129,7 +129,7 @@ public final class Constants {
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
     public static final double MIN_ANGLE_L2_HEIGHT = -0;
-    public static final double INTAKE_ANGLE = -86;
+    public static final double INTAKE_ANGLE = -88;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
     public static final double L4_ANGLE = 67;
     public static final double L32_ANGLE = 69;
@@ -142,7 +142,7 @@ public final class Constants {
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MINIMUM_ARM_ANGLE = -88;       // min - in degrees
+    public static final double MINIMUM_ARM_ANGLE = -90;       // min - in degrees
     public static final double MAXIMUM_ARM_ANGLE = 73;        // max - in degrees
 
     public static final double MM_CRUISE_VELOCITY = 250;  // degrees per second

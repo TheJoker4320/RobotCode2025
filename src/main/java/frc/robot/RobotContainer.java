@@ -127,20 +127,20 @@ public class RobotContainer {
 
     // -------------- AUTOMATED CONTROL --------------
 
-    Command adjustCoralGripCommand = new ParallelRaceGroup(
-      new ManipulatorCollectCoral(mManipulator),
-      new WaitCommand(0.5)
-    );
-    Trigger adjustCoralGripTrigger = new Trigger(
-      () -> {
-        boolean limitSwitch = mManipulator.getCoralSwitchState();
-        boolean collected = mManipulator.getCollectedCoral();
+    // Command adjustCoralGripCommand = new ParallelRaceGroup(
+    //   new ManipulatorCollectCoral(mManipulator),
+    //   new WaitCommand(0.5)
+    // );
+    // Trigger adjustCoralGripTrigger = new Trigger(
+    //   () -> {
+    //     boolean limitSwitch = mManipulator.getCoralSwitchState();
+    //     boolean collected = mManipulator.getCollectedCoral();
 
-        // When the limit switch is not pressed but we have collected - meaning we collected a coral and havent removed it yet than we return true
-        return ((!limitSwitch) && collected);   
-      }
-    );
-    adjustCoralGripTrigger.onTrue(adjustCoralGripCommand);
+    //     // When the limit switch is not pressed but we have collected - meaning we collected a coral and havent removed it yet than we return true
+    //     return ((!limitSwitch) && collected);   
+    //   }
+    // );
+    // adjustCoralGripTrigger.onTrue(adjustCoralGripCommand);
 
     Command adjustBallGripCommand = new ParallelRaceGroup(
       new ManipulatorCollectBall(mManipulator),
@@ -249,11 +249,11 @@ public class RobotContainer {
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
 
-    NamedCommands.registerCommand("release", (new PrintCommand("called release")).andThen(new ManipulatorCoralEject(mManipulator)));
-    NamedCommands.registerCommand("armPlaceCoral", (new PrintCommand("called armPlaceCoral")).andThen(new ArmPlaceCoral(mArm)));
-    NamedCommands.registerCommand("reachL4", (new PrintCommand("called reachL4")).andThen(l4Command));
-    NamedCommands.registerCommand("prepareIntake", (new PrintCommand("called prepareIntake")).andThen(prepareIntakeSequenceCommand));
-    NamedCommands.registerCommand("intake", (new PrintCommand("called intake")).andThen(intakeSequenceCommand));
+    NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
+    NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
+    NamedCommands.registerCommand("reachL4", l4Command);
+    NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
+    NamedCommands.registerCommand("intake", intakeSequenceCommand);
 
     mAutoChooser = AutoBuilder.buildAutoChooser();
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
