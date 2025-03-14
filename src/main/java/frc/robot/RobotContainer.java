@@ -283,10 +283,19 @@ public class RobotContainer {
     CloseClimbButton.whileTrue(new CloseClimber(mClimber));
 
     // Alignment buttons
+    Command rightCloseAlign = new SequentialCommandGroup(
+      mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.PRE_CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET),
+      mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET)
+    );
+    Command leftCloseAlign = new SequentialCommandGroup(
+      mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.PRE_CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET),
+      mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET)
+    );
+
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
+    rightCloseAlignTrigger.whileTrue(rightCloseAlign);
     Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
+    leftCloseAlignTrigger.whileTrue(leftCloseAlign);
 
     JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
     rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
