@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
@@ -12,7 +13,7 @@ import frc.robot.utils.ArmState;
 public class ArmPlaceCoral extends Command {
   /** Creates a new ArmReachAngle. */
   private Arm mArm;
-  private ArmState mDesieredState;
+  private ArmState mDesiredState;
   public ArmPlaceCoral(Arm arm) {
     mArm = arm;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,7 +23,8 @@ public class ArmPlaceCoral extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mDesieredState = mArm.setPlaceCoralSetpoint();
+    mDesiredState = mArm.setPlaceCoralSetpoint();
+    DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " INITIALIZED");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,13 +36,18 @@ public class ArmPlaceCoral extends Command {
   public void end(boolean interrupted) {
     if (!interrupted)
       mArm.stopMotorInPlace();
+
+    if (interrupted)
+      DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " FINISHED INTERRUPTED");
+    else
+      DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " FINISHED");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (mDesieredState == null)
+    if (mDesiredState == null)
       return true;
-    return mArm.isAtState(mDesieredState);
+    return mArm.isAtState(mDesiredState);
   }
 }

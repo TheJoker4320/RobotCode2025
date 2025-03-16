@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
@@ -38,6 +39,8 @@ public class ElevatorReachL2 extends Command {
     mSetpointInitiallied = false;
     mTimer.start();
     mTimer.reset();
+
+    DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " INITIALIZED");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -56,6 +59,11 @@ public class ElevatorReachL2 extends Command {
   public void end(boolean interrupted) {
     mElevator.stopMotorInPlace();
     mTimer.stop();
+
+    if (interrupted)
+      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED INTERRUPTED");
+    else
+      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED");
   }
 
   // Returns true when the command should end.

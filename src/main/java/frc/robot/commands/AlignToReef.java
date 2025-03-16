@@ -10,8 +10,6 @@ import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
 
-import com.pathplanner.lib.config.PIDConstants;
-
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -19,11 +17,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -75,6 +72,8 @@ public class AlignToReef extends Command {
   public void initialize() {
     mDriveController.setTolerance(new Pose2d(0.01, 0.01, Rotation2d.fromDegrees(1)));
     mGoalPublisher.set(mGoal);
+
+    DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - GOAL:(%5.3f, %5.3f, %5.2f)", mGoal.getX(), mGoal.getY(), mGoal.getRotation().getDegrees()));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -87,7 +86,13 @@ public class AlignToReef extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Might be needed to put mSwerve.setX() here but im not sure - requires testing
+    mGoalPublisher.set(null);
+    Pose2d curPose = mPoseEstimator.getPose();
+    
+    if (interrupted)
+      DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - REACHED:(%5.3f, %5.3f, %5.2f) - INTERRUPTED", curPose.getX(), curPose.getY(), curPose.getRotation().getDegrees()));
+    else
+      DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - REACHED:(%5.3f, %5.3f, %5.2f)", curPose.getX(), curPose.getY(), curPose.getRotation().getDegrees()));
   }
 
   // Returns true when the command should end.
