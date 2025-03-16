@@ -80,11 +80,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
-  @Override
-  public void periodic() {
-    boolean rejectVisionUpdate = false;
+  public void updateVisionMeasurement(String cameraName) {
     LimelightHelpers.SetRobotOrientation(
-      "limelight", 
+      cameraName, 
       mSwerve.getRotation().getDegrees() + mGyroOffset, 
       0, 
       0, 
@@ -93,7 +91,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       0
     );
 
-    LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
+    boolean rejectVisionUpdate = false;
 
     // If the angular velocity is over 720, the estimated pose is going to be very innacurate so we "reject" the vision update
     if (poseEstimate != null) {
@@ -108,6 +107,12 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
       }
     }
+  }
+
+  @Override
+  public void periodic() {
+    updateVisionMeasurement("limelight2");
+    updateVisionMeasurement("limelight2+");
 
     mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
 

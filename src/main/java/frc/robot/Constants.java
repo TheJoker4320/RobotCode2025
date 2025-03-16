@@ -235,8 +235,8 @@ public final class Constants {
   public static class PoseEstimatorConstants {
     // The larger the following values are the less the pose estimator trusts the measurements - if we see 
     // large ambiguity increase the values, if we see high precision than decrease the values
-    public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));      // TODO: Calibrate values
-    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.7, 0.7, Units.degreesToRadians(15));      // These values are most likely too high - should be tested, TODO: Calibrate values
+    public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));
+    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.35, 0.35, Units.degreesToRadians(999999999));      // These values are most likely too high - should be tested
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
