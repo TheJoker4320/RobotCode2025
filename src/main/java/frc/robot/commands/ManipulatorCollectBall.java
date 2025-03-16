@@ -34,12 +34,12 @@ public class ManipulatorCollectBall extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mManipulator.stopBallCollector();
+    mManipulator.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return mManipulator.getBallSwitchState();
+    return mManipulator.getSwitchState();
   }
 }

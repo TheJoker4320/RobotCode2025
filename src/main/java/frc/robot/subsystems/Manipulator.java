@@ -18,13 +18,11 @@ import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.utils.Configs.ManipulatorConfigs;
 
 public class Manipulator extends SubsystemBase {
-  private final SparkMax mCoralMotor;
-  private final SparkMax mBallMotor;
+  private final SparkMax mPrimaryMotor;
+  private final SparkMax mSecondaryMotor;
   
-  private final DigitalInput mBallSwitch;
-  private final DigitalInput mCoralSwitch;
-  private boolean mCollectedCoral;               // Holds true if collected coral, holds false if placed coral - holds the value we should expect from the limit switch
-  private boolean mCollectedBall;
+  private final DigitalInput mPrimarySwitch;
+  // private final DigitalInput mSecondarySwitch;
 
   private static Manipulator mInstance;
 
@@ -35,71 +33,43 @@ public class Manipulator extends SubsystemBase {
     return mInstance;
   }
 
-  private Manipulator() {
-    mCollectedCoral = false;
-    mCollectedBall = false;  
+  private Manipulator() {  
 
-    mCoralMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
-    mBallMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
+    mPrimaryMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
+    mSecondaryMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
 
-    mBallSwitch = new DigitalInput(ManipulatorConstants.BALL_SWITCH_PORT);
-    mCoralSwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
+    mPrimarySwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
       
-    mCoralMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    mBallMotor.configure(ManipulatorConfigs.BALL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mPrimaryMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    mSecondaryMotor.configure(ManipulatorConfigs.BALL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
-  public boolean getBallSwitchState() {
-    return !mBallSwitch.get();
+  public boolean getSwitchState() {
+    return !mPrimarySwitch.get();
   }
 
-  public boolean getCoralSwitchState() {
-    return !mCoralSwitch.get();
+  public void collectCoral() {
+    mPrimaryMotor.set(ManipulatorConstants.CORAL_COLLECT_SPEED);
   }
 
-  public void setCollectedCoral() {
-    mCollectedCoral = true;
-  }
-  public void setPlacedCoral() {
-    mCollectedCoral = false;
-  }
-  public boolean getCollectedCoral() {
-    return mCollectedCoral;
-  }
-  public void setCollectedBall() {
-    mCollectedBall = true;
-  }
-  public void setPlacedBall() {
-    mCollectedBall = false;
-  }
-  public boolean getCollectedBall() {
-    return mCollectedBall;
+  public void collectBall() {
+    mPrimaryMotor.set(ManipulatorConstants.BALL_COLLECT_SPEED);
   }
 
-  public void collectBall(){
-    mBallMotor.set(ManipulatorConstants.BALL_COLLECT_SPEED);
-  }
-  public void collectCoral(){
-    mCoralMotor.set(ManipulatorConstants.CORAL_COLLECT_SPEED);
-  }
-  public void ejectBall(){
-    mBallMotor.set(ManipulatorConstants.BALL_EJECT_SPEED);
-  }
-  public void ejectCoral(){
-    mCoralMotor.set(ManipulatorConstants.CORAL_EJECT_SPEED);
+  public void ejectBall() {
+    mPrimaryMotor.set(ManipulatorConstants.BALL_EJECT_SPEED);
   }
 
-  public void stopBallCollector() {
-    mBallMotor.set(0);
+  public void ejectCoral() {
+    mPrimaryMotor.set(ManipulatorConstants.CORAL_EJECT_SPEED);
   }
 
-  public void stopCoralCollector() {
-    mCoralMotor.set(0);
+  public void stop(){
+    mPrimaryMotor.set(0);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.getBoolean("ball collector state:", getBallSwitchState());
-    SmartDashboard.putBoolean("coral collector state", getCoralSwitchState());
+    SmartDashboard.getBoolean("manipulator switch state:", getSwitchState());
   }
 }
