@@ -7,10 +7,15 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +38,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private final StructPublisher<Pose2d> mPosePublisher;
 
+  private final StructArrayPublisher<Pose3d> mAprilTagPublisher1;
+  private final StructArrayPublisher<Pose3d> mAprilTagPublisher2;
+
+  private final AprilTagFieldLayout mAprilTagFieldLayout;
+
   private static PoseEstimatorSubsystem mInstance = null;
   public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
     if (mInstance == null)
@@ -54,6 +64,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       PoseEstimatorConstants.STATE_STANDARD_DEVIATIONS,
       PoseEstimatorConstants.VISION_STANDARD_DEVIATIONS
     );
+
+    mAprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+
+    mAprilTagPublisher1 = NetworkTableInstance.getDefault().getStructArrayTopic("Limelight2AprilTags", Pose3d.struct).publish();
+    mAprilTagPublisher2 = NetworkTableInstance.getDefault().getStructArrayTopic("Limelight2+AprilTags", Pose3d.struct).publish();
     mPosePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
   }
 
@@ -80,7 +95,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
-  public void updateVisionMeasurement(String cameraName) {
+  public void updateVisionMeasurement(String cameraName, StructArrayPublisher<Pose3d> aprilTagPublisher) {
     LimelightHelpers.SetRobotOrientation(
       cameraName, 
       mSwerve.getRotation().getDegrees() + mGyroOffset, 
@@ -94,6 +109,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
     boolean rejectVisionUpdate = false;
 
+    Pose3d[] aprilTags = null;
     // If the angular velocity is over 720, the estimated pose is going to be very innacurate so we "reject" the vision update
     if (poseEstimate != null) {
       if (Math.abs(mSwerve.getAngularVelocity())  > PoseEstimatorConstants.MAXIMUM_ANGULAR_VELOCITY) {
@@ -106,13 +122,21 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       if (!rejectVisionUpdate) {
         mPoseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
       }
+
+      aprilTags = new Pose3d[poseEstimate.rawFiducials.length];
+      for (int i = 0; i < poseEstimate.rawFiducials.length; i++)
+        aprilTags[i] = mAprilTagFieldLayout.getTagPose(poseEstimate.rawFiducials[i].id).get();
+    } else {
+      aprilTags = new Pose3d[0];
     }
+
+    aprilTagPublisher.set(aprilTags);
   }
 
   @Override
   public void periodic() {
-    updateVisionMeasurement("limelight2");
-    updateVisionMeasurement("limelight2+");
+    updateVisionMeasurement("limelight2", mAprilTagPublisher1);
+    updateVisionMeasurement("limelight2+", mAprilTagPublisher2);
 
     mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
 
