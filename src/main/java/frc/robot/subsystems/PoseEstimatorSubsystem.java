@@ -127,7 +127,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       for (int i = 0; i < poseEstimate.rawFiducials.length; i++)
         aprilTags[i] = mAprilTagFieldLayout.getTagPose(poseEstimate.rawFiducials[i].id).get();
     } else {
-      aprilTags = new Pose3d[0];
+      aprilTags = null;
     }
 
     aprilTagPublisher.set(aprilTags);
