@@ -154,24 +154,24 @@ public final class Constants {
   }
 
   public static class ManipulatorConstants {
-    public static int BALL_MOTOR_ID = 9;
-    public static int CORAL_MOTOR_ID = 10;
+    public static int SECONDARY_MOTOR_ID = 9;
+    public static int PRIMARY_MOTOR_ID = 10;
 
     /*This is the coral limit switch port */
-    public static int CORAL_SWITCH_PORT = 1; //TODO: set port
+    public static int PRIMARY_SWITCH_PORT = 1; //TODO: set port
     
     /*This is the ball limit switch port */
-    public static int BALL_SWITCH_PORT = 2; //TODO: set port
+    public static int SECONDARY_SWITCH_PORT = 2; //TODO: set port
 
-    public static final boolean BALL_COLLECTOR_INVERTED = true;
+    public static final boolean SECONDARY_MOTOR_INVERTED = true;
 
-    public static final int MANIPULATOR_BALL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
-    public static final int MANIPULATOR_CORAL_SMART_CURRENT_LIMIT = 20; //TODO: validate value
+    public static final int MANIPULATOR_SECONDARY_SMART_CURRENT_LIMIT = 40; //TODO: validate value
+    public static final int MANIPULATOR_PRIMARY_SMART_CURRENT_LIMIT = 40; //TODO: validate value
 
     //TODO: set correct speed for manipulator
-    public static final double BALL_COLLECT_SPEED = 0.75; 
+    public static final double BALL_COLLECT_SPEED = 1; 
     public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = -0.8;
+    public static final double BALL_EJECT_SPEED = -1;
     public static final double CORAL_EJECT_SPEED = -0.2;
   }
   
