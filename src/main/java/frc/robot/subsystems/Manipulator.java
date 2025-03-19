@@ -22,7 +22,7 @@ public class Manipulator extends SubsystemBase {
   private final SparkMax mSecondaryMotor;
   
   private final DigitalInput mPrimarySwitch;
-  // private final DigitalInput mSecondarySwitch;
+  private final DigitalInput mSecondarySwitch;
 
   private static Manipulator mInstance;
 
@@ -35,17 +35,18 @@ public class Manipulator extends SubsystemBase {
 
   private Manipulator() {  
 
-    mPrimaryMotor = new SparkMax(ManipulatorConstants.CORAL_MOTOR_ID, MotorType.kBrushless);
-    mSecondaryMotor = new SparkMax(ManipulatorConstants.BALL_MOTOR_ID, MotorType.kBrushless);
+    mPrimaryMotor = new SparkMax(ManipulatorConstants.PRIMARY_MOTOR_ID, MotorType.kBrushless);
+    mSecondaryMotor = new SparkMax(ManipulatorConstants.SECONDARY_MOTOR_ID, MotorType.kBrushless);
 
-    mPrimarySwitch = new DigitalInput(ManipulatorConstants.CORAL_SWITCH_PORT);
+    mPrimarySwitch = new DigitalInput(ManipulatorConstants.PRIMARY_SWITCH_PORT);
+    mSecondarySwitch = new DigitalInput(ManipulatorConstants.SECONDARY_SWITCH_PORT);
       
     mPrimaryMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     mSecondaryMotor.configure(ManipulatorConfigs.BALL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public boolean getSwitchState() {
-    return !mPrimarySwitch.get();
+    return !mPrimarySwitch.get() || !mSecondarySwitch.get();
   }
 
   public void collectCoral() {
