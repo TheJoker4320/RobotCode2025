@@ -24,7 +24,7 @@ public class Manipulator extends SubsystemBase {
   private final DigitalInput mPrimarySwitch;
   private final DigitalInput mSecondarySwitch;
 
-  private static Manipulator mInstance;
+  private static Manipulator mInstance = null;
 
   public static Manipulator getInstance() {
     if (mInstance == null) {
@@ -34,7 +34,6 @@ public class Manipulator extends SubsystemBase {
   }
 
   private Manipulator() {  
-
     mPrimaryMotor = new SparkMax(ManipulatorConstants.PRIMARY_MOTOR_ID, MotorType.kBrushless);
     mSecondaryMotor = new SparkMax(ManipulatorConstants.SECONDARY_MOTOR_ID, MotorType.kBrushless);
 
@@ -46,31 +45,37 @@ public class Manipulator extends SubsystemBase {
   }
 
   public boolean getSwitchState() {
-    return !mPrimarySwitch.get() || !mSecondarySwitch.get();
+    return (!mPrimarySwitch.get()) || (!mSecondarySwitch.get());
   }
 
   public void collectCoral() {
+    mSecondaryMotor.set(ManipulatorConstants.CORAL_COLLECT_SPEED);
     mPrimaryMotor.set(ManipulatorConstants.CORAL_COLLECT_SPEED);
   }
 
   public void collectBall() {
+    mSecondaryMotor.set(ManipulatorConstants.BALL_COLLECT_SPEED);
     mPrimaryMotor.set(ManipulatorConstants.BALL_COLLECT_SPEED);
   }
 
   public void ejectBall() {
+    mSecondaryMotor.set(ManipulatorConstants.BALL_EJECT_SPEED);
     mPrimaryMotor.set(ManipulatorConstants.BALL_EJECT_SPEED);
   }
 
   public void ejectCoral() {
+    mSecondaryMotor.set(ManipulatorConstants.CORAL_EJECT_SPEED);
     mPrimaryMotor.set(ManipulatorConstants.CORAL_EJECT_SPEED);
   }
 
   public void stop(){
+    mSecondaryMotor.set(0);
     mPrimaryMotor.set(0);
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.getBoolean("manipulator switch state:", getSwitchState());
+    SmartDashboard.putBoolean("primary switch state:", mPrimarySwitch.get());
+    SmartDashboard.putBoolean("secondary switch state:", mSecondarySwitch.get());
   }
 }

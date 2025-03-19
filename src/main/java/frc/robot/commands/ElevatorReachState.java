@@ -46,9 +46,9 @@ public class ElevatorReachState extends Command {
     mElevator.stopMotorInPlace();
 
     if (interrupted)
-      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED INTERRUPTED");
+      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED INTERRUPTED - REACHED: " + mElevator.getCurrentHeight());
     else
-      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED");
+      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED - REACHED: " + mElevator.getCurrentHeight());
   }
 
   // Returns true when the command should end.

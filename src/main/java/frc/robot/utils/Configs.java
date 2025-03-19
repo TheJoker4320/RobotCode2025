@@ -139,9 +139,10 @@ public final class Configs {
         public static final SparkMaxConfig CORAL_COLLECTOR_CONFIG = new SparkMaxConfig();
 
         static {
+            BALL_COLLECTOR_CONFIG.inverted(true);
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_SECONDARY_SMART_CURRENT_LIMIT);
-            BALL_COLLECTOR_CONFIG.follow(ManipulatorConstants.PRIMARY_MOTOR_ID, true);
+            CORAL_COLLECTOR_CONFIG.inverted(false);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_PRIMARY_SMART_CURRENT_LIMIT);
         }

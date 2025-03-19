@@ -61,9 +61,9 @@ public class ElevatorReachL2 extends Command {
     mTimer.stop();
 
     if (interrupted)
-      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED INTERRUPTED");
+      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED INTERRUPTED - REACHED: " + mElevator.getCurrentHeight());
     else
-      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED");
+      DataLogManager.log("ELEVATOR_REACH_STATE_" + mDesiredState.height() + " FINISHED - REACHED: " + mElevator.getCurrentHeight());
   }
 
   // Returns true when the command should end.

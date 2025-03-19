@@ -95,10 +95,10 @@ public class Elevator extends SubsystemBase {
       mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
     }
 
-    mElevatorPositionPublisher.set(mRightMotorController.getPosition().getValueAsDouble());
-    mElevatorRightOutputPublisher.set(mRightMotorController.get());
-    mElevatorLeftOutputPublisher.set(mLeftMotorController.get());
-    mElevatorSetpointPublisher.set(mSetpoint);
-    mElevatorSetpointInitializedPublisher.set(mSetpointInitiallied);
+    //mElevatorPositionPublisher.set(mRightMotorController.getPosition().getValueAsDouble());
+    //mElevatorRightOutputPublisher.set(mRightMotorController.get());
+    //mElevatorLeftOutputPublisher.set(mLeftMotorController.get());
+    //mElevatorSetpointPublisher.set(mSetpoint);
+    //mElevatorSetpointInitializedPublisher.set(mSetpointInitiallied);
   }
 }

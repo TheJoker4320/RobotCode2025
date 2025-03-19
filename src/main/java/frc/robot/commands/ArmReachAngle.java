@@ -40,9 +40,9 @@ public class ArmReachAngle extends Command {
       mArm.stopMotorInPlace();
 
     if (interrupted)
-      DataLogManager.log("ARM_REACH_ANGLE_" + mDesiredState.angle() + " FINISHED INTERRUPTED");
+      DataLogManager.log("ARM_REACH_ANGLE_" + mDesiredState.angle() + " FINISHED INTERRUPTED - REACHED: " + mArm.getCurrentAngle());
     else
-      DataLogManager.log("ARM_REACH_ANGLE_" + mDesiredState.angle() + " FINISHED");
+      DataLogManager.log("ARM_REACH_ANGLE_" + mDesiredState.angle() + " FINISHED - REACHED: " + mArm.getCurrentAngle());
   }
 
   // Returns true when the command should end.

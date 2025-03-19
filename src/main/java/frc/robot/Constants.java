@@ -129,9 +129,9 @@ public final class Constants {
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
     public static final double MIN_ANGLE_L2_HEIGHT = -0;
-    public static final double INTAKE_ANGLE = -88;
+    public static final double INTAKE_ANGLE = -89;
     public static final double OUT_OF_INTAKE_ANGLE = -65;
-    public static final double L4_ANGLE = 67;
+    public static final double L4_ANGLE = 70;
     public static final double L32_ANGLE = 69;
     public static final double L1_ANGLE = -31;
     public static final double L32_BALL_PRE_COLLECT_ANGLE = -15;
@@ -142,7 +142,7 @@ public final class Constants {
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
-    public static final double MINIMUM_ARM_ANGLE = -90;       // min - in degrees
+    public static final double MINIMUM_ARM_ANGLE = -91;       // min - in degrees
     public static final double MAXIMUM_ARM_ANGLE = 73;        // max - in degrees
 
     public static final double MM_CRUISE_VELOCITY = 250;  // degrees per second
@@ -169,10 +169,10 @@ public final class Constants {
     public static final int MANIPULATOR_PRIMARY_SMART_CURRENT_LIMIT = 40; //TODO: validate value
 
     //TODO: set correct speed for manipulator
-    public static final double BALL_COLLECT_SPEED = 1; 
-    public static final double CORAL_COLLECT_SPEED = 0.5;
-    public static final double BALL_EJECT_SPEED = -1;
-    public static final double CORAL_EJECT_SPEED = -0.2;
+    public static final double BALL_COLLECT_SPEED = -1; 
+    public static final double CORAL_COLLECT_SPEED = -0.5;
+    public static final double BALL_EJECT_SPEED = 1;
+    public static final double CORAL_EJECT_SPEED = 0.2;
   }
   
   public static class ElevatorConstants {
@@ -240,8 +240,8 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double FAR_REEF_X_OFFSET = -0.48;
-    public static final double CLOSE_REEF_X_OFFSET = -0.32;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double FAR_REEF_X_OFFSET = -0.52;
+    public static final double CLOSE_REEF_X_OFFSET = -0.46;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
     public static final double REEF_Y_RIGHT_OFFSET = -0.24;   // The distance between the center of the april tag and reef branch
     public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
@@ -328,7 +328,7 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.026179521;
+    public static final double DRIVING_P_CONSTANT = 0.035;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;

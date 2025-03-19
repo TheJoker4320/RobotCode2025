@@ -41,6 +41,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -74,6 +75,7 @@ public class RobotContainer {
     DriverStation.startDataLog(DataLogManager.getLog(), false);
 
     mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem);
+    mPoseEstimatorSubsystem.resetGyroOffset(DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0);
     SmartDashboard.putString("Alliance",DriverStation.getAlliance().get().equals(Alliance.Blue) ? "Blue" : "Red");
 
     RobotConfig config = null;
@@ -124,14 +126,16 @@ public class RobotContainer {
       )
     );
     // command for collecting a coral
-    Command intakeSequenceCommand = new SequentialCommandGroup(
-      new ParallelRaceGroup(
-        new WaitCommand(0.5),
-        new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE), 
-        new ManipulatorCollectCoral(mManipulator)
-      ), 
-      new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
-      new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE)
+    Command intakeSequenceCommand = new ParallelDeadlineGroup(
+      new SequentialCommandGroup(
+        new ParallelRaceGroup(
+          new WaitCommand(0.75),
+          new ElevatorReachState(mElevatorSubsystem, ElevatorState.INTAKE)
+        ), 
+        new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
+        new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE)
+      ),
+      new ManipulatorCollectCoral(mManipulator, 138)
     );
     // command for adjusting elevator and arm for l1
     Command l1Command = new ParallelCommandGroup(
@@ -211,6 +215,9 @@ public class RobotContainer {
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
+    JoystickButton collectStaticCoral = new JoystickButton(m_operatorController, PS4Controller.Button.kSquare.value);
+    collectStaticCoral.whileTrue(new ManipulatorCollectCoral(mManipulator, 219));
+
     // -------------- DRIVER BUTTONS -------------
 
     // Alignment buttons
@@ -256,7 +263,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_top_JKL");     // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("red_top_EDC");     // TODO: SET THE CORRECT AUTONOMOUS
     // PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;
@@ -264,6 +271,5 @@ public class RobotContainer {
     mSwerveSubsystem.resetHeading(auto.getStartingPose().getRotation().getDegrees() + degreeOffset);
     mPoseEstimatorSubsystem.resetPose(auto.getStartingPose());
     return auto;
-    // return null;
   }
 }

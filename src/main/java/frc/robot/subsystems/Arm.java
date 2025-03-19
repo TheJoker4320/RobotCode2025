@@ -134,10 +134,10 @@ public class Arm extends SubsystemBase {
       }
     }
 
-    mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
-    mArmAbsolutePositionPublisher.set(getAbsoluteEncoderValue());
-    mArmSetpointPublisher.set(mSetpoint);
-    mArmOutputPublisher.set(mMotor.get());
-    mArmSetpointInitializedPublisher.set(mSetpointInitiallied);
+    //mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
+    //mArmAbsolutePositionPublisher.set(getAbsoluteEncoderValue());
+    //mArmSetpointPublisher.set(mSetpoint);
+    //mArmOutputPublisher.set(mMotor.get());
+    //mArmSetpointInitializedPublisher.set(mSetpointInitiallied);
   }
 }
