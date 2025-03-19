@@ -5,14 +5,16 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.util.datalog.BooleanLogEntry;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.utils.ElevatorState;
@@ -25,6 +27,12 @@ public class Elevator extends SubsystemBase {
 
   private double mSetpoint;
   private boolean mSetpointInitiallied = false;
+
+  private DoubleLogEntry mElevatorHeightLog;
+  private DoubleLogEntry mElevatorRightOutputLog;
+  private DoubleLogEntry mElevatorLeftOutputLog;
+  private DoubleLogEntry mElevatorSetpointLog;
+  private BooleanLogEntry mElevatorSetpointInitializedLog;
 
   private static Elevator mInstance = null;
   public static Elevator getInstance() {
@@ -46,9 +54,17 @@ public class Elevator extends SubsystemBase {
     mLeftMotorController = new TalonFX(ElevatorConstants.LEFT_MOTOR_DEVICE_ID);
     mLeftMotorController.setControl(new Follower(mRightMotorController.getDeviceID(), ElevatorConstants.LEFT_OPPOSITE_OF_RIGHT));
     mLeftMotorController.setNeutralMode(NeutralModeValue.Brake);
+
+    DataLog log = DataLogManager.getLog();
+    mElevatorHeightLog = new DoubleLogEntry(log, "/joker/elevator/height");
+    mElevatorRightOutputLog = new DoubleLogEntry(log, "/joker/elevator/rightOutput");
+    mElevatorLeftOutputLog = new DoubleLogEntry(log, "/joker/elevator/leftOutput");
+    mElevatorSetpointInitializedLog = new BooleanLogEntry(log, "/joker/elevator/setpointInitialized");
+    mElevatorSetpointLog = new DoubleLogEntry(log, "/joker/elevator/setpoint"); 
   }
 
   public void setSetpoint(ElevatorState setpoint) {
+    DataLogManager.log("ELEVATOR - SETPOINT INITIALIZED - " + String.valueOf(setpoint.height()));
     mSetpoint = setpoint.height();
     mSetpointInitiallied = true;
   }
@@ -67,9 +83,10 @@ public class Elevator extends SubsystemBase {
   }
 
   public void stopMotorInPlace() {
+    DataLogManager.log("ELEVATOR - STOPPING IN PLACE");
+
     mRightMotorController.set(0);
     mSetpointInitiallied = false;
-    //mRightMotorController.setVoltage(ElevatorConstants.ELEVATOR_S_CONSTANT + ElevatorConstants.ELEVATOR_G_CONSTANT);
   }
 
   public boolean isSetpointInitialled(){
@@ -83,6 +100,11 @@ public class Elevator extends SubsystemBase {
       final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
     }
-    SmartDashboard.putBoolean("Elevator setpointInitialled", mSetpointInitiallied);
+
+    mElevatorHeightLog.append(mRightMotorController.getPosition().getValueAsDouble());
+    mElevatorRightOutputLog.append(mRightMotorController.get());
+    mElevatorLeftOutputLog.append(mLeftMotorController.get());
+    mElevatorSetpointLog.append(mSetpoint);
+    mElevatorSetpointInitializedLog.append(mSetpointInitiallied);
   }
 }

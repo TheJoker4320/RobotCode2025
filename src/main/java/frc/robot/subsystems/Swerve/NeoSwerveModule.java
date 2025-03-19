@@ -12,11 +12,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.utils.Configs.NeoSwerveConfigs;
 
 public class NeoSwerveModule implements ISwerveModule {
-
     private final int mModuleId;            // For debugging purposes
 
     private final SparkMax mDrivingSparkMax;
@@ -52,16 +50,15 @@ public class NeoSwerveModule implements ISwerveModule {
     }
 
     @Override
-    public void displayData() {
-        SmartDashboard.putNumber("MODULE " + mModuleId + " velocity", mDrivingEncoder.getVelocity());
-        SmartDashboard.putNumber("MODULE " + mModuleId + " angle", mTurningEncoder.getPosition());
-    }
-
-    @Override
     public SwerveModuleState getState() {
         Rotation2d currentModuleRotation = Rotation2d.fromRadians(mTurningEncoder.getPosition()).minus(Rotation2d.fromRadians(mChassisAngularOffset));
         SwerveModuleState currentState = new SwerveModuleState(mDrivingEncoder.getVelocity(), currentModuleRotation);
         return currentState;
+    }
+
+    @Override
+    public SwerveModuleState getDesiredState() {
+        return mDesiredState;
     }
 
     @Override

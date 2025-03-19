@@ -10,6 +10,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveSubsystemConstants;
@@ -28,6 +30,9 @@ public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry mOdometry;
 
     private Boolean mFieldRelative;
+
+    private StructArrayPublisher<SwerveModuleState> mSwerveStatesPublisher;
+    private StructArrayPublisher<SwerveModuleState> mDesiredSwerveStatesPublisher;
 
     private static Swerve mInstance = null;
     public static Swerve getInstance(SwerveModuleType moduleType) {
@@ -54,6 +59,9 @@ public class Swerve extends SubsystemBase {
         );
 
         mFieldRelative = true;
+
+        mSwerveStatesPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SwerveStates", SwerveModuleState.struct).publish();
+        mDesiredSwerveStatesPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("DesiredSwerveStates", SwerveModuleState.struct).publish();
     }
 
     public void drive(double xSpeed, double ySpeed, double rot) {
@@ -150,13 +158,6 @@ public class Swerve extends SubsystemBase {
         mOdometry.resetPosition(getRotation(), getModulePositions(), pose);
     }
 
-    public void displayModuleData() {
-        mFrontLeft.displayData();
-        mFrontRight.displayData();
-        mRearLeft.displayData();
-        mRearRight.displayData();
-    }
-
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return SwerveSubsystemConstants.DRIVE_KINEMATICS.toChassisSpeeds(
             mFrontLeft.getState(),
@@ -166,6 +167,26 @@ public class Swerve extends SubsystemBase {
         );
     }
 
+    private void logDesiredSwerveStates() {
+        SwerveModuleState[] desiredStates = new SwerveModuleState[4];
+        desiredStates[0] = mFrontLeft.getDesiredState();
+        desiredStates[1] = mFrontRight.getDesiredState();
+        desiredStates[2] = mRearLeft.getDesiredState();
+        desiredStates[3] = mRearRight.getDesiredState();
+
+        mDesiredSwerveStatesPublisher.set(desiredStates);
+    }
+
+    private void logSwerveStates() {
+        SwerveModuleState[] currentStates = new SwerveModuleState[4];
+        currentStates[0] = mFrontLeft.getState();
+        currentStates[1] = mFrontRight.getState();
+        currentStates[2] = mRearLeft.getState();
+        currentStates[3] = mRearRight.getState();
+
+        mSwerveStatesPublisher.set(currentStates);
+    }
+
     @Override
     public void periodic() {
         mOdometry.update(
@@ -173,9 +194,7 @@ public class Swerve extends SubsystemBase {
             getModulePositions()
         );
 
-        //SmartDashboard.putNumber("X", mOdometry.getPoseMeters().getX());
-        //SmartDashboard.putNumber("Y", mOdometry.getPoseMeters().getY());
-        //SmartDashboard.putNumber("ROT", mGyro.getRotation2d().getDegrees());
-        //SmartDashboard.putBoolean("FIeld Relative", mFieldRelative);
+        logDesiredSwerveStates();
+        logSwerveStates();
     }
 }
