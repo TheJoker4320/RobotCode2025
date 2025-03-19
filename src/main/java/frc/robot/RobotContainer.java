@@ -7,8 +7,6 @@ package frc.robot;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
-import frc.robot.commands.Climb;
-import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,16 +15,10 @@ import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
-import frc.robot.commands.BallCollectorCommands.CloseBallCollector;
-import frc.robot.commands.BallCollectorCommands.CollectBallGround;
-import frc.robot.commands.BallCollectorCommands.EjectBallGround;
-import frc.robot.commands.BallCollectorCommands.OpenBallCollector;
-import frc.robot.commands.CloseClimber;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.commands.ElevatorReachL2;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.BallCollector;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
@@ -73,10 +65,7 @@ public class RobotContainer {
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
   private SendableChooser<Command> mAutoChooser = new SendableChooser<>();
-    private final BallCollector mBallCollector = BallCollector.getInstance();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final Climber mClimber = Climber.getInstance();
   private final XboxController m_driverController = new XboxController(OperatorConstants.DRIVING_CONTROLLER_PORT);
   private final PS4Controller m_operatorController = new PS4Controller(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
@@ -217,28 +206,12 @@ public class RobotContainer {
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
 
     SmartDashboard.putData(mAutoChooser);
-    POVButton openBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.OPEN_BALL_POV_BUTTON);
-    POVButton closeBallCollectorButton = new POVButton(m_operatorController, OperatorConstants.CLOSE_BALL_POV_BUTTON);
-    POVButton collectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.COLLECT_POV_BUTTON);
-    POVButton ejectBallGroundButton = new POVButton(m_operatorController, OperatorConstants.EJECT_POV_BUTTOn);
-
-    openBallCollectorButton.onTrue(new OpenBallCollector(mBallCollector));
-    closeBallCollectorButton.onTrue(new CloseBallCollector(mBallCollector));
-    collectBallGroundButton.whileTrue(new CollectBallGround(mBallCollector));
-    ejectBallGroundButton.whileTrue(new EjectBallGround(mBallCollector));
 
     placeCoralButton.toggleOnTrue(placeCoralCommand);
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
     // -------------- DRIVER BUTTONS -------------
-
-    // Climber buttons
-    POVButton ClimbButton = new POVButton(m_driverController,OperatorConstants.CLIMBER_BUTTON); // climbing
-    ClimbButton.whileTrue(new Climb(mClimber));
-   
-    POVButton CloseClimbButton = new POVButton(m_driverController, OperatorConstants.CLOSE_CLIMBER_BUTTON); // lock the clibimg to be stable
-    CloseClimbButton.whileTrue(new CloseClimber(mClimber));
 
     // Alignment buttons
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
