@@ -12,6 +12,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.Publisher;
@@ -35,14 +36,12 @@ public class Arm extends SubsystemBase {
   private ArmState mSetpointState;
   private boolean mSetpointInitiallied;
 
-  private DoubleLogEntry mArmPosLog;
-  private DoubleLogEntry mArmAbsolutePoseLog;
-  private DoubleLogEntry mArmSetpointLog;
-  private BooleanLogEntry mSetpointInitialliedLog;
-  private DoubleLogEntry mArmOutputLog;
-
   private DoublePublisher mArmPositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armPose").publish();
-  
+  private DoublePublisher mArmAbsolutePositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armAbsPose").publish();
+  private DoublePublisher mArmSetpointPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armSetpoint").publish();
+  private DoublePublisher mArmOutputPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armOutput").publish();
+  private BooleanPublisher mArmSetpointInitializedPublisher = NetworkTableInstance.getDefault().getBooleanTopic("arm/armSetpointInitialized").publish();
+
   private static Arm mInstance;
   public static Arm getInstance() {
     if (mInstance == null)
@@ -59,13 +58,6 @@ public class Arm extends SubsystemBase {
 
     mSetpointInitiallied = false;
     mSetpointState = null;
-
-    DataLog log = DataLogManager.getLog();
-    mArmPosLog = new DoubleLogEntry(log, "/joker/arm/position");
-    mArmSetpointLog = new DoubleLogEntry(log, "/joker/arm/setpoint");
-    mArmOutputLog = new DoubleLogEntry(log, "/joker/arm/output");
-    mSetpointInitialliedLog = new BooleanLogEntry(log, "/joker/arm/setpointInitialized");
-    mArmAbsolutePoseLog = new DoubleLogEntry(log, "/joker/arm/absPosition"); 
   }
 
   public double getAbsoluteEncoderValue(){
@@ -147,12 +139,10 @@ public class Arm extends SubsystemBase {
       }
     }
 
-    mArmAbsolutePoseLog.append(getAbsoluteEncoderValue());
-    mArmSetpointLog.append(mSetpoint);
-    mArmPosLog.append(mMotor.getPosition().getValue().in(Degrees));
-    mArmOutputLog.append(mMotor.get());
-    mSetpointInitialliedLog.append(mSetpointInitiallied);
-
     mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
+    mArmAbsolutePositionPublisher.set(getAbsoluteEncoderValue());
+    mArmSetpointPublisher.set(mSetpoint);
+    mArmOutputPublisher.set(mMotor.get());
+    mArmSetpointInitializedPublisher.set(mSetpointInitiallied);
   }
 }
