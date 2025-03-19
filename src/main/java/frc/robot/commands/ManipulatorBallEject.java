@@ -24,8 +24,7 @@ public class ManipulatorBallEject extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mManipulator.ejectBall();
-    mManipulator.setPlacedBall();
+  mManipulator.ejectBall();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +34,7 @@ public class ManipulatorBallEject extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mManipulator.stopBallCollector();
+    mManipulator.stop();
   }
 
   // Returns true when the command should end.

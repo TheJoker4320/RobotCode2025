@@ -33,12 +33,12 @@ public class ManipulatorCollectCoral extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mManipulator.stopCoralCollector();
+    mManipulator.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return mManipulator.getCoralSwitchState();
+    return mManipulator.getSwitchState();
   }
 }

@@ -141,10 +141,12 @@ public final class Configs {
         static {
             BALL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             BALL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
-            BALL_COLLECTOR_CONFIG.inverted(ManipulatorConstants.BALL_COLLECTOR_INVERTED);
+            BALL_COLLECTOR_CONFIG.follow(ManipulatorConstants.CORAL_MOTOR_ID, true);
             CORAL_COLLECTOR_CONFIG.idleMode(IdleMode.kBrake);
             CORAL_COLLECTOR_CONFIG.smartCurrentLimit(ManipulatorConstants.MANIPULATOR_BALL_SMART_CURRENT_LIMIT);
         }
+
+
     }
     public static class ArmConfigs {
         public static TalonFXConfiguration ARM_TALONFX_CONFIG = new TalonFXConfiguration();
