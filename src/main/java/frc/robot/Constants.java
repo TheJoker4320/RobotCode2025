@@ -113,16 +113,16 @@ public final class Constants {
 
     public static final double ARM_POSITION_TOLERANCE = 3.5;  // in degrees
     public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
-    public static final double ARM_ENCODER_OFFSET = -129.61616 - 1.3;   // in degrees
+    public static final double ARM_ENCODER_OFFSET = -68.12;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
-    public static final double ARM_KP = 30;
+    public static final double ARM_KP = 32;
     public static final double ARM_KI = 0;
-    public static final double ARM_KD = 11.88016;
-    public static final double ARM_KG = 0.29506;  
-    public static final double ARM_KV = 16.5144;  
-    public static final double ARM_KA = 1.63256;  
-    public static final double ARM_KS = 0.3766;
+    public static final double ARM_KD = 4.4629;
+    public static final double ARM_KG = 0.276;  
+    public static final double ARM_KA = 0.637; 
+    public static final double ARM_KV = 9.946; 
+    public static final double ARM_KS = 0.371;
 
     public static final double ARM_KG_STAY = 0.2;
 
@@ -207,13 +207,13 @@ public final class Constants {
     public static final double MAXIMUM_ELEVATOR_HEIGHT = 1.3;           // This value is in meters
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
 
-    public static final double ELEVATOR_P_CONSTANT = 28.936;            // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_P_CONSTANT = 30.062;            // This is a calibrated value - do not lose it
     public static final double ELEVATOR_I_CONSTANT = 0;                 // This is a calibrated value - do not lose it
-    public static final double ELEVATOR_D_CONSTANT = 1.655;             // This is a calibrated value - do not lose it
-    public static final double ELEVATOR_G_CONSTANT = 0.10618;           // This is a calibrated value - do not lose it
-    public static final double ELEVATOR_V_CONSTANT = 8.2604;            // This is a calibrated value - do not lose it
-    public static final double ELEVATOR_A_CONSTANT = 0.19692;           // This is a calibrated value - do not lose it
-    public static final double ELEVATOR_S_CONSTANT = 0.11453;           // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_D_CONSTANT = 2.699;             // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_G_CONSTANT = 0.11336;           // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_V_CONSTANT = 8.212;            // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_A_CONSTANT = 0.3605;           // This is a calibrated value - do not lose it
+    public static final double ELEVATOR_S_CONSTANT = 0.06;           // This is a calibrated value - do not lose it
 
     public static final double MM_CRUISE_VELOCITY = 1.3;                // This is a calibrated value - do not lose it - meters per second
     public static final double MM_ACCELERATION = 20;                    // This is a calibrated value - do not lose it - meters per second^2

@@ -67,8 +67,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     mAprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
-    mAprilTagPublisher1 = NetworkTableInstance.getDefault().getStructArrayTopic("Limelight2AprilTags", Pose3d.struct).publish();
-    mAprilTagPublisher2 = NetworkTableInstance.getDefault().getStructArrayTopic("Limelight2+AprilTags", Pose3d.struct).publish();
+    mAprilTagPublisher1 = NetworkTableInstance.getDefault().getStructArrayTopic("LimelightRightAprilTags", Pose3d.struct).publish();
+    mAprilTagPublisher2 = NetworkTableInstance.getDefault().getStructArrayTopic("LimelightAprilTags", Pose3d.struct).publish();
     mPosePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
   }
 
@@ -135,8 +135,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    updateVisionMeasurement("limelight2", mAprilTagPublisher1);
-    updateVisionMeasurement("limelight2+", mAprilTagPublisher2);
+    updateVisionMeasurement("limelight-right", mAprilTagPublisher1);
+    updateVisionMeasurement("limelight", mAprilTagPublisher2);
 
     mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
 
