@@ -11,6 +11,8 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -33,6 +35,8 @@ public class Elevator extends SubsystemBase {
   private DoubleLogEntry mElevatorLeftOutputLog;
   private DoubleLogEntry mElevatorSetpointLog;
   private BooleanLogEntry mElevatorSetpointInitializedLog;
+
+  private DoublePublisher mElevatorPositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("elevator/elevatorPose").publish();
 
   private static Elevator mInstance = null;
   public static Elevator getInstance() {
@@ -106,5 +110,7 @@ public class Elevator extends SubsystemBase {
     mElevatorLeftOutputLog.append(mLeftMotorController.get());
     mElevatorSetpointLog.append(mSetpoint);
     mElevatorSetpointInitializedLog.append(mSetpointInitiallied);
+
+    mElevatorPositionPublisher.set(mRightMotorController.getPosition().getValueAsDouble());
   }
 }

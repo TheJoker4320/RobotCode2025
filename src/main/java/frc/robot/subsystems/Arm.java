@@ -12,6 +12,10 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.Publisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -36,6 +40,8 @@ public class Arm extends SubsystemBase {
   private DoubleLogEntry mArmSetpointLog;
   private BooleanLogEntry mSetpointInitialliedLog;
   private DoubleLogEntry mArmOutputLog;
+
+  private DoublePublisher mArmPositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armPose").publish();
   
   private static Arm mInstance;
   public static Arm getInstance() {
@@ -63,7 +69,7 @@ public class Arm extends SubsystemBase {
   }
 
   public double getAbsoluteEncoderValue(){
-    return mEncoder.get() * 360 * ArmConstants.ENCODER_TO_ARM_GEAR_RATIO + ArmConstants.ARM_ENCODER_OFFSET;
+    return Math.IEEEremainder(mEncoder.get() * 360 + ArmConstants.ARM_ENCODER_OFFSET, 360);
   }
 
   public void setSetpoint(ArmState setpoint) {
@@ -147,6 +153,6 @@ public class Arm extends SubsystemBase {
     mArmOutputLog.append(mMotor.get());
     mSetpointInitialliedLog.append(mSetpointInitiallied);
 
-    verifyEncoderSync();
+    mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
   }
 }
