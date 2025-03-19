@@ -24,7 +24,7 @@ public class ManipulatorBallEject extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  mManipulator.collectBall();
+  mManipulator.ejectBall();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
