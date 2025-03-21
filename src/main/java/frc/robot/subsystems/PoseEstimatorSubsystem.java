@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.PoseEstimatorConstants;
@@ -141,7 +142,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       for (int i = 0; i < poseEstimate.rawFiducials.length; i++)
         aprilTags[i] = mAprilTagFieldLayout.getTagPose(poseEstimate.rawFiducials[i].id).get();
     } else {
-      aprilTags = null;
+      aprilTags = new Pose3d[0];
     }
 
     aprilTagPublisher.set(aprilTags);
@@ -178,12 +179,15 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     return new Pose2d(reefToAlign.getX() + deltaX, reefToAlign.getY() + deltaY, reefToAlign.getRotation().plus(Rotation2d.k180deg));
   }
 
-  public Command getReefAlignmentCommand(final double xOffset, final double yOffset) {
-    return new DeferredCommand(
-      () -> {
-        return new AlignToReef(mSwerve, getReefToAlign(xOffset, yOffset));
-      },
-      Set.of(mSwerve)
+  public Command getReefAlignmentCommand(final double xOffset, final double yOffset, Command ledCommand) {
+    return new SequentialCommandGroup(
+      new DeferredCommand(
+        () -> {
+          return new AlignToReef(mSwerve, getReefToAlign(xOffset, yOffset));
+        },
+        Set.of(mSwerve)
+      ),
+      ledCommand
     );
   }
 }

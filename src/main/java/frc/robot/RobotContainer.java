@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.AutonomousConstants;
+import frc.robot.Constants.LedSubsystemConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
 import edu.wpi.first.wpilibj.XboxController;
@@ -22,6 +23,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
 import frc.robot.commands.ElevatorReachState;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LedSubsystem;
 import frc.robot.utils.ElevatorState;
 import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
@@ -43,6 +45,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -66,6 +69,7 @@ public class RobotContainer {
   private final Swerve mSwerveSubsystem = Swerve.getInstance(SwerveModuleType.NEO);
   private PoseEstimatorSubsystem mPoseEstimatorSubsystem;
   private final Elevator mElevatorSubsystem = Elevator.getInstance();
+  private final LedSubsystem mLedSubsystem = LedSubsystem.getInstance();
   private SendableChooser<Command> mAutoChooser = new SendableChooser<>();
 
   private final XboxController m_driverController = new XboxController(OperatorConstants.DRIVING_CONTROLLER_PORT);
@@ -115,6 +119,22 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
+    // -------------- LED COMMANDS --------------
+
+    mLedSubsystem.setDefaultCommand(
+      new RunCommand(
+        () -> {
+          double ledColor = (DriverStation.getAlliance().get().equals(Alliance.Red) ? LedSubsystemConstants.RED_LED_COLOR : LedSubsystemConstants.BLUE_LED_COLOR);
+          mLedSubsystem.setColor(ledColor);
+        }, 
+        mLedSubsystem
+      )
+    );
+
+    Command signalCoralCollected = getLedBlinkCommand(LedSubsystemConstants.YELLOW_LED_COLOR, LedSubsystemConstants.COLLECTED_CORAL_LED_TIME, LedSubsystemConstants.BLINK_TIME);
+    Trigger coralCollected = new Trigger(mManipulator::getSwitchState);
+    coralCollected.onTrue(signalCoralCollected);
 
     // -------------- OPERATOR BUTTONS --------------
 
@@ -240,14 +260,14 @@ public class RobotContainer {
 
     // Alignment buttons
     Trigger rightCloseAlignTrigger = new Trigger(() -> { return m_driverController.getRightTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
+    rightCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET, getLedBlinkCommand(LedSubsystemConstants.GREEN_LED_COLOR, LedSubsystemConstants.FINISHED_ALIGNMENT_LED_TIME, LedSubsystemConstants.BLINK_TIME)));
     Trigger leftCloseAlignTrigger = new Trigger(() -> { return m_driverController.getLeftTriggerAxis() > OperatorConstants.DRIVE_DEADBAND; } );
-    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
+    leftCloseAlignTrigger.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.CLOSE_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET, getLedBlinkCommand(LedSubsystemConstants.GREEN_LED_COLOR, LedSubsystemConstants.FINISHED_ALIGNMENT_LED_TIME, LedSubsystemConstants.BLINK_TIME)));
 
     JoystickButton rightFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET));
+    rightFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET, getLedBlinkCommand(LedSubsystemConstants.GREEN_LED_COLOR, LedSubsystemConstants.FINISHED_ALIGNMENT_LED_TIME, LedSubsystemConstants.BLINK_TIME)));
     JoystickButton leftFarAlignButton = new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET));
+    leftFarAlignButton.whileTrue(mPoseEstimatorSubsystem.getReefAlignmentCommand(PoseEstimatorConstants.FAR_REEF_X_OFFSET, PoseEstimatorConstants.REEF_Y_LEFT_OFFSET, getLedBlinkCommand(LedSubsystemConstants.GREEN_LED_COLOR, LedSubsystemConstants.FINISHED_ALIGNMENT_LED_TIME, LedSubsystemConstants.BLINK_TIME)));
 
     // Swerve buttons
     JoystickButton slowSwerveButton = new JoystickButton(m_driverController, OperatorConstants.LOW_SPEED_SWERVE_BUTTON);        // Artificially slows down the robot by multiplying the drivers input (*0.3)
@@ -271,6 +291,33 @@ public class RobotContainer {
           -MathUtil.applyDeadband(m_driverController.getRightX(), OperatorConstants.DRIVE_DEADBAND)
         ), 
         mSwerveSubsystem
+      )
+    );
+  }
+
+  public Command getLedBlinkCommand(double blinkColor, double runTime, double blinkIntervals) {
+    Command blinkCommand;
+    blinkCommand = new ParallelRaceGroup(
+      new WaitCommand(runTime),
+      new RepeatCommand(
+        new SequentialCommandGroup(
+          getLedColorCommand(blinkColor, blinkIntervals),
+          getLedColorCommand(LedSubsystemConstants.OFF_LED_COLOR, blinkIntervals)
+        )
+      )
+    );
+
+    return blinkCommand;
+  }
+
+  public Command getLedColorCommand(double ledColor, double runTime) {
+    return new ParallelRaceGroup(
+      new WaitCommand(runTime),
+      new RunCommand(
+        () -> {
+          mLedSubsystem.setColor(ledColor);
+        }, 
+        mLedSubsystem
       )
     );
   }
