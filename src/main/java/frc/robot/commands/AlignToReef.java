@@ -19,6 +19,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,6 +34,9 @@ public class AlignToReef extends Command {
   private final HolonomicDriveController mDriveController;
 
   private final StructPublisher<Pose2d> mGoalPublisher;
+
+    //private final StructLogEntry<Pose2d> mGoalLogEntry;
+
 
   /** Creates a new AlignToReef. */
   public AlignToReef(Swerve swerve, Pose2d goal) {
@@ -60,6 +65,9 @@ public class AlignToReef extends Command {
 
     mGoalPublisher = NetworkTableInstance.getDefault().getStructTopic("GoalPose", Pose2d.struct).publish();
 
+    //DataLog log = DataLogManager.getLog();
+    //mGoalLogEntry = StructLogEntry.create(log, "/joker/robot/goal", Pose2d.struct);
+
     SmartDashboard.putNumber("goal x", goal.getX());
     SmartDashboard.putNumber("goal y", goal.getY());
     SmartDashboard.putNumber("goal rotation", goal.getRotation().getDegrees());
@@ -73,7 +81,9 @@ public class AlignToReef extends Command {
     mDriveController.setTolerance(new Pose2d(0.01, 0.01, Rotation2d.fromDegrees(1)));
     mGoalPublisher.set(mGoal);
 
-    DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - GOAL:(%5.3f, %5.3f, %5.2f)", mGoal.getX(), mGoal.getY(), mGoal.getRotation().getDegrees()));
+    // DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - GOAL:(%5.3f, %5.3f, %5.2f)", mGoal.getX(), mGoal.getY(), mGoal.getRotation().getDegrees()));
+    // mGoalLogEntry.append(mGoal);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -93,6 +103,8 @@ public class AlignToReef extends Command {
       DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - REACHED:(%5.3f, %5.3f, %5.2f) - INTERRUPTED", curPose.getX(), curPose.getY(), curPose.getRotation().getDegrees()));
     else
       DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - REACHED:(%5.3f, %5.3f, %5.2f)", curPose.getX(), curPose.getY(), curPose.getRotation().getDegrees()));
+    
+    // mGoalLogEntry.append(null);
   }
 
   // Returns true when the command should end.

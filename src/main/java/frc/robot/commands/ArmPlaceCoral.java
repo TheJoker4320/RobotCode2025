@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DataLogManager;
+// import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.utils.ArmState;
@@ -24,7 +25,8 @@ public class ArmPlaceCoral extends Command {
   @Override
   public void initialize() {
     mDesiredState = mArm.setPlaceCoralSetpoint();
-    DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " INITIALIZED");
+    if (mDesiredState != null)
+      DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " INITIALIZED");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,10 +39,11 @@ public class ArmPlaceCoral extends Command {
     if (!interrupted)
       mArm.stopMotorInPlace();
 
-    if (interrupted)
-      DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " FINISHED INTERRUPTED - REACHED: " + mArm.getCurrentAngle());
-    else
-      DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " FINISHED - REACHED: " + mArm.getCurrentAngle());
+    if (mDesiredState != null)
+      if (interrupted)
+        DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " FINISHED INTERRUPTED - REACHED: " + mArm.getCurrentAngle());
+      else
+        DataLogManager.log("ARM_PLACE_CORAL_" + mDesiredState.angle() + " FINISHED - REACHED: " + mArm.getCurrentAngle());
   }
 
   // Returns true when the command should end.

@@ -17,6 +17,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.StructArrayLogEntry;
+import edu.wpi.first.util.datalog.StructLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,6 +46,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   private final StructArrayPublisher<Pose3d> mAprilTagPublisher2;
 
   private final AprilTagFieldLayout mAprilTagFieldLayout;
+
+  private final StructLogEntry<Pose2d> mPoseLog;
+  private final StructArrayLogEntry<Pose3d> mAprilTagsLog1;
+  private final StructArrayLogEntry<Pose3d> mAprilTagsLog2;
+  
 
   private static PoseEstimatorSubsystem mInstance = null;
   public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
@@ -70,6 +79,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     mAprilTagPublisher1 = NetworkTableInstance.getDefault().getStructArrayTopic("LimelightRightAprilTags", Pose3d.struct).publish();
     mAprilTagPublisher2 = NetworkTableInstance.getDefault().getStructArrayTopic("LimelightLeftAprilTags", Pose3d.struct).publish();
     mPosePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
+
+    DataLog log = DataLogManager.getLog();
+    mPoseLog = StructLogEntry.create(log, "/joker/robot/pose", Pose2d.struct);
+    mAprilTagsLog1 = StructArrayLogEntry.create(log, "/joker/robot/aprilTagsRight", Pose3d.struct);
+    mAprilTagsLog2 = StructArrayLogEntry.create(log, "/joker/robot/aprilTagsLeft", Pose3d.struct);
   }
 
   public void resetGyroOffset(double newOffset) {
@@ -95,7 +109,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
-  public void updateVisionMeasurement(String cameraName, StructArrayPublisher<Pose3d> aprilTagPublisher) {
+  public void updateVisionMeasurement(String cameraName, StructArrayPublisher<Pose3d> aprilTagPublisher, StructArrayLogEntry<Pose3d> aprilTagLogEntry) {
     LimelightHelpers.SetRobotOrientation(
       cameraName, 
       mSwerve.getRotation().getDegrees() + mGyroOffset, 
@@ -131,18 +145,24 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     }
 
     aprilTagPublisher.set(aprilTags);
+    aprilTagLogEntry.append(aprilTags);
   }
 
   @Override
   public void periodic() {
-    updateVisionMeasurement("limelight-right", mAprilTagPublisher1);
-    updateVisionMeasurement("limelight-left", mAprilTagPublisher2);
+    updateVisionMeasurement("limelight-right", mAprilTagPublisher1, mAprilTagsLog1);
+    updateVisionMeasurement("limelight-left", mAprilTagPublisher2, mAprilTagsLog2);
 
     mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
 
     mField.setRobotPose(mPoseEstimator.getEstimatedPosition());
 
     mPosePublisher.set(mPoseEstimator.getEstimatedPosition());
+
+    mPoseLog.append(mPoseEstimator.getEstimatedPosition());
+
+    SmartDashboard.putNumber("swerveGyro", mSwerve.getRotation().getDegrees());
+    SmartDashboard.putNumber("gyroOffset", mGyroOffset);
   }
 
   public Pose2d getReefToAlign(final double xOffset, final double yOffset) {

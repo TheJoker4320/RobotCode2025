@@ -10,8 +10,7 @@ public enum ArmState {
     L4(ArmConstants.L4_ANGLE),
     L32_PLACED(ArmConstants.L32_PLACED_ANGLE),
     L4_PLACED(ArmConstants.L4_PLACED_ANGLE),
-    L32_PRE_BALL(ArmConstants.L32_BALL_PRE_COLLECT_ANGLE),
-    L32_BALL_INTAKE(ArmConstants.L32_BALL_COLLECT_ANGLE),
+    L32_BALL(ArmConstants.L32_BALL_ANGLE),
     ZERO(ArmConstants.ZERO_ANGLE);
 
     private double mAngle;

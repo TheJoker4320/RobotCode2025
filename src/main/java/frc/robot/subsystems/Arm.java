@@ -15,8 +15,12 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.util.datalog.BooleanLogEntry;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.utils.ArmState;
@@ -37,6 +41,12 @@ public class Arm extends SubsystemBase {
   private DoublePublisher mArmOutputPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armOutput").publish();
   private BooleanPublisher mArmSetpointInitializedPublisher = NetworkTableInstance.getDefault().getBooleanTopic("arm/armSetpointInitialized").publish();
 
+  private DoubleLogEntry mArmPosLog;
+  private DoubleLogEntry mArmAbsolutePoseLog;
+  private DoubleLogEntry mArmSetpointLog;
+  private BooleanLogEntry mSetpointInitialliedLog;
+  private DoubleLogEntry mArmOutputLog;
+
   private static Arm mInstance;
   public static Arm getInstance() {
     if (mInstance == null)
@@ -53,6 +63,13 @@ public class Arm extends SubsystemBase {
 
     mSetpointInitiallied = false;
     mSetpointState = null;
+
+    DataLog log = DataLogManager.getLog();
+    mArmPosLog = new DoubleLogEntry(log, "/joker/arm/position");
+    mArmSetpointLog = new DoubleLogEntry(log, "/joker/arm/setpoint");
+    mArmOutputLog = new DoubleLogEntry(log, "/joker/arm/output");
+    mSetpointInitialliedLog = new BooleanLogEntry(log, "/joker/arm/setpointInitialized");
+    mArmAbsolutePoseLog = new DoubleLogEntry(log, "/joker/arm/absPosition");
   }
 
   public double getAbsoluteEncoderValue(){
@@ -81,7 +98,7 @@ public class Arm extends SubsystemBase {
   public double getCurrentAngle() {
     return mMotor.getPosition().getValue().in(Degree);
   }
-  private void syncEncoders() { 
+  public void syncEncoders() { 
     mMotor.setPosition(Degree.of(getAbsoluteEncoderValue()));
   }
   private boolean verifyEncoderSync() {
@@ -134,10 +151,15 @@ public class Arm extends SubsystemBase {
       }
     }
 
-    //mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
-    //mArmAbsolutePositionPublisher.set(getAbsoluteEncoderValue());
-    //mArmSetpointPublisher.set(mSetpoint);
-    //mArmOutputPublisher.set(mMotor.get());
-    //mArmSetpointInitializedPublisher.set(mSetpointInitiallied);
+    mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
+    mArmAbsolutePositionPublisher.set(getAbsoluteEncoderValue());
+    mArmSetpointPublisher.set(mSetpoint);
+    mArmOutputPublisher.set(mMotor.get());
+    mArmSetpointInitializedPublisher.set(mSetpointInitiallied);
+    mArmAbsolutePoseLog.append(getAbsoluteEncoderValue());
+    mArmSetpointLog.append(mSetpoint);
+    mArmPosLog.append(mMotor.getPosition().getValue().in(Degrees));
+    mArmOutputLog.append(mMotor.get());
+    mSetpointInitialliedLog.append(mSetpointInitiallied);
   }
 }

@@ -46,6 +46,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -165,19 +166,30 @@ public class RobotContainer {
       )
     );
     // command for reaching a ball placed on l2
-    Command reachL2BallCommand = new SequentialCommandGroup(
-      new ArmReachAngle(mArm, ArmState.L32_PRE_BALL), 
+    Command reachL2BallCommand = new ParallelCommandGroup(
+      new ArmReachAngle(mArm, ArmState.L32_BALL), 
       new ElevatorReachState(mElevatorSubsystem, ElevatorState.L2_BALL)
     );
     // command for reaching a ball placed on l3
     Command reachL3BallCommand = new ParallelCommandGroup(
       new ElevatorReachState(mElevatorSubsystem, ElevatorState.L3_BALL), 
-      new ArmReachAngle(mArm, ArmState.L32_PRE_BALL)
+      new ArmReachAngle(mArm, ArmState.L32_BALL)
     );
     // command for collecting a ball
     Command collectBallCommand = new ManipulatorCollectBall(mManipulator);
     // command for ejecting a ball from the manipulator
     Command ejectManipulatorBallCommand = new ManipulatorBallEject(mManipulator);
+    // sequence command for "throwing" the ball to the net
+    Command throwBallToNet = new ParallelDeadlineGroup(
+      new ParallelCommandGroup(
+        new ElevatorReachState(mElevatorSubsystem, ElevatorState.L4), 
+        new ArmReachAngle(mArm, ArmState.L4)
+      ),
+      new SequentialCommandGroup(
+        new WaitUntilCommand(() -> (Math.abs(mArm.getCurrentAngle() - ArmState.L4.angle()) < 20)),
+        new ManipulatorBallEject(mManipulator)
+      )
+    );
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -190,6 +202,7 @@ public class RobotContainer {
     JoystickButton collectBallButton = new JoystickButton(m_operatorController, OperatorConstants.COLLECT_BALL_BUTTON); //TODO: check constants before running
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
     JoystickButton ejectManipulatorBallButton = new JoystickButton(m_operatorController, OperatorConstants.EJECT_MANIPULATOR_BALL_BUTTON);
+    JoystickButton throwBallToBargeButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_BARGE_BUTTON);
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
     intakeButton.toggleOnTrue(intakeSequenceCommand);
@@ -199,12 +212,17 @@ public class RobotContainer {
     l4Button.onTrue(l4Command);
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
+    throwBallToBargeButton.whileTrue(throwBallToNet);
 
     NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
     NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
     NamedCommands.registerCommand("reachL4", l4Command);
     NamedCommands.registerCommand("prepareIntake", prepareIntakeSequenceCommand);
     NamedCommands.registerCommand("intake", intakeSequenceCommand);
+    NamedCommands.registerCommand("reachL3Ball", reachL3BallCommand);
+    NamedCommands.registerCommand("reachL2Ball", reachL2BallCommand);
+    NamedCommands.registerCommand("grabAlgea", collectBallCommand);
+    NamedCommands.registerCommand("releaseAlgea", ejectManipulatorBallCommand);
 
     mAutoChooser = AutoBuilder.buildAutoChooser();
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
@@ -215,8 +233,8 @@ public class RobotContainer {
     collectBallButton.toggleOnTrue(collectBallCommand);
     ejectManipulatorBallButton.whileTrue(ejectManipulatorBallCommand);
 
-    JoystickButton collectStaticCoral = new JoystickButton(m_operatorController, PS4Controller.Button.kSquare.value);
-    collectStaticCoral.whileTrue(new ManipulatorCollectCoral(mManipulator, 219));
+    JoystickButton correctEncoderButton = new JoystickButton(m_operatorController, PS4Controller.Button.kSquare.value);
+    correctEncoderButton.onTrue(new InstantCommand(() -> mArm.syncEncoders()));
 
     // -------------- DRIVER BUTTONS -------------
 
@@ -263,7 +281,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("red_top_EDC");     // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_mid_G_Algae");     // TODO: SET THE CORRECT AUTONOMOUS
     // PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;

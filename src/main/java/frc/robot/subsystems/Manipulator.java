@@ -73,9 +73,15 @@ public class Manipulator extends SubsystemBase {
     mPrimaryMotor.set(0);
   }
 
+  public void stopBall(){
+    mSecondaryMotor.set(-0.3);
+    mPrimaryMotor.set(-0.3);
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("primary switch state:", mPrimarySwitch.get());
     SmartDashboard.putBoolean("secondary switch state:", mSecondarySwitch.get());
+    SmartDashboard.putNumber("current", mPrimaryMotor.getOutputCurrent());
   }
 }

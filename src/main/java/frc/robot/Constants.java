@@ -60,9 +60,10 @@ public final class Constants {
     public static final int INTAKE_BUTTON = PS4Controller.Button.kCross.value;
     public static final int L2_BALL_STATE_BUTTON = PS4Controller.Button.kShare.value;
     public static final int L3_BALL_STATE_BUTTON = PS4Controller.Button.kOptions.value;
-    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kR3.value;
-    public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kL3.value;
-    
+    public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kL3.value;
+    public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kR3.value;
+    public static final int PLACE_BARGE_BUTTON = PS4Controller.Button.kPS.value;
+
     public static final int CLIMBER_BUTTON = 0;
     public static final int CLOSE_CLIMBER_BUTTON = 180;
   }
@@ -112,7 +113,7 @@ public final class Constants {
     public static final int MOTOR_ID = 13;
 
     public static final double ARM_POSITION_TOLERANCE = 3.5;  // in degrees
-    public static final double ARM_ENCODER_TOLERANCE = 0.5;   // in degrees
+    public static final double ARM_ENCODER_TOLERANCE = 2;   // in degrees
     public static final double ARM_ENCODER_OFFSET = -68.12;   // in degrees
 
     //all PID values are in rotations, not degrees/radians
@@ -124,7 +125,7 @@ public final class Constants {
     public static final double ARM_KV = 9.946; 
     public static final double ARM_KS = 0.371;
 
-    public static final double ARM_KG_STAY = 0.2;
+    public static final double ARM_KG_STAY = 0.1;
 
     public static final InvertedValue INVERTED_VALUE = InvertedValue.CounterClockwise_Positive;
 
@@ -134,8 +135,7 @@ public final class Constants {
     public static final double L4_ANGLE = 70;
     public static final double L32_ANGLE = 69;
     public static final double L1_ANGLE = -31;
-    public static final double L32_BALL_PRE_COLLECT_ANGLE = -15;
-    public static final double L32_BALL_COLLECT_ANGLE = 0;
+    public static final double L32_BALL_ANGLE = 0;
     public static final double L4_PLACED_ANGLE = 32;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
@@ -165,8 +165,8 @@ public final class Constants {
 
     public static final boolean SECONDARY_MOTOR_INVERTED = true;
 
-    public static final int MANIPULATOR_SECONDARY_SMART_CURRENT_LIMIT = 40; //TODO: validate value
-    public static final int MANIPULATOR_PRIMARY_SMART_CURRENT_LIMIT = 40; //TODO: validate value
+    public static final int MANIPULATOR_SECONDARY_SMART_CURRENT_LIMIT = 50; //TODO: validate value
+    public static final int MANIPULATOR_PRIMARY_SMART_CURRENT_LIMIT = 50; //TODO: validate value
 
     //TODO: set correct speed for manipulator
     public static final double BALL_COLLECT_SPEED = -1; 
@@ -195,8 +195,8 @@ public final class Constants {
     public static final double PRE_INTAKE_POSITION = 0.59;
     public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
-    public static final double L2_BALL_POSITION = 0.475;
-    public static final double L3_BALL_POSITION = 0.84;
+    public static final double L2_BALL_POSITION = 0.69;
+    public static final double L3_BALL_POSITION = 1.05;
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.185;
@@ -236,14 +236,14 @@ public final class Constants {
     // The larger the following values are the less the pose estimator trusts the measurements - if we see 
     // large ambiguity increase the values, if we see high precision than decrease the values
     public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5));
-    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.35, 0.35, Units.degreesToRadians(999999999));      // These values are most likely too high - should be tested
+    public static final Matrix<N3, N1> VISION_STANDARD_DEVIATIONS = VecBuilder.fill(0.35, 0.35, Units.degreesToRadians(15));      // These values are most likely too high - should be tested
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
     public static final double FAR_REEF_X_OFFSET = -0.52;
     public static final double CLOSE_REEF_X_OFFSET = -0.46;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
-    public static final double REEF_Y_RIGHT_OFFSET = -0.24;   // The distance between the center of the april tag and reef branch
-    public static final double REEF_Y_LEFT_OFFSET = 0.17;     // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_RIGHT_OFFSET = -0.20;   // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_LEFT_OFFSET = 0.20;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
 
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
@@ -328,12 +328,12 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.035;
+    public static final double DRIVING_P_CONSTANT = 0.045;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
 
-    public static final double TURNING_P_CONSTANT = 1;
+    public static final double TURNING_P_CONSTANT = 1.25;
     public static final double TURNING_I_CONSTANT = 0;
     public static final double TURNING_D_CONSTANT = 0;
 
