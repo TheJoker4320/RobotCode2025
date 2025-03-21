@@ -12,20 +12,20 @@
         "y": 1.8757735434586733
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "blue_C"
     },
     {
       "anchor": {
-        "x": 1.7849147727272727,
-        "y": 1.0933522727272724
+        "x": 1.5175941780821918,
+        "y": 1.0048373287671233
       },
       "prevControl": {
-        "x": 2.0054149964183585,
-        "y": 1.211164204857176
+        "x": 1.7380944017732776,
+        "y": 1.122649260897027
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "blue_bottFeeder"
     }
   ],
   "rotationTargets": [],

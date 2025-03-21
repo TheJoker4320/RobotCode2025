@@ -9,9 +9,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "race",
                 "data": {
-                  "pathName": "red_bottStart_J"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "blue_bottStart_E"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.5
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -30,7 +43,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.35
+                  "waitTime": 0.5
                 }
               },
               {
@@ -50,7 +63,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 0.1
+                              "waitTime": 0.375
                             }
                           },
                           {
@@ -75,7 +88,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_J_bottFeeder"
+                  "pathName": "blue_E_bottFeeder"
                 }
               },
               {
@@ -122,13 +135,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.75
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "red_bottFeeder_stopK"
+            "waitTime": 1.5
           }
         },
         {
@@ -142,13 +149,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.2
+                        "waitTime": 1.25
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "red_stopK_K"
+                        "pathName": "blue_bottFeeder_D"
                       }
                     }
                   ]
@@ -159,19 +166,13 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.25
-                      }
-                    },
-                    {
                       "type": "race",
                       "data": {
                         "commands": [
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 0.5
+                              "waitTime": 0.75
                             }
                           },
                           {
@@ -202,7 +203,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.35
+                  "waitTime": 0.5
                 }
               },
               {
@@ -222,7 +223,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 0.1
+                              "waitTime": 0.375
                             }
                           },
                           {
@@ -247,7 +248,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_K_bottFeeder"
+                  "pathName": "blue_D_bottFeeder"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.35
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "prepareIntake"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -257,7 +277,148 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.2
+                        "waitTime": 0.3
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "release"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.25
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "blue_bottFeeder_C"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.75
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "reachL4"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "armPlaceCoral"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.3
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "release"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "blue_C_bottFeeder"
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.35
                       }
                     },
                     {
@@ -276,7 +437,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.25
+                        "waitTime": 0.4
                       }
                     },
                     {
@@ -290,17 +451,11 @@
               }
             ]
           }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.75
-          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "red_bott",
+  "folder": "blue_bott",
   "choreoAuto": false
 }
