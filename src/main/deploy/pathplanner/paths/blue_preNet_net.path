@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.204,
-        "y": 1.652
+        "x": 5.532638888888889,
+        "y": 6.495
       },
       "prevControl": null,
       "nextControl": {
-        "x": 11.954,
-        "y": 1.652
+        "x": 6.532638888888889,
+        "y": 6.495
       },
       "isLocked": false,
-      "linkedName": "red_preNet"
+      "linkedName": "blue_preNet"
     },
     {
       "anchor": {
-        "x": 10.061335227272727,
-        "y": 1.6517613636363626
+        "x": 7.309176136363636,
+        "y": 6.495
       },
       "prevControl": {
-        "x": 10.311335227272727,
-        "y": 1.6517613636363626
+        "x": 6.309176136363636,
+        "y": 6.495
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.6264462809917334,
+      "minWaypointRelativePos": 0.8735537190082663,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 2.0,
@@ -48,7 +48,7 @@
   "eventMarkers": [
     {
       "name": "releaseAlgeaToNet",
-      "waypointRelativePos": 0.8035859820700896,
+      "waypointRelativePos": 0.7958677685950474,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -63,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "RedAlgeaPaths",
+  "folder": "BlueAlgeaPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
