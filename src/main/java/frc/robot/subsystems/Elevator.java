@@ -86,7 +86,8 @@ public class Elevator extends SubsystemBase {
   public void stopMotorInPlace() {
     DataLogManager.log("ELEVATOR - STOPPING IN PLACE");
 
-    mRightMotorController.set(0);
+    // mRightMotorController.set(0);
+    mRightMotorController.setVoltage(ElevatorConstants.ELEVATOR_G_CONSTANT);
     mSetpointInitiallied = false;
   }
 

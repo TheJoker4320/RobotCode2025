@@ -213,6 +213,10 @@ public class RobotContainer {
         new ManipulatorBallEject(mManipulator)
       )
     );
+    Command reachProcessorCommand = new ParallelCommandGroup(
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.PROCESSOR),
+      new ArmReachAngle(mArm, ArmState.L1)
+    );
 
     JoystickButton intakePrepareButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_PREPARE_BUTTON);
     JoystickButton intakeButton = new JoystickButton(m_operatorController, OperatorConstants.INTAKE_BUTTON);
@@ -226,6 +230,7 @@ public class RobotContainer {
     JoystickButton placeCoralButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_CORAL_BUTTON);
     JoystickButton ejectManipulatorBallButton = new JoystickButton(m_operatorController, OperatorConstants.EJECT_MANIPULATOR_BALL_BUTTON);
     JoystickButton throwBallToBargeButton = new JoystickButton(m_operatorController, OperatorConstants.PLACE_BARGE_BUTTON);
+    JoystickButton processorButton = new JoystickButton(m_operatorController, OperatorConstants.PROCESSOR_STATE_BUTTON);
 
     intakePrepareButton.onTrue(prepareIntakeSequenceCommand);
     intakeButton.toggleOnTrue(intakeSequenceCommand);
@@ -236,6 +241,13 @@ public class RobotContainer {
     reachL2BallButton.onTrue(reachL2BallCommand);
     reachL3BallButton.onTrue(reachL3BallCommand);
     throwBallToBargeButton.whileTrue(throwBallToNet);
+    processorButton.onTrue(reachProcessorCommand);
+
+    POVButton floorIntakeButton = new POVButton(m_operatorController, 180);
+    floorIntakeButton.onTrue(new SequentialCommandGroup(
+      new ArmReachAngle(mArm, ArmState.L1),
+      new ElevatorReachState(mElevatorSubsystem, ElevatorState.GROUND_BALL_INTAKE)
+    ));
 
     NamedCommands.registerCommand("release", new ManipulatorCoralEject(mManipulator));
     NamedCommands.registerCommand("armPlaceCoral", new ArmPlaceCoral(mArm));
@@ -245,7 +257,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("reachL3Ball", reachL3BallCommand);
     NamedCommands.registerCommand("reachL2Ball", reachL2BallCommand);
     NamedCommands.registerCommand("grabAlgea", collectBallCommand);
-    NamedCommands.registerCommand("releaseAlgea", ejectManipulatorBallCommand);
+    NamedCommands.registerCommand("releaseAlgeaToNet", throwBallToNet);
+    NamedCommands.registerCommand("releaseAlgea", new ManipulatorBallEject(mManipulator));
+    NamedCommands.registerCommand("reachProcessor", reachProcessorCommand);
 
     mAutoChooser = AutoBuilder.buildAutoChooser();
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));

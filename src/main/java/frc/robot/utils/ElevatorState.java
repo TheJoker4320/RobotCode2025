@@ -11,7 +11,9 @@ public enum ElevatorState {
     L4(ElevatorConstants.L4_POSITION),
     L3(ElevatorConstants.L3_POSITION),
     L2(ElevatorConstants.L2_POSITION),
-    L1(ElevatorConstants.L1_POSITION);
+    L1(ElevatorConstants.L1_POSITION),
+    PROCESSOR(ElevatorConstants.PROCESSOR_POSITION),
+    GROUND_BALL_INTAKE(ElevatorConstants.BALL_FLOOR_POSITION);
 
     private double mHeight;  
     private ElevatorState(double height) { mHeight = height; }

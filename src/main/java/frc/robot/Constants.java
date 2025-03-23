@@ -63,6 +63,7 @@ public final class Constants {
     public static final int COLLECT_BALL_BUTTON = PS4Controller.Button.kL3.value;
     public static final int EJECT_MANIPULATOR_BALL_BUTTON = PS4Controller.Button.kR3.value;
     public static final int PLACE_BARGE_BUTTON = PS4Controller.Button.kPS.value;
+    public static final int PROCESSOR_STATE_BUTTON = PS4Controller.Button.kTouchpad.value;
 
     public static final int CLIMBER_BUTTON = 0;
     public static final int CLOSE_CLIMBER_BUTTON = 180;
@@ -165,7 +166,7 @@ public final class Constants {
 
     public static final double BLINK_TIME = 0.05;
     public static final double FINISHED_ALIGNMENT_LED_TIME = 2;
-    public static final double COLLECTED_CORAL_LED_TIME = 2;
+    public static final double COLLECTED_CORAL_LED_TIME = 1;
   }
 
   public static class ManipulatorConstants {
@@ -216,6 +217,8 @@ public final class Constants {
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.2;
     public static final double L1_POSITION = 0.701;
+    public static final double PROCESSOR_POSITION = 0.53;
+    public static final double BALL_FLOOR_POSITION = 0.37;
     
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
@@ -255,10 +258,10 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double FAR_REEF_X_OFFSET = -0.52;
-    public static final double CLOSE_REEF_X_OFFSET = -0.46;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
-    public static final double REEF_Y_RIGHT_OFFSET = -0.20;   // The distance between the center of the april tag and reef branch
-    public static final double REEF_Y_LEFT_OFFSET = 0.20;     // The distance between the center of the april tag and reef branch
+    public static final double FAR_REEF_X_OFFSET = -0.61;
+    public static final double CLOSE_REEF_X_OFFSET = -0.52;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_Y_RIGHT_OFFSET = -0.17;   // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_LEFT_OFFSET = 0.15;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
 
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
@@ -343,7 +346,7 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.045;
+    public static final double DRIVING_P_CONSTANT = 0.055;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
@@ -356,7 +359,7 @@ public final class Constants {
   }
 
   public static class AutonomousConstants {
-    public static final double TRANSLATION_P_CONSTANT = 2.973395833;
+    public static final double TRANSLATION_P_CONSTANT = 3.673395833;
     public static final double TRANSLATION_I_CONSTANT = 0;
     public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 
