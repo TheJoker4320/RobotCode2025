@@ -210,11 +210,11 @@ public final class Constants {
     public static final double PRE_INTAKE_POSITION = 0.59;
     public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
-    public static final double L2_BALL_POSITION = 0.69;
-    public static final double L3_BALL_POSITION = 1.05;
+    public static final double L2_BALL_POSITION = 0.71;
+    public static final double L3_BALL_POSITION = 1.07;
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
-    public static final double L2_POSITION = 0.185;
+    public static final double L2_POSITION = 0.2;
     public static final double L1_POSITION = 0.701;
     
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters
