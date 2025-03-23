@@ -21,7 +21,8 @@ public class Manipulator extends SubsystemBase {
   private final SparkMax mPrimaryMotor;
   private final SparkMax mSecondaryMotor;
   
-  private final DigitalInput mPrimarySwitch;
+  //TODO: add back primary limit switch
+  //private final DigitalInput mPrimarySwitch;
   private final DigitalInput mSecondarySwitch;
 
   private static Manipulator mInstance = null;
@@ -37,7 +38,7 @@ public class Manipulator extends SubsystemBase {
     mPrimaryMotor = new SparkMax(ManipulatorConstants.PRIMARY_MOTOR_ID, MotorType.kBrushless);
     mSecondaryMotor = new SparkMax(ManipulatorConstants.SECONDARY_MOTOR_ID, MotorType.kBrushless);
 
-    mPrimarySwitch = new DigitalInput(ManipulatorConstants.PRIMARY_SWITCH_PORT);
+    //mPrimarySwitch = new DigitalInput(ManipulatorConstants.PRIMARY_SWITCH_PORT);
     mSecondarySwitch = new DigitalInput(ManipulatorConstants.SECONDARY_SWITCH_PORT);
       
     mPrimaryMotor.configure(ManipulatorConfigs.CORAL_COLLECTOR_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -45,7 +46,7 @@ public class Manipulator extends SubsystemBase {
   }
 
   public boolean getSwitchState() {
-    return (!mPrimarySwitch.get()) || (!mSecondarySwitch.get());
+    return (!mSecondarySwitch.get());
   }
 
   public void collectCoral() {
@@ -80,7 +81,7 @@ public class Manipulator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("primary switch state:", mPrimarySwitch.get());
+    //SmartDashboard.putBoolean("primary state:", mPrimarySwitch.get());
     SmartDashboard.putBoolean("secondary switch state:", mSecondarySwitch.get());
     SmartDashboard.putNumber("current", mPrimaryMotor.getOutputCurrent());
   }
