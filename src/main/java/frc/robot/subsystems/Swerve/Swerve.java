@@ -10,12 +10,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StructArrayLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveSubsystemConstants;
 
@@ -33,9 +30,6 @@ public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry mOdometry;
 
     private Boolean mFieldRelative;
-
-    private StructArrayPublisher<SwerveModuleState> mSwerveStatesPublisher;
-    private StructArrayPublisher<SwerveModuleState> mDesiredSwerveStatesPublisher;
 
     private StructArrayLogEntry<SwerveModuleState> mSwerveStatesLogEntry;
     private StructArrayLogEntry<SwerveModuleState> mDesiredSwerveStatesLogEntry;
@@ -66,16 +60,12 @@ public class Swerve extends SubsystemBase {
 
         mFieldRelative = true;
 
-        mSwerveStatesPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("SwerveStates", SwerveModuleState.struct).publish();
-        mDesiredSwerveStatesPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("DesiredSwerveStates", SwerveModuleState.struct).publish();
-
         DataLog log = DataLogManager.getLog();
         mSwerveStatesLogEntry = StructArrayLogEntry.create(log, "/joker/swerve/moduleStates", SwerveModuleState.struct);
         mDesiredSwerveStatesLogEntry = StructArrayLogEntry.create(log, "/joker/swerve/desiredStates", SwerveModuleState.struct);
     }
 
     public void drive(double xSpeed, double ySpeed, double rot) {
-        SmartDashboard.putNumber("Mult", mInputMultiplier);
         double xSpeedCommand = xSpeed * mInputMultiplier;
         double ySpeedCommand = ySpeed * mInputMultiplier;
         double rotCommand = rot * mInputMultiplier;
@@ -184,7 +174,6 @@ public class Swerve extends SubsystemBase {
         desiredStates[2] = mRearLeft.getDesiredState();
         desiredStates[3] = mRearRight.getDesiredState();
 
-        mDesiredSwerveStatesPublisher.set(desiredStates);
         mDesiredSwerveStatesLogEntry.append(desiredStates);
     }
 
@@ -195,7 +184,6 @@ public class Swerve extends SubsystemBase {
         currentStates[2] = mRearLeft.getState();
         currentStates[3] = mRearRight.getState();
 
-        mSwerveStatesPublisher.set(currentStates);
         mSwerveStatesLogEntry.append(currentStates);
     }
 

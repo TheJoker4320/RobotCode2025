@@ -12,15 +12,11 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.networktables.BooleanPublisher;
-import edu.wpi.first.networktables.DoublePublisher;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.utils.ArmState;
@@ -34,12 +30,6 @@ public class Arm extends SubsystemBase {
   private double mSetpoint;
   private ArmState mSetpointState;
   private boolean mSetpointInitiallied;
-
-  private DoublePublisher mArmPositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armPose").publish();
-  private DoublePublisher mArmAbsolutePositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armAbsPose").publish();
-  private DoublePublisher mArmSetpointPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armSetpoint").publish();
-  private DoublePublisher mArmOutputPublisher = NetworkTableInstance.getDefault().getDoubleTopic("arm/armOutput").publish();
-  private BooleanPublisher mArmSetpointInitializedPublisher = NetworkTableInstance.getDefault().getBooleanTopic("arm/armSetpointInitialized").publish();
 
   private DoubleLogEntry mArmPosLog;
   private DoubleLogEntry mArmAbsolutePoseLog;
@@ -151,11 +141,6 @@ public class Arm extends SubsystemBase {
       }
     }
 
-    mArmPositionPublisher.set(mMotor.getPosition().getValue().in(Degrees));
-    mArmAbsolutePositionPublisher.set(getAbsoluteEncoderValue());
-    mArmSetpointPublisher.set(mSetpoint);
-    mArmOutputPublisher.set(mMotor.get());
-    mArmSetpointInitializedPublisher.set(mSetpointInitiallied);
     mArmAbsolutePoseLog.append(getAbsoluteEncoderValue());
     mArmSetpointLog.append(mSetpoint);
     mArmPosLog.append(mMotor.getPosition().getValue().in(Degrees));

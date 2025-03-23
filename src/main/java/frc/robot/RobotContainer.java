@@ -77,7 +77,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    DriverStation.startDataLog(DataLogManager.getLog(), false);
+    DriverStation.startDataLog(DataLogManager.getLog(), true);
 
     mPoseEstimatorSubsystem = PoseEstimatorSubsystem.getInstance(mSwerveSubsystem);
     mPoseEstimatorSubsystem.resetGyroOffset(DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0);
@@ -181,8 +181,11 @@ public class RobotContainer {
     // command for ejecting a coral
     Command placeCoralCommand = new SequentialCommandGroup(
       new ParallelCommandGroup(
-        new ArmPlaceCoral(mArm), 
-        new ManipulatorCoralEject(mManipulator)
+        new ArmPlaceCoral(mArm),
+        new SequentialCommandGroup(
+          new WaitCommand(0.3), 
+          new ManipulatorCoralEject(mManipulator)
+        )
       )
     );
     // command for reaching a ball placed on l2
@@ -206,7 +209,7 @@ public class RobotContainer {
         new ArmReachAngle(mArm, ArmState.L4)
       ),
       new SequentialCommandGroup(
-        new WaitUntilCommand(() -> (Math.abs(mArm.getCurrentAngle() - ArmState.L4.angle()) < 20)),
+        new WaitUntilCommand(() -> (Math.abs(mArm.getCurrentAngle() - ArmState.L4.angle()) < 30)),
         new ManipulatorBallEject(mManipulator)
       )
     );

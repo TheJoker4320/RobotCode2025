@@ -11,9 +11,6 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.networktables.BooleanPublisher;
-import edu.wpi.first.networktables.DoublePublisher;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -30,12 +27,6 @@ public class Elevator extends SubsystemBase {
 
   private double mSetpoint;
   private boolean mSetpointInitiallied = false;
-
-  private DoublePublisher mElevatorPositionPublisher = NetworkTableInstance.getDefault().getDoubleTopic("elevator/elevatorPose").publish();
-  private DoublePublisher mElevatorRightOutputPublisher = NetworkTableInstance.getDefault().getDoubleTopic("elevator/elevatorRightOutput").publish();
-  private DoublePublisher mElevatorSetpointPublisher = NetworkTableInstance.getDefault().getDoubleTopic("elevator/elevatorSetpoint").publish();
-  private DoublePublisher mElevatorLeftOutputPublisher = NetworkTableInstance.getDefault().getDoubleTopic("elevator/elevatorLeftOutput").publish();
-  private BooleanPublisher mElevatorSetpointInitializedPublisher = NetworkTableInstance.getDefault().getBooleanTopic("elevator/elevatorSetpointInitialized").publish();
 
   private DoubleLogEntry mElevatorHeightLog;
   private DoubleLogEntry mElevatorRightOutputLog;
@@ -110,12 +101,6 @@ public class Elevator extends SubsystemBase {
       final MotionMagicVoltage mRequest = new MotionMagicVoltage(0);
       mRightMotorController.setControl(mRequest.withPosition(Rotations.of(mSetpoint)));
     }
-
-    mElevatorPositionPublisher.set(mRightMotorController.getPosition().getValueAsDouble());
-    mElevatorRightOutputPublisher.set(mRightMotorController.get());
-    mElevatorLeftOutputPublisher.set(mLeftMotorController.get());
-    mElevatorSetpointPublisher.set(mSetpoint);
-    mElevatorSetpointInitializedPublisher.set(mSetpointInitiallied);
 
     mElevatorHeightLog.append(mRightMotorController.getPosition().getValueAsDouble());
     mElevatorRightOutputLog.append(mRightMotorController.get());

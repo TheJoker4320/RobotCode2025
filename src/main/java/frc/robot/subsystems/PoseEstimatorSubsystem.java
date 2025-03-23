@@ -14,18 +14,12 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StructArrayLogEntry;
 import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -36,18 +30,11 @@ import frc.robot.Constants.SwerveSubsystemConstants;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.commands.AlignToReef;
 
-public class PoseEstimatorSubsystem extends SubsystemBase {
-  private final Field2d mField;
-  
+public class PoseEstimatorSubsystem extends SubsystemBase {  
   private final SwerveDrivePoseEstimator mPoseEstimator;
   private final Swerve mSwerve;
 
   private double mGyroOffset;   // In degrees
-
-  private final StructPublisher<Pose2d> mPosePublisher;
-
-  private final StructArrayPublisher<Pose3d> mAprilTagPublisher1;
-  private final StructArrayPublisher<Pose3d> mAprilTagPublisher2;
 
   private final AprilTagFieldLayout mAprilTagFieldLayout;
 
@@ -55,7 +42,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   private final StructArrayLogEntry<Pose3d> mAprilTagsLog1;
   private final StructArrayLogEntry<Pose3d> mAprilTagsLog2;
   
-
   private static PoseEstimatorSubsystem mInstance = null;
   public static PoseEstimatorSubsystem getInstance(Swerve swerve) {
     if (mInstance == null)
@@ -65,9 +51,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   /** Creates a new PoseEstimator. */
   private PoseEstimatorSubsystem(Swerve swerve) {
-    mField = new Field2d();
-    SmartDashboard.putData(mField);
-
     mSwerve = swerve;
     mPoseEstimator = new SwerveDrivePoseEstimator(
       SwerveSubsystemConstants.DRIVE_KINEMATICS, 
@@ -79,10 +62,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
 
     mAprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
-
-    mAprilTagPublisher1 = NetworkTableInstance.getDefault().getStructArrayTopic("LimelightRightAprilTags", Pose3d.struct).publish();
-    mAprilTagPublisher2 = NetworkTableInstance.getDefault().getStructArrayTopic("LimelightLeftAprilTags", Pose3d.struct).publish();
-    mPosePublisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
 
     DataLog log = DataLogManager.getLog();
     mPoseLog = StructLogEntry.create(log, "/joker/robot/pose", Pose2d.struct);
@@ -113,7 +92,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     );
   }
 
-  public void updateVisionMeasurement(String cameraName, StructArrayPublisher<Pose3d> aprilTagPublisher, StructArrayLogEntry<Pose3d> aprilTagLogEntry) {
+  public void updateVisionMeasurement(String cameraName, StructArrayLogEntry<Pose3d> aprilTagLogEntry) {
     LimelightHelpers.SetRobotOrientation(
       cameraName, 
       mSwerve.getRotation().getDegrees() + mGyroOffset, 
@@ -148,25 +127,17 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       aprilTags = new Pose3d[0];
     }
 
-    aprilTagPublisher.set(aprilTags);
     aprilTagLogEntry.append(aprilTags);
   }
 
   @Override
   public void periodic() {
-    updateVisionMeasurement("limelight-right", mAprilTagPublisher1, mAprilTagsLog1);
-    updateVisionMeasurement("limelight-left", mAprilTagPublisher2, mAprilTagsLog2);
+    updateVisionMeasurement("limelight-right", mAprilTagsLog1);
+    updateVisionMeasurement("limelight-left", mAprilTagsLog2);
 
     mPoseEstimator.update(getRobotRotation(), mSwerve.getModulePositions());
 
-    mField.setRobotPose(mPoseEstimator.getEstimatedPosition());
-
-    mPosePublisher.set(mPoseEstimator.getEstimatedPosition());
-
     mPoseLog.append(mPoseEstimator.getEstimatedPosition());
-
-    SmartDashboard.putNumber("swerveGyro", mSwerve.getRotation().getDegrees());
-    SmartDashboard.putNumber("gyroOffset", mGyroOffset);
   }
 
   public Pose2d getReefToAlign(final double xOffset, final double yOffset) {

@@ -22,7 +22,6 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StructLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -35,7 +34,7 @@ public class AlignToReef extends Command {
 
   private final StructPublisher<Pose2d> mGoalPublisher;
 
-    //private final StructLogEntry<Pose2d> mGoalLogEntry;
+  private final StructLogEntry<Pose2d> mGoalLogEntry;
 
 
   /** Creates a new AlignToReef. */
@@ -65,12 +64,8 @@ public class AlignToReef extends Command {
 
     mGoalPublisher = NetworkTableInstance.getDefault().getStructTopic("GoalPose", Pose2d.struct).publish();
 
-    //DataLog log = DataLogManager.getLog();
-    //mGoalLogEntry = StructLogEntry.create(log, "/joker/robot/goal", Pose2d.struct);
-
-    SmartDashboard.putNumber("goal x", goal.getX());
-    SmartDashboard.putNumber("goal y", goal.getY());
-    SmartDashboard.putNumber("goal rotation", goal.getRotation().getDegrees());
+    DataLog log = DataLogManager.getLog();
+    mGoalLogEntry = StructLogEntry.create(log, "/joker/robot/goal", Pose2d.struct);
 
     addRequirements(mSwerve);
   }
@@ -79,11 +74,9 @@ public class AlignToReef extends Command {
   @Override
   public void initialize() {
     mDriveController.setTolerance(new Pose2d(0.01, 0.01, Rotation2d.fromDegrees(1)));
-    mGoalPublisher.set(mGoal);
 
-    // DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - GOAL:(%5.3f, %5.3f, %5.2f)", mGoal.getX(), mGoal.getY(), mGoal.getRotation().getDegrees()));
-    // mGoalLogEntry.append(mGoal);
-
+    DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - GOAL:(%5.3f, %5.3f, %5.2f)", mGoal.getX(), mGoal.getY(), mGoal.getRotation().getDegrees()));
+    mGoalLogEntry.append(mGoal);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -104,7 +97,7 @@ public class AlignToReef extends Command {
     else
       DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - REACHED:(%5.3f, %5.3f, %5.2f)", curPose.getX(), curPose.getY(), curPose.getRotation().getDegrees()));
     
-    // mGoalLogEntry.append(null);
+    mGoalLogEntry.append(new Pose2d());
   }
 
   // Returns true when the command should end.

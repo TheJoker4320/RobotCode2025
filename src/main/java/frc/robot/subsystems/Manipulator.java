@@ -83,6 +83,5 @@ public class Manipulator extends SubsystemBase {
   public void periodic() {
     //SmartDashboard.putBoolean("primary state:", mPrimarySwitch.get());
     SmartDashboard.putBoolean("secondary switch state:", mSecondarySwitch.get());
-    SmartDashboard.putNumber("current", mPrimaryMotor.getOutputCurrent());
   }
 }
