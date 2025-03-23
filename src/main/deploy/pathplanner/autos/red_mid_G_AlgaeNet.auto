@@ -21,7 +21,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "blue_midStart_G"
+                        "pathName": "red_midStart_G"
                       }
                     }
                   ]
@@ -81,7 +81,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "blue_G_ballStop"
+                  "pathName": "red_G_ballStop"
                 }
               },
               {
@@ -107,9 +107,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "reachL2Ball"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.7
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "reachL2Ball"
+                }
+              }
+            ]
           }
         },
         {
@@ -119,7 +132,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "blue_ballStop_ball"
+                  "pathName": "red_ballStop_ball"
                 }
               },
               {
@@ -132,60 +145,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "blue_ball_Net"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.75
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "reachL4"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "pathName": "red_ball_preNet"
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 2.0
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "releaseAlgea"
-                }
-              }
-            ]
+            "pathName": "red_preNet_net"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "blue_mid",
+  "folder": "red_mid",
   "choreoAuto": false
 }
