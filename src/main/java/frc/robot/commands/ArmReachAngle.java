@@ -48,6 +48,12 @@ public class ArmReachAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (Math.abs(mArm.getCurrentAngle() - mArm.getAbsoluteEncoderValue()) > 15) {
+      DataLogManager.log("ARM_REACH_ANGLE_" + mDesiredState.angle() + " ENCODERS BADLY OUT OF SYNC!");
+      mArm.syncEncoders();
+      return true;
+    }
+
     return mArm.isAtState(mDesiredState);
   }
 }

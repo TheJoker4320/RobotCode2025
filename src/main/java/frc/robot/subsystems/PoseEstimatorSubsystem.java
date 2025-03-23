@@ -25,8 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.PoseEstimatorConstants;
 import frc.robot.Constants.SwerveSubsystemConstants;
@@ -179,15 +182,31 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     return new Pose2d(reefToAlign.getX() + deltaX, reefToAlign.getY() + deltaY, reefToAlign.getRotation().plus(Rotation2d.k180deg));
   }
 
+  private boolean isInTolerance(Pose2d pose, Pose2d goal, Pose2d tolerance) {
+    return
+      Math.abs(pose.getX() - goal.getX()) < tolerance.getX() &&
+      Math.abs(pose.getY() - goal.getY()) < tolerance.getY() &&
+      Math.abs(pose.getRotation().minus(goal.getRotation()).getDegrees()) < tolerance.getRotation().getDegrees();
+  }
+
   public Command getReefAlignmentCommand(final double xOffset, final double yOffset, Command ledCommand) {
-    return new SequentialCommandGroup(
+    return new ParallelDeadlineGroup(
       new DeferredCommand(
         () -> {
           return new AlignToReef(mSwerve, getReefToAlign(xOffset, yOffset));
         },
         Set.of(mSwerve)
       ),
-      ledCommand
+      new SequentialCommandGroup(
+        new DeferredCommand(
+          () -> {
+            Pose2d goal = getReefToAlign(xOffset, yOffset);
+            return new WaitUntilCommand(() -> isInTolerance(getPose(), goal, new Pose2d(0.035, 0.035, Rotation2d.fromDegrees(1))));
+          }, 
+          Set.of()
+        ),
+        ledCommand
+      )
     );
   }
 }
