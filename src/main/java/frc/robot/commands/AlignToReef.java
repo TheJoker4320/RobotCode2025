@@ -73,7 +73,7 @@ public class AlignToReef extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mDriveController.setTolerance(new Pose2d(0.01, 0.01, Rotation2d.fromDegrees(1)));
+    mDriveController.setTolerance(new Pose2d(0.015, 0.015, Rotation2d.fromDegrees(1)));
 
     DataLogManager.log(String.format("ALIGN_TO_REEF INITIALIZED - GOAL:(%5.3f, %5.3f, %5.2f)", mGoal.getX(), mGoal.getY(), mGoal.getRotation().getDegrees()));
     mGoalLogEntry.append(mGoal);

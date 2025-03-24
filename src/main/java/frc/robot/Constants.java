@@ -346,7 +346,7 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.055;
+    public static final double DRIVING_P_CONSTANT = 0.058;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
@@ -359,7 +359,7 @@ public final class Constants {
   }
 
   public static class AutonomousConstants {
-    public static final double TRANSLATION_P_CONSTANT = 3.673395833;
+    public static final double TRANSLATION_P_CONSTANT = 3.833395833;
     public static final double TRANSLATION_I_CONSTANT = 0;
     public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 

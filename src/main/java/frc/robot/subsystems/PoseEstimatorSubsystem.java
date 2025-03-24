@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StructArrayLogEntry;
 import edu.wpi.first.util.datalog.StructLogEntry;
@@ -38,6 +40,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private final AprilTagFieldLayout mAprilTagFieldLayout;
 
+  private final DoubleEntry mXOffsetTunable;  // TODO: REMOVE THIS
+  private final DoubleEntry mYOffsetTunable;  // TODO: REMOVE THIS
+
   private final StructLogEntry<Pose2d> mPoseLog;
   private final StructArrayLogEntry<Pose3d> mAprilTagsLog1;
   private final StructArrayLogEntry<Pose3d> mAprilTagsLog2;
@@ -60,6 +65,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       PoseEstimatorConstants.STATE_STANDARD_DEVIATIONS,
       PoseEstimatorConstants.VISION_STANDARD_DEVIATIONS
     );
+
+    mXOffsetTunable = DogLog.tunable("Alignment/XOffset", PoseEstimatorConstants.FAR_REEF_X_OFFSET);      // TODO: REMOVE THIS
+    mYOffsetTunable = DogLog.tunable("Alignment/YOffset", PoseEstimatorConstants.REEF_Y_RIGHT_OFFSET);    // TODO: REMOVE THIS
 
     mAprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
@@ -146,9 +154,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     Pose2d reefToAlign = robotPose.nearest(mReefAprilTags);
 
     final double angleOffset = PoseEstimatorConstants.APRIL_TAG_ANGLE_OFFSET;
-
-    double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
-    double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
+    
+    double deltaX = mXOffsetTunable.get() * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + mYOffsetTunable.get() * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);      // TODO: REMOVE THIS
+    double deltaY = -mXOffsetTunable.get() * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + mYOffsetTunable.get() * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);     // TODO: REMOVE THIS
+    //double deltaX = xOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset);
+    //double deltaY = -xOffset * Math.cos(reefToAlign.getRotation().getRadians() + angleOffset) + yOffset * Math.sin(reefToAlign.getRotation().getRadians() + angleOffset);
 
     return new Pose2d(reefToAlign.getX() + deltaX, reefToAlign.getY() + deltaY, reefToAlign.getRotation().plus(Rotation2d.k180deg));
   }
