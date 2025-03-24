@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.204,
-        "y": 1.652
+        "x": 12.696703767123289,
+        "y": 1.7035316780821916
       },
       "prevControl": null,
       "nextControl": {
-        "x": 11.954,
-        "y": 1.652
+        "x": 12.446703767123289,
+        "y": 1.7035316780821916
       },
       "isLocked": false,
       "linkedName": "red_preNet"
     },
     {
       "anchor": {
-        "x": 10.061335227272727,
-        "y": 1.6517613636363626
+        "x": 10.067208904109588,
+        "y": 1.718557363013698
       },
       "prevControl": {
-        "x": 10.311335227272727,
-        "y": 1.6517613636363626
+        "x": 10.317208904109588,
+        "y": 1.718557363013698
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,19 +45,12 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "releaseAlgeaToNet",
-      "waypointRelativePos": 0.8035859820700896,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.8,
-    "maxAcceleration": 3.8,
-    "maxAngularVelocity": 480.0,
-    "maxAngularAcceleration": 540.0,
+    "maxVelocity": 3.6,
+    "maxAcceleration": 3.6,
+    "maxAngularVelocity": 420.0,
+    "maxAngularAcceleration": 480.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

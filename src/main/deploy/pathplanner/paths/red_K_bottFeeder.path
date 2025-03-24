@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.64954219,
-        "y": 2.703042504
+        "x": 13.57356143,
+        "y": 2.774645044
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.521919192486859,
-        "y": 1.409030135185148
+        "x": 14.445938432486859,
+        "y": 1.4806326751851482
       },
       "isLocked": false,
       "linkedName": "red_K"
     },
     {
       "anchor": {
-        "x": 15.91657986111111,
-        "y": 0.8804687499999989
+        "x": 16.0173801369863,
+        "y": 0.9221960616438355
       },
       "prevControl": {
-        "x": 15.31207218636354,
-        "y": 1.3794990678743384
+        "x": 15.326198630136988,
+        "y": 1.3128638698630142
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.13148148148148228,
+      "maxWaypointRelativePos": 0.1593533487297921,
       "constraints": {
         "maxVelocity": 2.0,
         "maxAcceleration": 2.0,
@@ -47,10 +47,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.8,
-    "maxAcceleration": 3.8,
-    "maxAngularVelocity": 480.0,
-    "maxAngularAcceleration": 540.0,
+    "maxVelocity": 3.6,
+    "maxAcceleration": 3.6,
+    "maxAngularVelocity": 420.0,
+    "maxAngularAcceleration": 480.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
