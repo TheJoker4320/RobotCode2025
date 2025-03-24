@@ -153,13 +153,39 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.25
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "blue_preNet_net"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "blue_preNet_net"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.82
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "releaseAlgeaToNet"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

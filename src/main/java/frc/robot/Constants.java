@@ -217,8 +217,8 @@ public final class Constants {
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.2;
     public static final double L1_POSITION = 0.701;
-    public static final double PROCESSOR_POSITION = 0.53;
-    public static final double BALL_FLOOR_POSITION = 0.37;
+    public static final double PROCESSOR_POSITION = 0.55;
+    public static final double BALL_FLOOR_POSITION = 0.32;
     
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
@@ -242,7 +242,7 @@ public final class Constants {
 
     public static final boolean MOTIONMAGIC_ENABLED = true;
 
-    public static final double REACHSTATE_TIMEOUT = 4;                  // Maximum time for a reachstate command (in seconds)
+    public static final double REACHSTATE_TIMEOUT = 1.25;                  // Maximum time for a reachstate command (in seconds)
 
     public static final InvertedValue RIGHT_MOTOR_INVERTED = InvertedValue.Clockwise_Positive;
 
@@ -363,7 +363,7 @@ public final class Constants {
     public static final double TRANSLATION_I_CONSTANT = 0;
     public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 
-    public static final double ROTATION_P_CONSTANT = 2.35166667;
+    public static final double ROTATION_P_CONSTANT = 2.85166667;
     public static final double ROTATION_I_CONSTANT = 0;
     public static final double ROTATION_D_CONSTANT = 0.087583333;
 

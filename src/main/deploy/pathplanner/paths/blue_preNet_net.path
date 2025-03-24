@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.532638888888889,
-        "y": 6.495
+        "x": 4.882133838383839,
+        "y": 6.444065656565656
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.532638888888889,
-        "y": 6.495
+        "x": 5.882133838383839,
+        "y": 6.444065656565656
       },
       "isLocked": false,
       "linkedName": "blue_preNet"
     },
     {
       "anchor": {
-        "x": 7.309176136363636,
-        "y": 6.495
+        "x": 7.392676767676768,
+        "y": 6.454229797979798
       },
       "prevControl": {
-        "x": 6.309176136363636,
-        "y": 6.495
+        "x": 6.392676767676768,
+        "y": 6.454229797979798
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,33 +29,12 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8735537190082663,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
-        "maxAngularVelocity": 480.0,
-        "maxAngularAcceleration": 540.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "releaseAlgeaToNet",
-      "waypointRelativePos": 0.7958677685950474,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 5.0,
+    "maxVelocity": 3.8,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 480.0,
     "maxAngularAcceleration": 540.0,
     "nominalVoltage": 12.0,

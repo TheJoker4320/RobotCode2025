@@ -35,6 +35,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.events.EventTrigger;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -256,6 +258,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("releaseAlgeaToNet", throwBallToNet);
     NamedCommands.registerCommand("releaseAlgea", new ManipulatorBallEject(mManipulator));
     NamedCommands.registerCommand("reachProcessor", reachProcessorCommand);
+
+    (new EventTrigger("releaseAlgeaToNet")).onTrue(throwBallToNet);
 
     mAutoChooser = AutoBuilder.buildAutoChooser();
     mAutoChooser.addOption("Wait", new WaitCommand(0.1));
