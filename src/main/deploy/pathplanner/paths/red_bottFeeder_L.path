@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 15.735741561932832,
-        "y": 1.0530883014717465
+        "y": 1.053088301471747
       },
       "isLocked": false,
       "linkedName": "red_bottFeeder"
     },
     {
       "anchor": {
-        "x": 13.90765108,
-        "y": 2.95598479
+        "x": 13.92667032,
+        "y": 2.863042504
       },
       "prevControl": {
-        "x": 14.65765108,
-        "y": 1.656946684323342
+        "x": 14.67667032,
+        "y": 1.564004398323342
       },
       "nextControl": null,
       "isLocked": false,

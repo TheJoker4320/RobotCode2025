@@ -173,6 +173,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "blue_top",
+  "folder": "blue_mid",
   "choreoAuto": false
 }
