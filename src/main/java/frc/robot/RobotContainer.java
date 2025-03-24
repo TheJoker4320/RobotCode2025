@@ -132,10 +132,6 @@ public class RobotContainer {
       )
     );
 
-    Command signalCoralCollected = getLedBlinkCommand(LedSubsystemConstants.YELLOW_LED_COLOR, LedSubsystemConstants.COLLECTED_CORAL_LED_TIME, LedSubsystemConstants.BLINK_TIME);
-    Trigger coralCollected = new Trigger(mManipulator::getSwitchState);
-    coralCollected.onTrue(signalCoralCollected);
-
     // -------------- OPERATOR BUTTONS --------------
 
     // command for preparing to collect a coral
@@ -345,7 +341,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_mid_G_Algae");     // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_mid_G_AlgaeNet");     // TODO: SET THE CORRECT AUTONOMOUS
     // PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;

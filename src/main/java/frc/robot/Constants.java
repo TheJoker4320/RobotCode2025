@@ -43,7 +43,7 @@ public final class Constants {
     public static final int RESET_HEADING_SWERVE_BUTTON = 7; //minus #TODO: Check if actually this button
     public static final int REFERENCE_FRAME_SWERVE_BUTTON = 8; //plus
 
-    public static final double DRIVE_DEADBAND = 0.05;
+    public static final double DRIVE_DEADBAND = 0.075;
     
     public static final int OPEN_BALL_POV_BUTTON = 0;         // This means UP on the pov button
     public static final int CLOSE_BALL_POV_BUTTON = 180;      // This means DOWN on the pov button
@@ -258,10 +258,10 @@ public final class Constants {
   
     public static final double MAXIMUM_ANGULAR_VELOCITY = 720;
 
-    public static final double FAR_REEF_X_OFFSET = -0.61;
-    public static final double CLOSE_REEF_X_OFFSET = -0.52;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
-    public static final double REEF_Y_RIGHT_OFFSET = -0.17;   // The distance between the center of the april tag and reef branch
-    public static final double REEF_Y_LEFT_OFFSET = 0.15;     // The distance between the center of the april tag and reef branch
+    public static final double FAR_REEF_X_OFFSET = -0.51;
+    public static final double CLOSE_REEF_X_OFFSET = -0.45;          // The distance front edge of the robot to the center plus a few centimeters - depends on with/without bumpers
+    public static final double REEF_Y_RIGHT_OFFSET = -0.18;   // The distance between the center of the april tag and reef branch
+    public static final double REEF_Y_LEFT_OFFSET = 0.18;     // The distance between the center of the april tag and reef branch
     public static final double APRIL_TAG_ANGLE_OFFSET = Math.PI + Math.PI / 2;
 
     // It is by definition that 0 degree angle is towards the red alliance drivers - so for the blue alliance it is consistent
@@ -346,7 +346,7 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.058;
+    public static final double DRIVING_P_CONSTANT = 0.068;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;
@@ -359,7 +359,7 @@ public final class Constants {
   }
 
   public static class AutonomousConstants {
-    public static final double TRANSLATION_P_CONSTANT = 3.833395833;
+    public static final double TRANSLATION_P_CONSTANT = 3.903395833;
     public static final double TRANSLATION_I_CONSTANT = 0;
     public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 

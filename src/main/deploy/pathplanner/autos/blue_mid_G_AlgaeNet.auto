@@ -75,7 +75,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -148,6 +148,12 @@
           "type": "path",
           "data": {
             "pathName": "blue_ball_preNet"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {

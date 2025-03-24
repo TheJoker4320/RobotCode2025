@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import dev.doglog.DogLog;
-import dev.doglog.DogLogOptions;
-
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -30,13 +27,6 @@ public class Robot extends TimedRobot {
   public Robot() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    DogLogOptions dogLogOptions = new DogLogOptions();      // TODO: REMOVE THIS
-    dogLogOptions.withCaptureConsole(false)
-                 .withCaptureDs(false)
-                 .withCaptureNt(false)
-                 .withLogExtras(false)
-                 .withNtPublish(false);
-    DogLog.setOptions(dogLogOptions);                       // TODO: REMOVE THIS
 
     DataLogManager.start("/u/logs");
     DataLogManager.logNetworkTables(true);
