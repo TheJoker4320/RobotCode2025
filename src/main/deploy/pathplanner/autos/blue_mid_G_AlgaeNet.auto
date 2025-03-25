@@ -187,6 +187,12 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue_net_back"
+          }
         }
       ]
     }

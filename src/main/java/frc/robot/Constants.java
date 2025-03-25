@@ -363,7 +363,7 @@ public final class Constants {
     public static final double TRANSLATION_I_CONSTANT = 0;
     public static final double TRANSLATION_D_CONSTANT = 0.28391875;
 
-    public static final double ROTATION_P_CONSTANT = 2.85166667;
+    public static final double ROTATION_P_CONSTANT = 3.25166667;
     public static final double ROTATION_I_CONSTANT = 0;
     public static final double ROTATION_D_CONSTANT = 0.087583333;
 

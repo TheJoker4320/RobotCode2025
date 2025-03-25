@@ -187,6 +187,12 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "red_net_back"
+          }
         }
       ]
     }
