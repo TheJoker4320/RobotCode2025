@@ -22,8 +22,8 @@
     "red_mid",
     "red_top"
   ],
-  "defaultMaxVel": 3.6,
-  "defaultMaxAccel": 3.6,
+  "defaultMaxVel": 3.65,
+  "defaultMaxAccel": 3.75,
   "defaultMaxAngVel": 420.0,
   "defaultMaxAngAccel": 480.0,
   "defaultNominalVoltage": 12.0,

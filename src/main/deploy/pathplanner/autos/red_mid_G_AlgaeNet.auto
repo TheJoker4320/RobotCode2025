@@ -151,6 +151,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "reachProcessor"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 0.25
@@ -173,7 +179,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.79
+                        "waitTime": 0.49
                       }
                     },
                     {

@@ -140,6 +140,7 @@ public final class Constants {
     public static final double L4_PLACED_ANGLE = 32;     // This angle isnt final - needs to be tested
     public static final double L32_PLACED_ANGLE = 43;    // This angle isnt final - needs to be tested
     public static final double ZERO_ANGLE = 0.0;
+    public static final double GROUND_BALL_INTAKE_ANGLE = -10;
 
     public static final boolean MAXIMUM_VALUE_ENABLED = true;
     public static final boolean MINIMUM_VALUE_ENABLED = true;
@@ -208,7 +209,7 @@ public final class Constants {
     public static final double ELEVATOR_ENCODER_TOLERANCE = 0.01;
     public static final double ELEVATOR_POSITION_TOLERANCE = 0.005;
 
-    public static final double PRE_INTAKE_POSITION = 0.59;
+    public static final double PRE_INTAKE_POSITION = 0.64;
     public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
     public static final double L2_BALL_POSITION = 0.71;
@@ -218,7 +219,7 @@ public final class Constants {
     public static final double L2_POSITION = 0.2;
     public static final double L1_POSITION = 0.701;
     public static final double PROCESSOR_POSITION = 0.55;
-    public static final double BALL_FLOOR_POSITION = 0.32;
+    public static final double BALL_FLOOR_POSITION = 0.2;
     
     public static final double MINIMUM_ELEVATOR_HEIGHT = 0.15;          // This value is in meters
     public static final boolean MINIMUM_VALUE_ENABLED = true;
@@ -346,7 +347,7 @@ public final class Constants {
 
     public static final boolean TURNING_ENCODER_INVERTED = true;
 
-    public static final double DRIVING_P_CONSTANT = 0.068;
+    public static final double DRIVING_P_CONSTANT = 0.072;
     public static final double DRIVING_I_CONSTANT = 0;
     public static final double DRIVING_D_CONSTANT = 0;
     public static final double DRIVING_VELOCITY_FF = 1.0 / DRIVING_WHEEL_FREE_SPEED_RPS;

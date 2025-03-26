@@ -135,7 +135,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.2
+            "waitTime": 1.115
           }
         },
         {
@@ -149,7 +149,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.38
+                        "waitTime": 0.2
                       }
                     },
                     {
@@ -295,59 +295,66 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.2
+            "waitTime": 1.115
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.38
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "red_bottFeeder_L"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 0.75
+                              "waitTime": 0.15
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "path",
                             "data": {
-                              "name": "intake"
+                              "pathName": "red_bottFeeder_L"
                             }
                           }
                         ]
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "sequential",
                       "data": {
-                        "name": "reachL4"
+                        "commands": [
+                          {
+                            "type": "race",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 0.75
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "intake"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "reachL4"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -363,7 +370,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 1.0
                 }
               },
               {
@@ -383,7 +390,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 0.3
+                              "waitTime": 0.185
                             }
                           },
                           {
@@ -394,56 +401,24 @@
                           }
                         ]
                       }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "red_L_bottFeeder"
-                }
-              },
-              {
-                "type": "deadline",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.35
-                      }
                     },
                     {
-                      "type": "named",
+                      "type": "sequential",
                       "data": {
-                        "name": "release"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.4
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "prepareIntake"
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.285
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "red_L_bottFeeder"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

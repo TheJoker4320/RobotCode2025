@@ -74,6 +74,15 @@ public class Elevator extends SubsystemBase {
     return mRightMotorController.getPosition().getValueAsDouble();
   }
 
+  public void resetElevatorPosition() {
+    mRightMotorController.getConfigurator().apply(ElevatorConfigs.ELEVATOR_TALONFX_CONFIG);
+    mRightMotorController.setPosition(ElevatorConstants.MOTOR_OFFSET);
+  }
+
+  public void changeElevatorMinHeight() {
+    mRightMotorController.getConfigurator().apply(ElevatorConfigs.ELEVATOR_RESET_CONFIG);
+  }
+
   public boolean isAtState(ElevatorState state) {
     if (Math.abs(state.height() - getCurrentHeight()) < ElevatorConstants.ELEVATOR_POSITION_TOLERANCE) {
       mSetpointInitiallied = false;
@@ -93,6 +102,10 @@ public class Elevator extends SubsystemBase {
 
   public boolean isSetpointInitialled(){
     return mSetpointInitiallied;
+  }
+
+  public void setSpeed(){
+    mRightMotorController.set(-0.1);
   }
 
   @Override

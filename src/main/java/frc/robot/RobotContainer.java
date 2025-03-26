@@ -16,6 +16,7 @@ import frc.robot.commands.ManipulatorCollectBall;
 import frc.robot.commands.ManipulatorCollectCoral;
 import frc.robot.commands.ManipulatorBallEject;
 import frc.robot.commands.ManipulatorCoralEject;
+import frc.robot.commands.SyncElevator;
 import frc.robot.subsystems.Manipulator;
 import frc.robot.commands.ArmReachAngle;
 import frc.robot.commands.ElevatorReachL2;
@@ -243,7 +244,7 @@ public class RobotContainer {
 
     POVButton floorIntakeButton = new POVButton(m_operatorController, 180);
     floorIntakeButton.onTrue(new SequentialCommandGroup(
-      new ArmReachAngle(mArm, ArmState.L1),
+      new ArmReachAngle(mArm, ArmState.GROUND_BALL_INTAKE),
       new ElevatorReachState(mElevatorSubsystem, ElevatorState.GROUND_BALL_INTAKE)
     ));
 
@@ -310,6 +311,13 @@ public class RobotContainer {
         mSwerveSubsystem
       )
     );
+
+    POVButton syncElevatorButton = new POVButton(m_driverController, 180);
+    Command syncElevatorCommand = new SequentialCommandGroup(
+      new ArmReachAngle(mArm, ArmState.L4),
+      new SyncElevator(mElevatorSubsystem)
+    );
+    syncElevatorButton.whileTrue(syncElevatorCommand);
   }
 
   public Command getLedBlinkCommand(double blinkColor, double runTime, double blinkIntervals) {
@@ -345,8 +353,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_mid_G_AlgaeNet");     // TODO: SET THE CORRECT AUTONOMOUS
-    // PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
+    // PathPlannerAuto auto = (PathPlannerAuto)AutoBuilder.buildAuto("blue_mid_G_AlgaeNet");     // TODO: SET THE CORRECT AUTONOMOUS
+    PathPlannerAuto auto = (PathPlannerAuto)mAutoChooser.getSelected();
 
     double degreeOffset = DriverStation.getAlliance().get().equals(Alliance.Red) ? 180 : 0;
     mPoseEstimatorSubsystem.resetGyroOffset(degreeOffset);

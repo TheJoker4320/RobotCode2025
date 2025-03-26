@@ -69,6 +69,7 @@ public final class Configs {
 
     public static class ElevatorConfigs {
         public static final TalonFXConfiguration ELEVATOR_TALONFX_CONFIG = new TalonFXConfiguration();
+        public static final TalonFXConfiguration ELEVATOR_RESET_CONFIG = new TalonFXConfiguration();
 
         static {
             Slot0Configs slot0Configs = ELEVATOR_TALONFX_CONFIG.Slot0;
@@ -104,6 +105,36 @@ public final class Configs {
             CurrentLimitsConfigs currentLimitsConfigs = ELEVATOR_TALONFX_CONFIG.CurrentLimits;
             currentLimitsConfigs.withStatorCurrentLimitEnable(ElevatorConstants.CURRENT_LIMIT_ENABLED);
             currentLimitsConfigs.withStatorCurrentLimit(ElevatorConstants.CURRENT_LIMIT);
+
+            //----------------------------------------------
+
+            Slot0Configs newSolt0 = ELEVATOR_RESET_CONFIG.Slot0;
+            newSolt0.GravityType = GravityTypeValue.Elevator_Static;
+            newSolt0.kP = ElevatorConstants.ELEVATOR_P_CONSTANT;
+            newSolt0.kI = ElevatorConstants.ELEVATOR_I_CONSTANT;
+            newSolt0.kD = ElevatorConstants.ELEVATOR_D_CONSTANT;
+            newSolt0.kG = ElevatorConstants.ELEVATOR_G_CONSTANT;
+            // Note that we are using motion magic
+            newSolt0.kV = ElevatorConstants.ELEVATOR_V_CONSTANT;
+            newSolt0.kA = ElevatorConstants.ELEVATOR_A_CONSTANT;
+            newSolt0.kS = ElevatorConstants.ELEVATOR_S_CONSTANT;
+
+            MotionMagicConfigs newMotionMagic = ELEVATOR_RESET_CONFIG.MotionMagic;
+            newMotionMagic.MotionMagicCruiseVelocity = ElevatorConstants.MM_CRUISE_VELOCITY;
+            newMotionMagic.MotionMagicAcceleration = ElevatorConstants.MM_ACCELERATION;
+            newMotionMagic.MotionMagicJerk = ElevatorConstants.MM_JERK;
+
+            FeedbackConfigs newFeedback = ELEVATOR_RESET_CONFIG.Feedback;
+            newFeedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+            newFeedback.SensorToMechanismRatio = ElevatorConstants.ELV_SENSOR_TO_MECAHNISM_RATIO;
+
+            MotorOutputConfigs newMotorOutput = ELEVATOR_RESET_CONFIG.MotorOutput;
+            newMotorOutput.NeutralMode = NeutralModeValue.Brake;
+            newMotorOutput.Inverted = ElevatorConstants.RIGHT_MOTOR_INVERTED;
+
+            CurrentLimitsConfigs newCurrentLimits = ELEVATOR_RESET_CONFIG.CurrentLimits;
+            newCurrentLimits.withStatorCurrentLimitEnable(ElevatorConstants.CURRENT_LIMIT_ENABLED);
+            newCurrentLimits.withStatorCurrentLimit(ElevatorConstants.CURRENT_LIMIT);
         }
     }
 
