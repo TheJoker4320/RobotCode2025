@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.542887290183618,
-        "y": 6.44534602544875
+        "x": 14.32370171678908,
+        "y": 5.995949002299167
       },
       "isLocked": false,
       "linkedName": "red_C"
@@ -36,7 +36,7 @@
       "maxWaypointRelativePos": 0.18,
       "constraints": {
         "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
+        "maxAcceleration": 2.4,
         "maxAngularVelocity": 480.0,
         "maxAngularAcceleration": 540.0,
         "nominalVoltage": 12.0,

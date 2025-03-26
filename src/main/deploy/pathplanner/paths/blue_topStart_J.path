@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.69,
-        "y": 7.5
+        "x": 6.747609076372691,
+        "y": 7.285
       },
       "isLocked": false,
       "linkedName": "blue_topStart"
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.6970633693972207,
+      "waypointRelativePos": 0.77,
       "rotationDegrees": -119.99999999999999
     }
   ],
