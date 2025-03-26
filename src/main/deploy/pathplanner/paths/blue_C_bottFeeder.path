@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0630214270000002,
-        "y": 1.9154145594586733
+        "x": 2.9130214270000003,
+        "y": 1.6556069383233418
       },
       "isLocked": false,
       "linkedName": "blue_C"
@@ -33,7 +33,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.16197975253093294,
+      "maxWaypointRelativePos": 0.18,
       "constraints": {
         "maxVelocity": 2.0,
         "maxAcceleration": 2.0,

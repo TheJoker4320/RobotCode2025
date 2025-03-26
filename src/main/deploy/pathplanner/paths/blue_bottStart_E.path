@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.782568899164587,
-        "y": 0.9788729291931517
+        "x": 6.856018025769743,
+        "y": 0.8844311672217152
       },
       "isLocked": false,
       "linkedName": "blue_bottStart"
@@ -37,11 +37,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.7898383371824481,
+      "minWaypointRelativePos": 0.69,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 2.0,
+        "maxVelocity": 2.1,
+        "maxAcceleration": 2.15,
         "maxAngularVelocity": 480.0,
         "maxAngularAcceleration": 540.0,
         "nominalVoltage": 12.0,

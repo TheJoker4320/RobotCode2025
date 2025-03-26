@@ -15,7 +15,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "red_topStart_E"
+                        "pathName": "blue_topStart_J"
                       }
                     },
                     {
@@ -88,7 +88,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_E_topFeeder"
+                  "pathName": "blue_J_topFeeder"
                 }
               },
               {
@@ -155,7 +155,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "red_topFeeder_D"
+                        "pathName": "blue_topFeeder_K"
                       }
                     }
                   ]
@@ -248,7 +248,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "red_D_topFeeder"
+                  "pathName": "blue_K_topFeeder"
                 }
               },
               {
@@ -319,7 +319,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "red_topFeeder_C"
+                              "pathName": "blue_topFeeder_L"
                             }
                           }
                         ]
@@ -415,7 +415,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "red_C_topFeeder"
+                              "pathName": "blue_C_bottFeeder"
                             }
                           }
                         ]
@@ -431,6 +431,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "red_top",
+  "folder": "blue_top",
   "choreoAuto": false
 }
