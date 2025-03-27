@@ -155,7 +155,10 @@ public class RobotContainer {
         new ElevatorReachState(mElevatorSubsystem, ElevatorState.PRE_INTAKE), 
         new ArmReachAngle(mArm, ArmState.OUT_OF_INTAKE)
       ),
-      new ManipulatorCollectCoral(mManipulator, 138)
+      new ParallelRaceGroup(
+        new ManipulatorCollectCoral(mManipulator, 138),
+        new WaitCommand(0.75)
+      )
     );
     // command for adjusting elevator and arm for l1
     Command l1Command = new ParallelCommandGroup(

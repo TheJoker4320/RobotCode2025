@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.753855427000001,
-        "y": 6.576193061676658
+        "x": 5.703855427000001,
+        "y": 6.489590521298214
       },
       "isLocked": false,
       "linkedName": "blue_J"
@@ -47,8 +47,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.65,
-    "maxAcceleration": 3.75,
+    "maxVelocity": 3.75,
+    "maxAcceleration": 3.9,
     "maxAngularVelocity": 420.0,
     "maxAngularAcceleration": 480.0,
     "nominalVoltage": 12.0,
@@ -64,5 +64,5 @@
     "velocity": 0,
     "rotation": -119.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

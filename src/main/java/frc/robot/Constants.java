@@ -213,7 +213,7 @@ public final class Constants {
     public static final double INTAKE_POSITION = 0.4525;  //TODO: add to value +- 2 centimeters
     public static final double PRE_SCORING = 0.55;
     public static final double L2_BALL_POSITION = 0.71;
-    public static final double L3_BALL_POSITION = 1.07;
+    public static final double L3_BALL_POSITION = 1.12;
     public static final double L4_POSITION = 1.257;
     public static final double L3_POSITION = 0.617;
     public static final double L2_POSITION = 0.2;
