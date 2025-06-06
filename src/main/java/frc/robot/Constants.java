@@ -110,12 +110,12 @@ public final class Constants {
     public static final boolean SMART_CURRENT_LIMIT_ENABLED = true;
     public static final double SMART_CURRENT_LIMIT = 40;
 
-    public static final int ENCODER_CHANNEL = 0;
+    public static final int ENCODER_CHANNEL = 1;
     public static final int MOTOR_ID = 13;
 
     public static final double ARM_POSITION_TOLERANCE = 3.5;  // in degrees
     public static final double ARM_ENCODER_TOLERANCE = 2;   // in degrees
-    public static final double ARM_ENCODER_OFFSET = -68.12;   // in degrees
+    public static final double ARM_ENCODER_OFFSET = 50.3;   // in degrees -68.12
 
     //all PID values are in rotations, not degrees/radians
     public static final double ARM_KP = 32;
@@ -156,8 +156,8 @@ public final class Constants {
   }
 
   public static class LedSubsystemConstants {
-    public static final int RIGHT_LED_STRIP_PORT = 0;
-    public static final int LEFT_LED_STRIP_PORT = 1;
+    public static final int RIGHT_LED_STRIP_PORT = 7;
+    public static final int LEFT_LED_STRIP_PORT = 6;
 
     public static final double RED_LED_COLOR = 0.61;
     public static final double BLUE_LED_COLOR = 0.87;
@@ -172,13 +172,13 @@ public final class Constants {
 
   public static class ManipulatorConstants {
     public static int SECONDARY_MOTOR_ID = 9;
-    public static int PRIMARY_MOTOR_ID = 10;
+    public static int PRIMARY_MOTOR_ID = 3;
 
     /*This is the coral limit switch port */
-    public static int PRIMARY_SWITCH_PORT = 1; //TODO: set port
+    public static int PRIMARY_SWITCH_PORT = 0; //TODO: set port
     
     /*This is the ball limit switch port */
-    public static int SECONDARY_SWITCH_PORT = 2; //TODO: set port
+    public static int SECONDARY_SWITCH_PORT = 0; //TODO: set port
 
     public static final boolean SECONDARY_MOTOR_INVERTED = true;
 
@@ -320,8 +320,8 @@ public final class Constants {
   public static final class NeoModuleConstants {
     public static final int MODULE_COUNT = 4;
     
-    public static final int[] DRIVING_CAN_ID = new int[] {8, 6, 2, 4};
-    public static final int[] TURNING_CAN_ID = new int[] {7, 5, 1, 3};
+    public static final int[] DRIVING_CAN_ID = new int[] {17, 7, 2, 1};
+    public static final int[] TURNING_CAN_ID = new int[] {10, 5, 8, 6};
     public static final double[] ANGULAR_OFFSETS = new double[] {
       (-Math.PI / 2.0), 0, (Math.PI), (Math.PI / 2.0)
     };
